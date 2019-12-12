@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/backgroundColor">
+
+    <fragment
+        android:id="@+id/status"
+        android:name="org.linphone.fragments.StatusBarFragment"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        tools:layout="@layout/status_bar" />
+
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/assistant_topbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/standard_text_font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/welcome"
+                android:paddingTop="10dp"
+                android:textAllCaps="true" />
+
+            <TextView
+                style="@style/standard_small_text_font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="top"
+                android:paddingTop="10dp"
+                android:text="@string/assistant_welcome_desc" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="2">
+
+                <TextView
+                    android:id="@+id/generic_connection"
+                    style="@style/button_font"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_margin="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="fill"
+                    android:layout_columnWeight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/assistant_button"
+                    android:textColor="@drawable/assistant_button_text_color"
+                    android:contentDescription="@string/assistant_login_generic"
+                    android:text="@string/assistant_login_generic" />
+                <TextView
+                    android:id="@+id/scan_btn"
+                    style="@style/button_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/assistant_button"
+                    android:contentDescription="QRcode"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="QRcode"
+                    android:textColor="@drawable/assistant_button_text_color"
+                    android:layout_row="1"
+                    android:layout_column="0" />
+
+            </GridLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
