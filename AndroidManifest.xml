@@ -188,6 +188,8 @@
         <activity
             android:name=".call.opendoor"/>
         <activity
+            android:name=".assistant.login"/>
+        <activity
             android:name=".assistant.MenuAssistantActivity"/>
         <activity
             android:name=".assistant.AccountConnectionAssistantActivity"/>

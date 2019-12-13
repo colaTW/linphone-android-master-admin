@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey_color">
+
+    <AbsoluteLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/register">
+
+
+        >
+
+        <TextView
+            android:id="@+id/Num"
+            android:layout_width="214dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100px"
+            android:layout_x="159dp"
+            android:layout_y="247dp"
+            android:baselineAligned="false"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/UUID"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100px"
+            android:layout_x="133dp"
+            android:layout_y="197dp"
+            android:baselineAligned="false"
+            android:text="TextView55555555555555555555555555555555555555555555555555555555555" />
+
+        <DatePicker
+            android:id="@+id/dt"
+            android:layout_width="290dp"
+            android:layout_height="112dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_x="71dp"
+            android:layout_y="309dp"
+
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:endYear="2020"
+            android:spinnersShown="true"
+            android:startYear="2015" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="280dp"
+            android:layout_y="436dp"
+            android:text="Button"
+            tools:layout_editor_absoluteX="262dp"
+            tools:layout_editor_absoluteY="429dp" />
+    </AbsoluteLayout>
+
+</FrameLayout>

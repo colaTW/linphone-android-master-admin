@@ -33,7 +33,6 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.linphone.R;
-import org.linphone.core.TransportType;
 import org.linphone.settings.LinphonePreferences;
 
 public class MenuAssistantActivity extends AssistantActivity {
@@ -122,19 +121,30 @@ public class MenuAssistantActivity extends AssistantActivity {
                 try {
                     JSONObject info = new JSONObject(result.getContents());
                     info2 = info;
-                    //  info2 = info2.getJSONObject("household");
                     user = info2.getString("user");
                     Domain = info2.getString("domain");
                     Password = info2.getString("Pwd");
+
+                    Bundle bundle = new Bundle();
+                    // 儲存資料　第一個為參數key，第二個為Value
+                    bundle.putString("user", user);
+                    bundle.putString("Domain", Domain);
+                    bundle.putString("Password", Password);
+                    Intent intent = new Intent();
+                    intent.setClass(MenuAssistantActivity.this, login.class);
+                    startActivity(intent);
+                    intent.putExtras(bundle); // 記得put進去，不然資料不會帶過去哦
+                    startActivity(intent);
+                    MenuAssistantActivity.this.finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                mAccountCreator.setUsername(user);
-                mAccountCreator.setDomain(Domain);
-                mAccountCreator.setPassword(Password);
-                mAccountCreator.setTransport(TransportType.Udp);
-                createProxyConfigAndLeaveAssistant();
+                // mAccountCreator.setUsername(user);
+                //  mAccountCreator.setDomain(Domain);
+                // mAccountCreator.setPassword(Password);
+                // mAccountCreator.setTransport(TransportType.Udp);
+                // createProxyConfigAndLeaveAssistant();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
