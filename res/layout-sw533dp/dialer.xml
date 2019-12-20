@@ -81,6 +81,13 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:focusable="true">
+                <org.linphone.views.CallButton
+                    android:id="@+id/B_home"
+                    android:layout_width="223dp"
+                    android:layout_height="match_parent"
+
+                    android:background="@drawable/back_home"
+                    android:nextFocusLeft="@id/start_call" />
                 <ImageView
                     android:id="@+id/add_contact"
                     android:layout_width="match_parent"

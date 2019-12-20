@@ -31,6 +31,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,17 +46,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
+
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
@@ -87,6 +88,15 @@ import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.AndroidAudioManager;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class CallActivity extends LinphoneGenericActivity
         implements CallStatusBarFragment.StatsClikedListener,
@@ -136,6 +146,7 @@ public class CallActivity extends LinphoneGenericActivity
     private CoreListener mListener;
     private AndroidAudioManager mAudioManager;
     private VideoZoomHelper mZoomHelper;
+    String Guard, pass = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,8 +159,20 @@ public class CallActivity extends LinphoneGenericActivity
         Compatibility.setShowWhenLocked(this, true);
 
         setContentView(R.layout.call);
-
+        try {
+            FileInputStream fin = openFileInput("info.txt");
+            byte[] buffer = new byte[100];
+            int byteCount = fin.read(buffer);
+            String outinfo = "";
+            outinfo = new String(buffer, 0, byteCount, "utf-8");
+            String out[] = outinfo.split("\\,");
+            Guard = out[0];
+            pass = out[1];
+            fin.close();
+        } catch (Exception e) {
+        }
         ImageView mget = findViewById(R.id.Openkey);
+        // 開門按鈕
         mget.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -160,22 +183,47 @@ public class CallActivity extends LinphoneGenericActivity
                             StrictMode.setThreadPolicy(policy);
                         }
                         try {
-                            URL url = new URL("http://49.159.128.172/opendoor.php");
+                            URL url =
+                                    new URL(
+                                            "http://49.159.128.172:8888/api/v1/household/device/login");
                             JSONObject jo = new JSONObject();
-                            //    jo.put("name", "test1");
-                            //  jo.put("password", "123456");
+                            jo.put(
+                                    "device_uuid",
+                                    Settings.Secure.getString(
+                                            getContext().getContentResolver(),
+                                            Settings.Secure.ANDROID_ID));
+                            jo.put("password", pass);
                             HttpClient httpClient = new DefaultHttpClient();
                             AbstractHttpEntity entity =
                                     new ByteArrayEntity(jo.toString().getBytes("UTF8"));
                             entity.setContentType(
                                     new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-
                             HttpPost httpPost = new HttpPost(url.toURI());
                             httpPost.setEntity(entity);
                             // Prepare JSON to send by setting the entity
                             HttpResponse response = httpClient.execute(httpPost);
                             String json_string = EntityUtils.toString(response.getEntity());
                             JSONObject temp1 = new JSONObject(json_string);
+                            JSONObject data = temp1.getJSONObject("data");
+                            String status = temp1.getString("status");
+
+                            if (status.equals("success")) {
+                                String token = data.getString("access_token");
+                                HttpGet httpGet =
+                                        new HttpGet(
+                                                "http://49.159.128.172:8888/api/v1/household/device/open/gap");
+                                HttpClient httpClient2 = new DefaultHttpClient();
+                                httpGet.addHeader("Authorization", "Bearer " + token);
+                                HttpResponse response2 = httpClient2.execute(httpGet);
+                                HttpEntity responseHttpEntity = response2.getEntity();
+                                String json_string2 = EntityUtils.toString(response2.getEntity());
+                                JSONObject temp2 = new JSONObject(json_string2);
+                                String suc = temp2.getString("success");
+                                if (suc.equals("true")) {
+                                    Toast.makeText(CallActivity.this, "芝麻芝麻開門", Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            }
 
                             //  BufferedReader reader = new BufferedReader(new
                             // InputStreamReader(response.getEntity().getContent(), "UTF-8"));
@@ -1106,8 +1154,10 @@ public class CallActivity extends LinphoneGenericActivity
             ContactAvatar.displayAvatar(displayName, mContactAvatar, true);
             mContactName.setText(displayName);
             ImageView Okey = findViewById(R.id.Openkey);
+
             // 守衛辨識
-            if (displayName.equals("5101")) {
+
+            if (displayName.equals(Guard)) {
                 Okey.setVisibility(View.VISIBLE);
             } else {
                 Okey.setVisibility(View.INVISIBLE);

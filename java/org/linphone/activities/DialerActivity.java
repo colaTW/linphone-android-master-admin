@@ -29,13 +29,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
-import java.util.ArrayList;
-import java.util.Collection;
+
 import org.linphone.LinphoneManager;
 import org.linphone.R;
+import org.linphone.assistant.home;
 import org.linphone.call.CallActivity;
 import org.linphone.contacts.ContactsActivity;
 import org.linphone.contacts.ContactsManager;
@@ -49,12 +50,15 @@ import org.linphone.views.CallButton;
 import org.linphone.views.Digit;
 import org.linphone.views.EraseButton;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class DialerActivity extends MainActivity implements AddressText.AddressChangedListener {
     private static final String ACTION_CALL_LINPHONE = "org.linphone.intent.action.CallLaunched";
 
     private AddressText mAddress;
     private CallButton mStartCall, mAddCall, mTransferCall;
-    private ImageView mAddContact, mBackToCall;
+    private ImageView mAddContact, mBackToCall, gohome;
 
     private boolean mIsTransfer;
     private CoreListenerStub mListener;
@@ -63,6 +67,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (mAbortCreation) {
             return;
         }
@@ -187,6 +192,14 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(DialerActivity.this, CallActivity.class));
+                    }
+                });
+        gohome = view.findViewById(R.id.B_home);
+        gohome.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(DialerActivity.this, home.class));
                     }
                 });
 

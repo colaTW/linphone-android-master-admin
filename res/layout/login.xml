@@ -19,8 +19,8 @@
             android:layout_width="214dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="100px"
-            android:layout_x="159dp"
-            android:layout_y="247dp"
+            android:layout_x="165dp"
+            android:layout_y="261dp"
             android:baselineAligned="false"
             android:text="TextView" />
 
@@ -29,18 +29,18 @@
             android:layout_width="238dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="100px"
-            android:layout_x="133dp"
-            android:layout_y="197dp"
+            android:layout_x="146dp"
+            android:layout_y="179dp"
             android:baselineAligned="false"
-            android:text="TextView55555555555555555555555555555555555555555555555555555555555" />
+            android:text="UUID" />
 
         <DatePicker
             android:id="@+id/dt"
             android:layout_width="290dp"
             android:layout_height="112dp"
             android:layout_gravity="center_horizontal"
-            android:layout_x="71dp"
-            android:layout_y="309dp"
+            android:layout_x="128dp"
+            android:layout_y="339dp"
 
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
@@ -48,15 +48,45 @@
             android:spinnersShown="true"
             android:startYear="2015" />
 
-        <Button
+        <ImageButton
             android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="280dp"
-            android:layout_y="436dp"
-            android:text="Button"
+            android:layout_width="120dp"
+            android:layout_height="41dp"
+            android:layout_x="279dp"
+            android:layout_y="465dp"
+            android:background="@drawable/confirm"
             tools:layout_editor_absoluteX="262dp"
             tools:layout_editor_absoluteY="429dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="41dp"
+            android:layout_y="179dp"
+            android:text="設備機碼"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="183dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="36dp"
+            android:layout_y="261dp"
+            android:text="住戶分機號碼"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="240dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="38dp"
+            android:layout_y="335dp"
+            android:text="住戶出生日期"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="330dp" />
     </AbsoluteLayout>
 
 </FrameLayout>

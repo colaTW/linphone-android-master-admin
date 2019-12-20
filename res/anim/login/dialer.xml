@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/address_bar"
@@ -30,16 +27,13 @@
 
     </RelativeLayout>
 
-    <include
+    <include layout="@layout/numpad"
         android:id="@+id/numpad"
-        layout="@layout/numpad"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/controls"
         android:layout_below="@id/address_bar"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="-14dp"
-        android:layout_marginBottom="14dp"
+        android:layout_centerInParent="true"
         android:padding="10dp" />
 
     <LinearLayout
@@ -47,8 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="2dp">
-
+        android:layout_marginBottom="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -67,7 +60,6 @@
                 android:padding="15dp"
                 android:src="@drawable/call_back"
                 android:visibility="gone" />
-
             <ImageView
                 android:id="@+id/add_contact"
                 android:layout_width="match_parent"
@@ -82,23 +74,11 @@
         </RelativeLayout>
 
         <org.linphone.views.CallButton
-            android:id="@+id/B_home"
-            android:layout_width="223dp"
-            android:layout_height="match_parent"
-            android:layout_alignStart="@+id/controls"
-            android:background="@drawable/back_home"
-            android:nextFocusLeft="@id/start_call" />
-
-        <org.linphone.views.CallButton
             android:id="@+id/start_call"
-            android:layout_width="223dp"
-            android:layout_height="match_parent"
-            android:layout_alignTop="@+id/controls"
-            android:layout_alignEnd="@+id/controls"
-            android:layout_alignBottom="@+id/controls"
-            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:background="@drawable/go"
+            android:background="@drawable/call"
             android:contentDescription="@string/content_description_call"
             android:padding="12dp"
             android:src="@drawable/call_audio_start" />

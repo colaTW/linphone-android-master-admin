@@ -10,7 +10,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import org.linphone.R;
 
-public class QRcode extends MenuAssistantActivity {
+public class QRcode extends AssistantActivity {
     private TextView scan_btn;
 
     @Override

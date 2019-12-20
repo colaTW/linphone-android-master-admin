@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/topbanner"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@drawable/banner" />
+
+    <ImageView
+        android:id="@+id/notice"
+        android:layout_width="68dp"
+        android:layout_height="197dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/topbanner"
+        android:background="@drawable/notice" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="307dp"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/notice"
+        android:layout_below="@id/topbanner"
+        android:stretchColumns="*"
+        android:layout_marginRight="5dp">
+
+        <TableRow>
+
+            <ImageButton
+
+                android:id="@+id/B_call"
+                android:layout_width="1dp"
+                android:layout_height="90dp"
+                android:background="@drawable/call" />
+
+            <ImageButton
+                android:id="@+id/B_mess"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/message" />
+
+            <ImageButton
+                android:id="@+id/B_cctv"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/cctv" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageButton
+                android:id="@+id/B_security"
+                android:layout_width="1dp"
+                android:layout_height="90dp"
+                android:background="@drawable/security" />
+
+            <ImageButton
+                android:id="@+id/B_bull"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bull" />
+
+            <ImageButton
+                android:id="@+id/B_mail"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/mailbox" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-2dp"
+        android:gravity="right">
+
+        <TableLayout
+
+            android:layout_width="154dp"
+            android:layout_height="80dp"
+
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <ImageButton
+                    android:id="@+id/login_status"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/login1" />
+
+                <ImageButton
+                    android:id="@+id/list"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/list" />
+
+                <ImageButton
+                    android:id="@+id/setting"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/setting" />
+
+                <ImageButton
+                    android:id="@+id/newinfo"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/inforblue" />
+            </TableRow>
+
+
+        </TableLayout>
+    </LinearLayout>
+</RelativeLayout>

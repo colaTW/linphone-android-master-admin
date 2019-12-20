@@ -19,11 +19,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import static org.linphone.core.AccountCreator.UsernameStatus.Invalid;
-import static org.linphone.core.AccountCreator.UsernameStatus.InvalidCharacters;
-import static org.linphone.core.AccountCreator.UsernameStatus.TooLong;
-import static org.linphone.core.AccountCreator.UsernameStatus.TooShort;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,7 +51,10 @@ public abstract class AssistantActivity extends LinphoneGenericActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        View statusBar = findViewById(R.id.status);
+
         if (mAbortCreation) {
             return;
         }
@@ -74,25 +72,6 @@ public abstract class AssistantActivity extends LinphoneGenericActivity
         super.onResume();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-        View statusBar = findViewById(R.id.status);
-        if (getResources().getBoolean(R.bool.assistant_hide_status_bar)) {
-            statusBar.setVisibility(View.GONE);
-        }
-
-        View topBar = findViewById(R.id.top_bar);
-        if (getResources().getBoolean(R.bool.assistant_hide_top_bar)) {
-            topBar.setVisibility(View.GONE);
-        }
-
-        mBack = findViewById(R.id.back);
-        mBack.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
     }
 
     @Override
