@@ -36,6 +36,7 @@ import org.linphone.R;
 import org.linphone.settings.LinphonePreferences;
 
 public class MenuAssistantActivity extends AssistantActivity {
+    String type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,18 +49,36 @@ public class MenuAssistantActivity extends AssistantActivity {
         setContentView(R.layout.assistant_menu);
 
         TextView scan_btn = findViewById(R.id.scan_btn);
+        TextView scan_btn2 = findViewById(R.id.scan_btn2);
         final Activity activity = this;
 
         scan_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        type = "2";
                         IntentIntegrator integrator = new IntentIntegrator(activity);
                         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                         integrator.setPrompt("Scan");
                         integrator.setCameraId(0);
                         integrator.setBeepEnabled(false);
                         integrator.setBarcodeImageEnabled(false);
+                        integrator.setOrientationLocked(false);
+                        integrator.initiateScan();
+                    }
+                });
+        scan_btn2.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view2) {
+                        type = "3";
+                        IntentIntegrator integrator = new IntentIntegrator(activity);
+                        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                        integrator.setPrompt("Scan");
+                        integrator.setCameraId(0);
+                        integrator.setBeepEnabled(false);
+                        integrator.setBarcodeImageEnabled(false);
+                        integrator.setOrientationLocked(false);
                         integrator.initiateScan();
                     }
                 });
@@ -112,30 +131,36 @@ public class MenuAssistantActivity extends AssistantActivity {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_SHORT).show();
 
             } else {
-                JSONObject info2;
+
                 String user = "";
                 String Domain = "";
                 String Password = "";
+                String guard = "";
                 // String ANDROID_ID = java.util.UUID.randomUUID().toString();
                 // System.out.println(ANDROID_ID);
                 try {
+                    JSONObject info2;
                     JSONObject info = new JSONObject(result.getContents());
                     info2 = info;
                     user = info2.getString("user");
                     Domain = info2.getString("domain");
                     Password = info2.getString("Pwd");
+                    guard = info2.getString("guard");
 
                     Bundle bundle = new Bundle();
                     // 儲存資料　第一個為參數key，第二個為Value
                     bundle.putString("user", user);
                     bundle.putString("Domain", Domain);
                     bundle.putString("Password", Password);
+                    bundle.putString("type", type);
+                    bundle.putString("guard", guard);
                     Intent intent = new Intent();
                     intent.setClass(MenuAssistantActivity.this, login.class);
-                    startActivity(intent);
+
                     intent.putExtras(bundle); // 記得put進去，不然資料不會帶過去哦
                     startActivity(intent);
                     MenuAssistantActivity.this.finish();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -154,19 +179,6 @@ public class MenuAssistantActivity extends AssistantActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!getResources()
-                .getBoolean(R.bool.forbid_to_leave_assistant_before_account_configuration)) {
-            mBack.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            LinphonePreferences.instance().firstLaunchSuccessful();
-                            goToLinphoneActivity();
-                        }
-                    });
-        } else {
-            mBack.setEnabled(false);
-        }
     }
 
     @Override
