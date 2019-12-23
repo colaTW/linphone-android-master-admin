@@ -19,6 +19,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
@@ -47,12 +49,16 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -88,15 +94,6 @@ import org.linphone.settings.LinphonePreferences;
 import org.linphone.utils.AndroidAudioManager;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.views.ContactAvatar;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-
-import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class CallActivity extends LinphoneGenericActivity
         implements CallStatusBarFragment.StatsClikedListener,
@@ -1151,6 +1148,7 @@ public class CallActivity extends LinphoneGenericActivity
 
         } else {
             String displayName = LinphoneUtils.getAddressDisplayName(call.getRemoteAddress());
+
             ContactAvatar.displayAvatar(displayName, mContactAvatar, true);
             mContactName.setText(displayName);
             ImageView Okey = findViewById(R.id.Openkey);

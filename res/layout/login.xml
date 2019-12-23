@@ -6,87 +6,101 @@
     android:background="@color/dark_grey_color">
 
     <AbsoluteLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/register">
 
 
-        >
+        <TableLayout
+            android:layout_width="372dp"
+            android:layout_height="321dp"
+            android:layout_x="38dp"
+            android:layout_y="143dp"
+            android:orientation="vertical"
+            android:shrinkColumns="0"
+            android:stretchColumns="1"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
 
-        <TextView
-            android:id="@+id/Num"
-            android:layout_width="214dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100px"
-            android:layout_x="165dp"
-            android:layout_y="261dp"
-            android:baselineAligned="false"
-            android:text="TextView" />
+            <TableRow>
 
-        <TextView
-            android:id="@+id/UUID"
-            android:layout_width="238dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100px"
-            android:layout_x="146dp"
-            android:layout_y="179dp"
-            android:baselineAligned="false"
-            android:text="UUID" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-        <DatePicker
-            android:id="@+id/dt"
-            android:layout_width="290dp"
-            android:layout_height="112dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_x="128dp"
-            android:layout_y="339dp"
+                    android:text="設備機碼:"
+                    tools:layout_editor_absoluteX="50dp"
+                    tools:layout_editor_absoluteY="183dp" />
 
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            android:endYear="2020"
-            android:spinnersShown="true"
-            android:startYear="2015" />
+                <TextView
+                    android:id="@+id/Num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:baselineAligned="false"
+                    android:text="TextView" />
+
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="40dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="36dp"
+                    android:layout_y="261dp"
+                    android:text="住戶分機號碼:"
+                    tools:layout_editor_absoluteX="50dp"
+                    tools:layout_editor_absoluteY="240dp" />
+
+                <TextView
+                    android:id="@+id/UUID"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:baselineAligned="false"
+                    android:text="UUID" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="50dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="38dp"
+                    android:layout_y="335dp"
+                    android:text="住戶出生日期"
+                    tools:layout_editor_absoluteX="36dp"
+                    tools:layout_editor_absoluteY="330dp" />
+
+                <DatePicker
+                    android:id="@+id/dt"
+                    android:layout_width="290dp"
+                    android:layout_height="112dp"
+                    android:layout_gravity="center_horizontal"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    android:endYear="2020"
+                    android:spinnersShown="true"
+                    android:startYear="1911" />
+            </TableRow>
+
+
+        </TableLayout>
 
         <ImageButton
             android:id="@+id/login"
-            android:layout_width="120dp"
-            android:layout_height="41dp"
-            android:layout_x="279dp"
-            android:layout_y="465dp"
-            android:background="@drawable/confirm"
-            tools:layout_editor_absoluteX="262dp"
-            tools:layout_editor_absoluteY="429dp" />
+            android:layout_width="137dp"
+            android:layout_height="54dp"
+            android:layout_x="257dp"
+            android:layout_y="474dp"
+            android:background="@drawable/confirm" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="41dp"
-            android:layout_y="179dp"
-            android:text="設備機碼"
-            tools:layout_editor_absoluteX="50dp"
-            tools:layout_editor_absoluteY="183dp" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="36dp"
-            android:layout_y="261dp"
-            android:text="住戶分機號碼"
-            tools:layout_editor_absoluteX="50dp"
-            tools:layout_editor_absoluteY="240dp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="38dp"
-            android:layout_y="335dp"
-            android:text="住戶出生日期"
-            tools:layout_editor_absoluteX="36dp"
-            tools:layout_editor_absoluteY="330dp" />
     </AbsoluteLayout>
 
 </FrameLayout>

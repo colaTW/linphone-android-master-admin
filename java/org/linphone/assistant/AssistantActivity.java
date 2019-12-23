@@ -23,10 +23,9 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.R;
@@ -51,10 +50,7 @@ public abstract class AssistantActivity extends LinphoneGenericActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        View statusBar = findViewById(R.id.status);
-
         if (mAbortCreation) {
             return;
         }
@@ -70,8 +66,6 @@ public abstract class AssistantActivity extends LinphoneGenericActivity
     @Override
     protected void onResume() {
         super.onResume();
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override

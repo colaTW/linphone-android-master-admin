@@ -6,12 +6,7 @@
     android:orientation="vertical"
     android:background="?attr/backgroundColor">
 
-    <fragment
-        android:id="@+id/status"
-        android:name="org.linphone.fragments.StatusBarFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        tools:layout="@layout/status_bar" />
+
 
 
     <include

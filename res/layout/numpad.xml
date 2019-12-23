@@ -95,7 +95,8 @@
             android:layout_width="40dp"
             android:background="@drawable/alarm"
             android:soundEffectsEnabled="true"
-            android:text="*" />
+            android:text="*"
+            android:visibility="invisible"/>
 
         <org.linphone.views.Digit
             android:id="@+id/Digit00"

@@ -155,9 +155,7 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
         }
 
         Address address = mCall.getRemoteAddress();
-
         LinphoneContact contact = ContactsManager.getInstance().findContactFromAddress(address);
-
         if (contact != null) {
             ContactAvatar.displayAvatar(contact, findViewById(R.id.avatar_layout), true);
             mName.setText(contact.getFullName());
@@ -165,9 +163,6 @@ public class CallIncomingActivity extends LinphoneGenericActivity {
             String displayName = LinphoneUtils.getAddressDisplayName(address);
             ContactAvatar.displayAvatar(displayName, findViewById(R.id.avatar_layout), true);
             mName.setText(displayName);
-            // if (displayName.equals("cola02")) {
-            //     finish();
-            //  }
         }
         mNumber.setText(address.asStringUriOnly());
 
