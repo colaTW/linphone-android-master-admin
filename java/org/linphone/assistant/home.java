@@ -14,12 +14,54 @@ public class home extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         ImageButton gocall = findViewById(R.id.B_call);
+        ImageButton gobull = findViewById(R.id.B_bull);
+        ImageButton gomess = findViewById(R.id.B_mess);
+        ImageButton gomail = findViewById(R.id.B_mail);
+        ImageButton gocctv = findViewById(R.id.B_cctv);
+
+        gocctv.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(home.this, cctv.class);
+                        startActivity(intent);
+                    }
+                });
+
         gocall.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
                         intent.setClass(home.this, DialerActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        gobull.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(home.this, bulletin.class);
+                        startActivity(intent);
+                    }
+                });
+        gomess.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(home.this, message.class);
+                        startActivity(intent);
+                    }
+                });
+        gomail.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(home.this, mailbox.class);
                         startActivity(intent);
                     }
                 });

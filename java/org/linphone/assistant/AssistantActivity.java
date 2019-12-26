@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
 import org.linphone.R;
