@@ -11,11 +11,12 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       android:src="@drawable/message_test" />
+        android:src="@drawable/messagepage" />
+
     <ImageButton
         android:id="@+id/B_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-       android:background="@drawable/back_home" />
+        android:layout_width="46dp"
+        android:layout_height="41dp"
+        android:background="@drawable/back_home"
+        android:text="Button" />
 </RelativeLayout>

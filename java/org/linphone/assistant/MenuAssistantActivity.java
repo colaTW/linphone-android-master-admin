@@ -30,7 +30,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import org.json.JSONException;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.linphone.R;
 import org.linphone.settings.LinphonePreferences;
@@ -71,7 +76,7 @@ public class MenuAssistantActivity extends AssistantActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view2) {
-                        type = "3";
+                        type = "1";
                         IntentIntegrator integrator = new IntentIntegrator(activity);
                         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                         integrator.setPrompt("Scan");
@@ -136,40 +141,55 @@ public class MenuAssistantActivity extends AssistantActivity {
                 String Domain = "";
                 String Password = "";
                 String guard = "";
+                String code = "";
+                String houseID;
                 // String ANDROID_ID = java.util.UUID.randomUUID().toString();
                 // System.out.println(ANDROID_ID);
                 try {
                     JSONObject info2;
                     JSONObject info = new JSONObject(result.getContents());
                     info2 = info;
-                    user = info2.getString("user");
+                    user = info2.getString("household_number");
                     Domain = info2.getString("domain");
-                    Password = info2.getString("Pwd");
                     guard = info2.getString("guard");
+                    houseID = info2.getString("household_id");
 
-                    Bundle bundle = new Bundle();
-                    // 儲存資料　第一個為參數key，第二個為Value
-                    bundle.putString("user", user);
-                    bundle.putString("Domain", Domain);
-                    bundle.putString("Password", Password);
-                    bundle.putString("type", type);
-                    bundle.putString("guard", guard);
-                    Intent intent = new Intent();
-                    intent.setClass(MenuAssistantActivity.this, login.class);
+                    HttpGet httpGet =
+                            new HttpGet(
+                                    "http://49.159.128.172:8888/api/v1/household/devices/captain/"
+                                            + houseID);
+                    HttpClient httpClient2 = new DefaultHttpClient();
+                    HttpResponse response2 = httpClient2.execute(httpGet);
+                    HttpEntity responseHttpEntity = response2.getEntity();
+                    code = EntityUtils.toString(response2.getEntity());
+                    JSONObject temp1 = new JSONObject(code);
+                    JSONObject data1 = temp1.getJSONObject("data");
+                    String check = data1.getString("code");
+                    if (type == "2" && check == "1") {
+                        Toast.makeText(
+                                        MenuAssistantActivity.this,
+                                        "戶長機已註冊，請選住戶機註冊",
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        Bundle bundle = new Bundle();
+                        // 儲存資料　第一個為參數key，第二個為Value
+                        bundle.putString("user", user);
+                        bundle.putString("Domain", Domain);
+                        bundle.putString("Password", Password);
+                        bundle.putString("type", type);
+                        bundle.putString("guard", guard);
+                        Intent intent = new Intent();
+                        intent.setClass(MenuAssistantActivity.this, login.class);
+                        intent.putExtras(bundle); // 記得put進去，不然資料不會帶過去哦
+                        startActivity(intent);
+                        MenuAssistantActivity.this.finish();
+                    }
 
-                    intent.putExtras(bundle); // 記得put進去，不然資料不會帶過去哦
-                    startActivity(intent);
-                    MenuAssistantActivity.this.finish();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Toast.makeText(MenuAssistantActivity.this, e.toString(), Toast.LENGTH_SHORT)
+                            .show();
                 }
-
-                // mAccountCreator.setUsername(user);
-                //  mAccountCreator.setDomain(Domain);
-                // mAccountCreator.setPassword(Password);
-                // mAccountCreator.setTransport(TransportType.Udp);
-                // createProxyConfigAndLeaveAssistant();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

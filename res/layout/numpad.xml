@@ -93,10 +93,10 @@
             android:id="@+id/DigitStar"
             style="@style/DialerDigit"
             android:layout_width="40dp"
-            android:background="@drawable/alarm"
+            android:background="@drawable/mi"
             android:soundEffectsEnabled="true"
             android:text="*"
-            android:visibility="invisible"/>
+           />
 
         <org.linphone.views.Digit
             android:id="@+id/Digit00"

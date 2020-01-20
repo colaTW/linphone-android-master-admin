@@ -15,57 +15,66 @@
         android:visibility="gone"/>
 
 
-
-    <AbsoluteLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/regist"
+        android:background="@drawable/register3"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/generic_connection"
             style="@style/button_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="20dp"
+            android:background="@drawable/assistant_button"
+            android:contentDescription="@string/assistant_login_generic"
             android:gravity="center"
             android:padding="10dp"
-            android:layout_margin="20dp"
-            android:layout_width="wrap_content"
-            android:layout_gravity="fill"
-            android:layout_columnWeight="1"
-            android:layout_height="0dp"
-            android:background="@drawable/assistant_button"
+            android:text="@string/assistant_login_generic"
             android:textColor="@drawable/assistant_button_text_color"
-            android:contentDescription="@string/assistant_login_generic"
-            android:text="@string/assistant_login_generic" />
+            android:visibility="gone"/>
+
+        <ImageView
+            style="@style/button_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_margin="50dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/welcomebar"
+            android:cropToPadding="true" />
+
         <TextView
             android:id="@+id/scan_btn"
             style="@style/button_font"
-            android:layout_width="191dp"
-            android:layout_height="71dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_gravity="fill"
-            android:layout_margin="20dp"
-            android:layout_x="27dp"
-            android:layout_y="279dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
             android:adjustViewBounds="true"
             android:background="@drawable/sync1"
-            android:cropToPadding="true"
-            />
+            android:cropToPadding="true" />
 
         <TextView
             android:id="@+id/scan_btn2"
             style="@style/button_font"
-            android:layout_width="191dp"
-            android:layout_height="71dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="0"
-            android:layout_gravity="fill"
+            android:layout_gravity="right|center_vertical"
             android:layout_margin="20dp"
-            android:layout_x="197dp"
-            android:layout_y="459dp"
             android:adjustViewBounds="true"
             android:background="@drawable/sync2"
-            android:cropToPadding="true" />
+            android:cropToPadding="true"
+            />
 
-    </AbsoluteLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

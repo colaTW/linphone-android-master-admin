@@ -187,6 +187,7 @@
 
         <!-- Assistant activities -->
 
+
         <activity
             android:name=".assistant.MenuAssistantActivity"
             android:screenOrientation="portrait" />
@@ -208,8 +209,16 @@
                 <action android:name="org.linphone.intent.action.cctv" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="org.linphone.intent.action.house_qrcode" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
 
             </activity>
+        <activity
+            android:name=".assistant.sercu"/>
+        <activity
+            android:name=".assistant.house_qrcode"/>
         <activity
             android:name=".assistant.login"/>
         <activity

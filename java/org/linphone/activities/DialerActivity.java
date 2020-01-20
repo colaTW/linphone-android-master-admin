@@ -50,6 +50,7 @@ import org.linphone.views.CallButton;
 import org.linphone.views.Digit;
 import org.linphone.views.EraseButton;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -58,7 +59,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
 
     private AddressText mAddress;
     private CallButton mStartCall, mAddCall, mTransferCall;
-    private ImageView mAddContact, mBackToCall, gohome;
+    private ImageView mAddContact, mBackToCall, gohome, alarm;
 
     private boolean mIsTransfer;
     private CoreListenerStub mListener;
@@ -151,7 +152,6 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         if (core != null) {
             core.removeListener(mListener);
         }
-
         super.onPause();
     }
 
@@ -163,7 +163,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         EraseButton erase = view.findViewById(R.id.erase);
         erase.setAddressWidget(mAddress);
 
-        mStartCall = view.findViewById(R.id.start_call);
+        mStartCall = view.findViewById(R.id.start_call2);
         mStartCall.setAddressWidget(mAddress);
 
         mAddCall = view.findViewById(R.id.add_call);
@@ -175,6 +175,31 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
 
         mAddContact = view.findViewById(R.id.add_contact);
         mAddContact.setEnabled(false);
+
+        alarm = findViewById(R.id.alarm);
+        alarm.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String Guard = "";
+                        try {
+                            FileInputStream fin = openFileInput("info.txt");
+                            byte[] buffer = new byte[100];
+                            int byteCount = fin.read(buffer);
+                            String outinfo = "";
+                            outinfo = new String(buffer, 0, byteCount, "utf-8");
+                            String out[] = outinfo.split("\\,");
+                            Guard = out[0];
+                            fin.close();
+                        } catch (Exception e) {
+
+                        }
+                        mAddress.setText(Guard);
+                        mStartCall.performClick();
+                        mAddress.setText("");
+                    }
+                });
+
         mAddContact.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -268,18 +293,18 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         }
 
         boolean atLeastOneCall = core.getCallsNb() > 0;
-        mStartCall.setVisibility(atLeastOneCall ? View.GONE : View.VISIBLE);
+        // mStartCall.setVisibility(atLeastOneCall ? View.GONE : View.VISIBLE);
         mAddContact.setVisibility(atLeastOneCall ? View.GONE : View.VISIBLE);
-        if (!atLeastOneCall) {
-            if (core.getVideoActivationPolicy().getAutomaticallyInitiate()) {
-                mStartCall.setImageResource(R.drawable.call_video_start);
-            } else {
-                mStartCall.setImageResource(R.drawable.call_audio_start);
-            }
-        }
+        // if (!atLeastOneCall) {
+        //   if (core.getVideoActivationPolicy().getAutomaticallyInitiate()) {
+        //      mStartCall.setImageResource(R.drawable.call_video_start);
+        // } else {
+        //    mStartCall.setImageResource(R.drawable.call_audio_start);
+        // }
+        // }
 
         mBackToCall.setVisibility(atLeastOneCall ? View.VISIBLE : View.GONE);
-        mAddCall.setVisibility(atLeastOneCall && !mIsTransfer ? View.VISIBLE : View.GONE);
+        mAddCall.setVisibility(atLeastOneCall && !mIsTransfer ? View.GONE : View.GONE);
         mTransferCall.setVisibility(atLeastOneCall && mIsTransfer ? View.VISIBLE : View.GONE);
     }
 

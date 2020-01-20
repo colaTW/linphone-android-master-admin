@@ -5,25 +5,27 @@
     android:layout_height="match_parent"
     android:background="@color/dark_grey_color">
 
-    <AbsoluteLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/register">
+        android:background="@drawable/register3">
 
 
         <TableLayout
-            android:layout_width="372dp"
-            android:layout_height="321dp"
-            android:layout_x="38dp"
-            android:layout_y="143dp"
+            android:id="@+id/table"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:background="@drawable/register1"
+            android:layout_marginTop="100dp"
+
             android:orientation="vertical"
             android:shrinkColumns="0"
             android:stretchColumns="1"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <TableRow>
+            <TableRow android:layout_marginTop="40dp">
 
                 <TextView
                     android:id="@+id/textView"
@@ -66,22 +68,20 @@
                     android:text="UUID" />
             </TableRow>
 
-            <TableRow android:layout_marginTop="50dp">
+            <TableRow
+                android:layout_width="332dp"
+                android:layout_marginTop="50dp">
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_x="38dp"
-                    android:layout_y="335dp"
-                    android:text="住戶出生日期"
-                    tools:layout_editor_absoluteX="36dp"
-                    tools:layout_editor_absoluteY="330dp" />
+                    android:text="住戶出生日期" />
 
                 <DatePicker
                     android:id="@+id/dt"
                     android:layout_width="290dp"
-                    android:layout_height="112dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:calendarViewShown="false"
                     android:datePickerMode="spinner"
@@ -91,16 +91,21 @@
             </TableRow>
 
 
+
+
+
         </TableLayout>
+
 
         <ImageButton
             android:id="@+id/login"
             android:layout_width="137dp"
             android:layout_height="54dp"
-            android:layout_x="257dp"
-            android:layout_y="474dp"
-            android:background="@drawable/confirm" />
+            android:background="@drawable/confirm"
+            android:layout_below="@id/table"
+            android:layout_alignParentRight="true"/>
 
-    </AbsoluteLayout>
+    </RelativeLayout>
+
 
 </FrameLayout>

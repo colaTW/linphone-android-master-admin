@@ -18,6 +18,18 @@ public class home extends Activity {
         ImageButton gomess = findViewById(R.id.B_mess);
         ImageButton gomail = findViewById(R.id.B_mail);
         ImageButton gocctv = findViewById(R.id.B_cctv);
+        ImageButton golist = findViewById(R.id.list);
+        ImageButton gosercu = findViewById(R.id.B_security);
+
+        golist.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(home.this, house_qrcode.class);
+                        startActivity(intent);
+                    }
+                });
 
         gocctv.setOnClickListener(
                 new View.OnClickListener() {
@@ -62,6 +74,15 @@ public class home extends Activity {
                     public void onClick(View view) {
                         Intent intent = new Intent();
                         intent.setClass(home.this, mailbox.class);
+                        startActivity(intent);
+                    }
+                });
+        gosercu.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(home.this, sercu.class);
                         startActivity(intent);
                     }
                 });

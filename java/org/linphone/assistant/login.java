@@ -1,7 +1,5 @@
 package org.linphone.assistant;
 
-import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -10,13 +8,7 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -30,6 +22,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.linphone.R;
 import org.linphone.core.TransportType;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class login extends AssistantActivity {
     @Override
@@ -70,6 +72,7 @@ public class login extends AssistantActivity {
                             jo.put("uuid", android_id.toString());
                             jo.put("password", birth.toString());
                             jo.put("household_number", user);
+                            jo.put("device_type", type);
                             HttpClient httpClient = new DefaultHttpClient();
                             AbstractHttpEntity entity =
                                     new ByteArrayEntity(jo.toString().getBytes("UTF8"));
@@ -111,15 +114,21 @@ public class login extends AssistantActivity {
                             //  BufferedReader reader = new BufferedReader(new
                             // InputStreamReader(response.getEntity().getContent(), "UTF-8"));
                         } catch (MalformedURLException e) {
-                            e.printStackTrace();
+                            Toast.makeText(login.this, "1" + e.toString(), Toast.LENGTH_SHORT)
+                                    .show();
+
                         } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
+                            Toast.makeText(login.this, "2" + e.toString(), Toast.LENGTH_SHORT)
+                                    .show();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Toast.makeText(login.this, "3" + e.toString(), Toast.LENGTH_SHORT)
+                                    .show();
                         } catch (URISyntaxException e) {
-                            e.printStackTrace();
+                            Toast.makeText(login.this, "4" + e.toString(), Toast.LENGTH_SHORT)
+                                    .show();
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Toast.makeText(login.this, "5" + e.toString(), Toast.LENGTH_SHORT)
+                                    .show();
                         }
                     }
                 });

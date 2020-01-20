@@ -143,7 +143,7 @@ public class CallActivity extends LinphoneGenericActivity
     private CoreListener mListener;
     private AndroidAudioManager mAudioManager;
     private VideoZoomHelper mZoomHelper;
-    String Guard, pass = "";
+    public String Guard, pass = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -792,7 +792,7 @@ public class CallActivity extends LinphoneGenericActivity
 
     private void toggleExtrasButtons() {
         mExtrasButtons.setSelected(!mExtrasButtons.isSelected());
-        mAddCall.setVisibility(mExtrasButtons.isSelected() ? View.VISIBLE : View.GONE);
+        mAddCall.setVisibility(mExtrasButtons.isSelected() ? View.GONE : View.GONE);
         mTransferCall.setVisibility(mExtrasButtons.isSelected() ? View.VISIBLE : View.GONE);
         mRecordCall.setVisibility(mExtrasButtons.isSelected() ? View.VISIBLE : View.GONE);
         mConference.setVisibility(mExtrasButtons.isSelected() ? View.VISIBLE : View.GONE);
@@ -1156,9 +1156,11 @@ public class CallActivity extends LinphoneGenericActivity
             // 守衛辨識
 
             if (displayName.equals(Guard)) {
-                Okey.setVisibility(View.VISIBLE);
+                Okey.setBackgroundResource(R.drawable.unlock);
+                Okey.setEnabled(true);
             } else {
-                Okey.setVisibility(View.INVISIBLE);
+                Okey.setBackgroundResource(R.drawable.unlock_1);
+                Okey.setEnabled(false);
             }
         }
     }
