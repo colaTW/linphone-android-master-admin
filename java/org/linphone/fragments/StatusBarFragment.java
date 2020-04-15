@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
+import org.linphone.core.AuthInfo;
 import org.linphone.core.Content;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
@@ -44,6 +45,7 @@ public class StatusBarFragment extends Fragment {
     private ImageView mVoicemail;
     private CoreListenerStub mListener;
     private MenuClikedListener mMenuListener;
+    private AuthInfo mAuthInfo;
 
     @Override
     public View onCreateView(

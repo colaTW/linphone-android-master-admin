@@ -8,21 +8,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import org.linphone.R;
 
-public class sercu extends Activity {
+public class sercu_reset extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sercu_page);
+        setContentView(R.layout.sercu_reset);
         ImageButton home = findViewById(R.id.B_home);
         ImageView setting = findViewById(R.id.setting);
-        ImageView reset = findViewById(R.id.reset);
+        ImageView status = findViewById(R.id.status);
 
         home.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(sercu.this, home.class);
+                        intent.setClass(sercu_reset.this, home.class);
                         startActivity(intent);
                     }
                 });
@@ -31,16 +31,16 @@ public class sercu extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(sercu.this, sercu_setting.class);
+                        intent.setClass(sercu_reset.this, sercu_setting.class);
                         startActivity(intent);
                     }
                 });
-        reset.setOnClickListener(
+        status.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(sercu.this, sercu_reset.class);
+                        intent.setClass(sercu_reset.this, sercu.class);
                         startActivity(intent);
                     }
                 });

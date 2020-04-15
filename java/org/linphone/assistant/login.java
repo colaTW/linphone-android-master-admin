@@ -1,5 +1,7 @@
 package org.linphone.assistant;
 
+import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -8,7 +10,13 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -22,16 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.linphone.R;
 import org.linphone.core.TransportType;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-
-import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class login extends AssistantActivity {
     @Override
@@ -100,7 +98,9 @@ public class login extends AssistantActivity {
                                 String test = guard + ",";
                                 fos.write(test.getBytes());
                                 String birthday = birth.toString();
+                                birthday = birthday + ",";
                                 fos.write(birthday.getBytes());
+                                fos.write(user.getBytes());
                                 fos.close();
                                 FileInputStream fin = openFileInput("info.txt");
                                 byte[] buffer = new byte[100];

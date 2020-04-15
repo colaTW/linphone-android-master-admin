@@ -156,6 +156,7 @@ public class CallActivity extends LinphoneGenericActivity
         Compatibility.setShowWhenLocked(this, true);
 
         setContentView(R.layout.call);
+
         try {
             FileInputStream fin = openFileInput("info.txt");
             byte[] buffer = new byte[100];
@@ -1153,7 +1154,7 @@ public class CallActivity extends LinphoneGenericActivity
             mContactName.setText(displayName);
             ImageView Okey = findViewById(R.id.Openkey);
 
-            // 守衛辨識
+            // 來電是否大門辨識 是=>可開門圖 否=>灰色且不能按
 
             if (displayName.equals(Guard)) {
                 Okey.setBackgroundResource(R.drawable.unlock);

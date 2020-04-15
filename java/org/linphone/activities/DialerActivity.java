@@ -20,20 +20,32 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.Manifest;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
-
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.Socket;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import org.json.JSONObject;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.assistant.home;
@@ -50,10 +62,6 @@ import org.linphone.views.CallButton;
 import org.linphone.views.Digit;
 import org.linphone.views.EraseButton;
 
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-
 public class DialerActivity extends MainActivity implements AddressText.AddressChangedListener {
     private static final String ACTION_CALL_LINPHONE = "org.linphone.intent.action.CallLaunched";
 
@@ -64,14 +72,99 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
     private boolean mIsTransfer;
     private CoreListenerStub mListener;
     private boolean mInterfaceLoaded;
+    private NotificationManagerCompat notificationManager;
+    private Socket mSocket;
+    private String data2;
+    private String tiltle;
+    private String content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        notificationManager = NotificationManagerCompat.from(this);
+
+        // txt_uuid = (TextView) findViewById(R.id.txt_uuid);
+        //  txt = (TextView) findViewById(R.id.txt_hello);
+        RatKiller app = (RatKiller) getApplication();
+        mSocket = app.getmSocket();
+        mSocket.connect();
+        System.out.println("here" + mSocket.connect());
+        Toast.makeText(DialerActivity.this, "Connected!!", Toast.LENGTH_SHORT).show();
+        // mSocket.emit("login", "53326483");
+        String UUID = "";
+        try {
+            FileInputStream fin = openFileInput("info.txt");
+            byte[] buffer = new byte[100];
+            int byteCount = fin.read(buffer);
+            String outinfo = "";
+            outinfo = new String(buffer, 0, byteCount, "utf-8");
+            String out[] = outinfo.split("\\,");
+            UUID = out[2];
+            fin.close();
+        } catch (Exception e) {
+        }
+        mSocket.emit("login", UUID);
+        //  txt_uuid.setText("Login UUID:\n"+UUID);
+        Toast.makeText(DialerActivity.this, "Login ID:" + UUID, Toast.LENGTH_SHORT).show();
+        mSocket.on(
+                "new_msg2",
+                new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+
+                        // txt.setText("接收資料");
+                        android.util.Log.e("123", "data:" + args[0]);
+                        String data = args[0].toString();
+                        // String data_ = "{'title':'公告1','content':'訊息測試'}";
+                        final JSONObject jsonObj;
+
+                        try {
+                            jsonObj = new JSONObject(data);
+                            tiltle = jsonObj.getString("title");
+                            content = jsonObj.getString("content");
+
+                        } catch (Exception e) {
+                        }
+
+                        data2 = args[0].toString();
+                        runOnUiThread(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Toast.makeText(MainActivity.this, data2,
+                                        // Toast.LENGTH_SHORT).show();
+                                        // whatever your UI logic
+                                        notificaioncall(tiltle, content);
+                                        Toast.makeText(
+                                                        DialerActivity.this,
+                                                        "新消息",
+                                                        Toast.LENGTH_SHORT)
+                                                .show();
+
+                                        //                        Notification notification = new
+                                        // NotificationCompat.Builder(this, CHANNEL_1_ID )
+                                        //
+                                        // .setSmallIcon(R.drawable.ic_one)
+                                        //                                .setContentTitle("test")
+                                        //                                .setContentText(data2)
+                                        //
+                                        // .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                        //
+                                        // .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                        //                                .build();
+                                        //
+                                        // notificationManager.notify(1,notification);
+
+                                    }
+                                });
+                    }
+                });
 
         if (mAbortCreation) {
             return;
         }
+        // testpassword test = new testpassword();
+        // test.change();
 
         mInterfaceLoaded = false;
         // Uses the fragment container layout to inflate the dialer view instead of using a fragment
@@ -366,5 +459,37 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
             }
         }
         return views;
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mSocket.off("disconnect");
+    }
+
+    public String getIdentity() {
+        SharedPreferences preference =
+                PreferenceManager.getDefaultSharedPreferences(DialerActivity.this);
+        String identity = preference.getString("identity", null);
+        if (identity == null) {
+            identity = java.util.UUID.randomUUID().toString();
+            preference.edit().putString("identity", identity).commit();
+        }
+        return identity;
+    }
+
+    private void notificaioncall(String ContentTitle, String ContentText) {
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_one)
+                        .setLargeIcon(
+                                BitmapFactory.decodeResource(getResources(), R.drawable.ic_two))
+                        .setContentTitle(ContentTitle)
+                        .setOngoing(false)
+                        .setAutoCancel(true)
+                        .setContentText(ContentText);
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(55, notificationBuilder.build());
     }
 }

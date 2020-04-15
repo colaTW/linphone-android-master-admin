@@ -1,7 +1,5 @@
 package org.linphone.assistant;
 
-import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 import android.widget.VideoView;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -31,6 +24,15 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.linphone.R;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class house_qrcode extends Activity {
     private VideoView videoView;
@@ -82,7 +84,9 @@ public class house_qrcode extends Activity {
             JSONObject data = temp1.getJSONObject("data");
             String h_id = data.getString("household_id");
             String h_type = data.getString("household_type");
-            if (h_type == "2") {
+            if (h_type.equals("2")) {
+                Toast.makeText(house_qrcode.this, h_type, Toast.LENGTH_SHORT).show();
+
                 HttpGet httpGet =
                         new HttpGet("http://49.159.128.172:8888/v1/households/qrcode/" + h_id);
                 HttpClient httpClient2 = new DefaultHttpClient();
@@ -95,7 +99,8 @@ public class house_qrcode extends Activity {
                 // webView.loadData(data, "text/html", "GBK");
                 webView.loadDataWithBaseURL(null, qrcode, "text/html", "utf-8", null);
             } else {
-                Toast.makeText(house_qrcode.this, "非戶長機無法產生QRCODE", Toast.LENGTH_SHORT).show();
+                Toast.makeText(house_qrcode.this, "非戶長機無法產生QRCODE" + temp1, Toast.LENGTH_LONG)
+                        .show();
                 Intent intent = new Intent();
                 intent.setClass(house_qrcode.this, home.class);
                 startActivity(intent);

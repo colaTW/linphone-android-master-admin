@@ -94,7 +94,7 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
 
     private ChatMessageViewHolder(View view) {
         super(view);
-        eventLayout = view.findViewById(R.id.event);
+        eventLayout = view.findViewById(R.id.R_gas);
         eventMessage = view.findViewById(R.id.event_text);
 
         securityEventLayout = view.findViewById(R.id.security_event);

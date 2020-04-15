@@ -86,6 +86,7 @@ class ApiTwentyEightPlus {
                 .setStyle(style)
                 .addAction(ApiTwentyFourPlus.getReplyMessageAction(context, notif))
                 .addAction(ApiTwentyFourPlus.getMarkMessageAsReadAction(context, notif))
+                .setOngoing(false)
                 .build();
     }
 

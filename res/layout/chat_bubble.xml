@@ -22,7 +22,7 @@
         android:contentDescription="@string/content_description_delete" />
 
     <LinearLayout
-        android:id="@+id/event"
+        android:id="@+id/R_gas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"

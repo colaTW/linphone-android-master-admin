@@ -88,6 +88,7 @@ class ApiTwentyFourPlus {
                 .setStyle(style)
                 .addAction(getReplyMessageAction(context, notif))
                 .addAction(getMarkMessageAsReadAction(context, notif))
+                .setOngoing(false)
                 .build();
     }
 
@@ -115,6 +116,7 @@ class ApiTwentyFourPlus {
                         .setWhen(System.currentTimeMillis())
                         .setShowWhen(true)
                         .setColor(context.getColor(R.color.notification_led_color))
+                        .setOngoing(false)
                         .addAction(getCallDeclineAction(context, callId));
 
         if (showAnswerAction) {

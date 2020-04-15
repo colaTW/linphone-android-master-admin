@@ -70,6 +70,7 @@ class ApiTwentyOnePlus {
                 .setNumber(msgCount)
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(true)
+                .setOngoing(false)
                 .build();
     }
 
@@ -96,6 +97,7 @@ class ApiTwentyOnePlus {
                         context.getResources().getInteger(R.integer.notification_ms_on),
                         context.getResources().getInteger(R.integer.notification_ms_off))
                 .setShowWhen(true)
+                .setOngoing(false)
                 .build();
     }
 
@@ -128,6 +130,7 @@ class ApiTwentyOnePlus {
                             .setWhen(System.currentTimeMillis())
                             .setPriority(priority)
                             .setShowWhen(true)
+                            .setOngoing(false)
                             .build();
         } else {
             notif =
@@ -146,6 +149,7 @@ class ApiTwentyOnePlus {
                             .setPriority(priority)
                             .setWhen(System.currentTimeMillis())
                             .setShowWhen(true)
+                            .setOngoing(false)
                             .build();
         }
 
@@ -171,6 +175,7 @@ class ApiTwentyOnePlus {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(true)
+                .setOngoing(false)
                 .build();
     }
 
@@ -193,6 +198,7 @@ class ApiTwentyOnePlus {
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setShowWhen(true)
+                .setOngoing(false)
                 .build();
     }
 

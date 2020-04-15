@@ -137,6 +137,7 @@ class ApiTwentySixPlus {
                 .setStyle(style)
                 .addAction(ApiTwentyFourPlus.getReplyMessageAction(context, notif))
                 .addAction(ApiTwentyFourPlus.getMarkMessageAsReadAction(context, notif))
+                .setOngoing(false)
                 .build();
     }
 
@@ -166,6 +167,7 @@ class ApiTwentySixPlus {
                         .setWhen(System.currentTimeMillis())
                         .setShowWhen(true)
                         .setColor(context.getColor(R.color.notification_led_color))
+                        .setOngoing(false)
                         .addAction(ApiTwentyFourPlus.getCallDeclineAction(context, callId));
 
         if (showAnswerAction) {
@@ -198,6 +200,7 @@ class ApiTwentySixPlus {
                     .setWhen(System.currentTimeMillis())
                     .setShowWhen(true)
                     .setColor(context.getColor(R.color.notification_led_color))
+                    .setOngoing(false)
                     .build();
         } else {
             return new Notification.Builder(
@@ -212,6 +215,7 @@ class ApiTwentySixPlus {
                     .setWhen(System.currentTimeMillis())
                     .setShowWhen(true)
                     .setColor(context.getColor(R.color.notification_led_color))
+                    .setOngoing(false)
                     .build();
         }
     }
@@ -232,6 +236,7 @@ class ApiTwentySixPlus {
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(true)
                 .setColor(context.getColor(R.color.notification_led_color))
+                .setOngoing(false)
                 .build();
     }
 
@@ -252,6 +257,7 @@ class ApiTwentySixPlus {
                 .setShowWhen(true)
                 .setColorized(true)
                 .setColor(context.getColor(R.color.notification_led_color))
+                .setOngoing(false)
                 .build();
     }
 

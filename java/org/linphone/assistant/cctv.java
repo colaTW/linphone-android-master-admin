@@ -6,8 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 import org.linphone.R;
@@ -23,6 +25,10 @@ public class cctv extends Activity implements View.OnTouchListener {
         setContentView(R.layout.cctv_page);
         videoView = (VideoView) findViewById(R.id.videoView);
         ImageButton home = findViewById(R.id.B_home);
+        Button B1 = findViewById(R.id.B1);
+        Button B2 = findViewById(R.id.B2);
+        Button B3 = findViewById(R.id.B3);
+        final TextView place = findViewById(R.id.textView4);
         home.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -38,6 +44,36 @@ public class cctv extends Activity implements View.OnTouchListener {
         videoView.setMediaController(mediaController);
         videoView.start();
         videoView.setOnTouchListener(this);
+        B1.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        videoView.pause();
+                        place.setText("大廳");
+                        videoView.setVideoURI(Uri.parse(uri));
+                        videoView.start();
+                    }
+                });
+        B2.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        videoView.pause();
+                        place.setText("車庫");
+                        videoView.setVideoURI(Uri.parse(uri));
+                        videoView.start();
+                    }
+                });
+        B3.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        videoView.pause();
+                        place.setText("庭院");
+                        videoView.setVideoURI(Uri.parse(uri));
+                        videoView.start();
+                    }
+                });
     }
 
     @Override

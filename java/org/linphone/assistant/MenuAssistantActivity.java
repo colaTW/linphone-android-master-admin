@@ -165,6 +165,7 @@ public class MenuAssistantActivity extends AssistantActivity {
                     JSONObject temp1 = new JSONObject(code);
                     JSONObject data1 = temp1.getJSONObject("data");
                     String check = data1.getString("code");
+
                     if (type == "2" && check == "1") {
                         Toast.makeText(
                                         MenuAssistantActivity.this,

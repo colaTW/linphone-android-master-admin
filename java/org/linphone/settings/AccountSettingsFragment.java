@@ -51,7 +51,7 @@ public class AccountSettingsFragment extends SettingsFragment {
     private View mRootView;
     private int mAccountIndex;
     private ProxyConfig mProxyConfig;
-    private AuthInfo mAuthInfo;
+    public AuthInfo mAuthInfo;
     private boolean mIsNewlyCreatedAccount;
 
     private TextSetting mUsername,
@@ -596,7 +596,7 @@ public class AccountSettingsFragment extends SettingsFragment {
                 });
     }
 
-    private void updateValues() {
+    public void updateValues() {
         Core core = LinphoneManager.getCore();
         if (core == null) return;
 

@@ -22,10 +22,38 @@
         android:id="@+id/B_home"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/back_home"
+    android:background="@drawable/backhome"
     android:text="Button" />
 
+
+
 </LinearLayout>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/B1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大廳" />
+        <Button
+            android:id="@+id/B2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="車庫" />
+        <Button
+            android:id="@+id/B3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="庭院" />
+    </TableRow>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="大廳" />
+
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
