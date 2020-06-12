@@ -27,18 +27,31 @@
 
 
     </LinearLayout>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <TableLayout
-        android:layout_width="match_parent"
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:text="住戶意見:"
+            />
+
+        <EditText
+            android:id="@+id/detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:baselineAligned="false"
+            android:minLines="8"
+            android:background="@drawable/paddline"/>
+
+    <Button
+        android:id="@+id/R_submit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:shrinkColumns="0"
-        android:stretchColumns="1"
-        android:id="@+id/showlist">
-    </TableLayout>
-    </ScrollView>
+        android:layout_gravity="right|center_vertical"
+        android:text="確認" />
+
 
 </LinearLayout>

@@ -94,10 +94,11 @@
             android:baselineAligned="false"></TextView>
 
         <ImageView
+            android:id="@+id/upload"
             android:layout_width="62dp"
             android:layout_height="match_parent"
-            android:src="@drawable/mes13"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:src="@drawable/mes13" />
 
 
     </TableRow>

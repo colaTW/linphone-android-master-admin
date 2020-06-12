@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import androidx.viewpager.widget.ViewPager;
 import java.util.ArrayList;
@@ -21,8 +20,9 @@ public class message extends Activity {
         ImageButton home = findViewById(R.id.B_home);
         ImageButton page1 = findViewById(R.id.messagepage1);
         ImageButton page2 = findViewById(R.id.messagepage2);
-        Button page3 = findViewById(R.id.messagepage3);
-        Button page4 = findViewById(R.id.messagepage4);
+        ImageButton page3 = findViewById(R.id.messagepage3);
+        ImageButton page4 = findViewById(R.id.messagepage4);
+        ImageButton page5 = findViewById(R.id.messagepage5);
 
         page1.setOnClickListener(
                 new View.OnClickListener() {
@@ -57,6 +57,15 @@ public class message extends Activity {
                     public void onClick(View view) {
                         Intent intent = new Intent();
                         intent.setClass(message.this, messagepage4.class);
+                        startActivity(intent);
+                    }
+                });
+        page5.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(message.this, messagepage5.class);
                         startActivity(intent);
                     }
                 });

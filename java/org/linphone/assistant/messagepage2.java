@@ -1,5 +1,7 @@
 package org.linphone.assistant;
 
+import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.viewpager.widget.ViewPager;
-
+import java.io.FileInputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -24,20 +28,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.linphone.R;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class messagepage2 extends Activity {
     ViewPager pager;
@@ -51,9 +43,7 @@ public class messagepage2 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_page2);
         ImageButton home = findViewById(R.id.B_home);
-        Button M_submit = findViewById(R.id.R_submit);
         Button Gas_submit = findViewById(R.id.Gas_submit);
-        final EditText event = findViewById(R.id.detail);
         final EditText R_gas = findViewById(R.id.R_gas);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy =
@@ -106,58 +96,7 @@ public class messagepage2 extends Activity {
                         startActivity(intent);
                     }
                 });
-        M_submit.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        try {
-                            URL url2 = new URL("http://49.159.128.172:8888/api/v1/question");
-                            JSONObject jo2 = new JSONObject();
-                            jo2.put("household_id", house_id);
-                            jo2.put(
-                                    "household_device_uuid",
-                                    Settings.Secure.getString(
-                                            getContext().getContentResolver(),
-                                            Settings.Secure.ANDROID_ID));
-                            jo2.put("question_content", event.getText().toString());
-                            jo2.put("main_image_file", "");
-                            HttpClient httpClient2 = new DefaultHttpClient();
-                            AbstractHttpEntity entity2 =
-                                    new ByteArrayEntity(jo2.toString().getBytes("UTF8"));
-                            entity2.setContentType(
-                                    new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-                            HttpPost httpPost2 = new HttpPost(url2.toURI());
-                            httpPost2.setHeader("Authorization", "Bearer " + token);
-                            httpPost2.setEntity(entity2);
-                            // Prepare JSON to send by setting the entity
-                            HttpResponse response2 = httpClient2.execute(httpPost2);
-                            String json_string2 = EntityUtils.toString(response2.getEntity());
-                            JSONObject temp2 = new JSONObject(json_string2);
-                            String data2 = temp2.getString("errors");
 
-                            if (data2.toString().equals("")) {
-                                Toast.makeText(messagepage2.this, "成功", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(
-                                                messagepage2.this,
-                                                data2.toString(),
-                                                Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
         Gas_submit.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

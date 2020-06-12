@@ -51,29 +51,5 @@
         android:layout_gravity="right|center_vertical"
         android:text="確認" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-
-            android:text="住戶意見:"
-            />
-
-        <EditText
-            android:id="@+id/detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:baselineAligned="false"
-            android:minLines="8"
-            android:background="@drawable/paddline"/>
-
-    <Button
-        android:id="@+id/R_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        android:text="確認" />
-
 
 </LinearLayout>

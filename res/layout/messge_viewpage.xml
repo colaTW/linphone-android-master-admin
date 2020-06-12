@@ -28,6 +28,7 @@
 
 
     </LinearLayout>
+
     <ImageButton
         android:id="@+id/messagepage1"
         style="@style/button_font"
@@ -35,10 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_gravity="fill"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/mes6"
+        android:background="@drawable/b1"
         android:cropToPadding="true" />
 
     <ImageButton
@@ -50,20 +51,46 @@
         android:layout_gravity="right|center_vertical"
         android:layout_margin="20dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/mes1"
+        android:background="@drawable/b2"
+        android:cropToPadding="true"
+        />
+    <ImageButton
+        android:id="@+id/messagepage5"
+        style="@style/button_font"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_gravity="right|center_vertical"
+        android:layout_margin="20dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/b3"
         android:cropToPadding="true"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/messagepage3"
-        android:layout_width="match_parent"
+        style="@style/button_font"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我的意見" />
+        android:layout_row="0"
+        android:layout_gravity="right|center_vertical"
+        android:layout_margin="20dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/b4"
+        android:cropToPadding="true"
+        />
 
-    <Button
+    <ImageButton
         android:id="@+id/messagepage4"
-        android:layout_width="match_parent"
+        style="@style/button_font"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我的維修" />
+        android:layout_row="0"
+        android:layout_gravity="right|center_vertical"
+        android:layout_margin="20dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/b5"
+        android:cropToPadding="true"
+        />
 
 </LinearLayout>

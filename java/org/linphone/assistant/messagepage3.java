@@ -1,10 +1,13 @@
 package org.linphone.assistant;
 
+import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
@@ -15,9 +18,14 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import androidx.viewpager.widget.ViewPager;
-
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -33,16 +41,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.linphone.R;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-
-import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class messagepage3 extends Activity implements View.OnClickListener {
     ViewPager pager;
@@ -125,8 +123,10 @@ public class messagepage3 extends Activity implements View.OnClickListener {
                 tv.setText(out.getJSONObject(i).getString("question_content"));
                 row.addView(tv);
                 ImageView img = new ImageView(this);
-                Uri uri = Uri.parse(out.getJSONObject(i).getString("main_image"));
-                img.setImageURI(uri);
+                URL uri = new URL(out.getJSONObject(i).getString("main_image"));
+                Bitmap bmp = BitmapFactory.decodeStream(uri.openConnection().getInputStream());
+                img.setImageBitmap(bmp);
+                System.out.println(uri);
                 row.addView(img);
                 Button bt = new Button(this);
                 bt.setText("查看回覆");
@@ -163,6 +163,7 @@ public class messagepage3 extends Activity implements View.OnClickListener {
             String json_string2 = EntityUtils.toString(response2.getEntity());
             JSONObject temp2 = new JSONObject(json_string2);
             JSONArray data3 = temp2.getJSONArray("items");
+            System.out.println(temp2);
             content = data3.getJSONObject(0).getString("reply_content");
         } catch (Exception e) {
             e.printStackTrace();

@@ -20,11 +20,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.Manifest;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -77,6 +80,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
     private String data2;
     private String tiltle;
     private String content;
+    private String icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,22 +110,24 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         mSocket.emit("login", UUID);
         //  txt_uuid.setText("Login UUID:\n"+UUID);
         Toast.makeText(DialerActivity.this, "Login ID:" + UUID, Toast.LENGTH_SHORT).show();
+
         mSocket.on(
                 "new_msg2",
                 new Emitter.Listener() {
                     @Override
                     public void call(Object... args) {
-
                         // txt.setText("接收資料");
                         android.util.Log.e("123", "data:" + args[0]);
-                        String data = args[0].toString();
+                        String test = args[0].toString();
+                        System.out.println(test);
                         // String data_ = "{'title':'公告1','content':'訊息測試'}";
                         final JSONObject jsonObj;
 
                         try {
-                            jsonObj = new JSONObject(data);
+                            jsonObj = new JSONObject(test);
                             tiltle = jsonObj.getString("title");
                             content = jsonObj.getString("content");
+                            icon = jsonObj.getString("icon");
 
                         } catch (Exception e) {
                         }
@@ -134,27 +140,52 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
                                         // Toast.makeText(MainActivity.this, data2,
                                         // Toast.LENGTH_SHORT).show();
                                         // whatever your UI logic
-                                        notificaioncall(tiltle, content);
+                                        notificaioncall(tiltle, content, icon);
                                         Toast.makeText(
                                                         DialerActivity.this,
                                                         "新消息",
                                                         Toast.LENGTH_SHORT)
                                                 .show();
+                                    }
+                                });
+                    }
+                });
+        mSocket.on(
+                "dio",
+                new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                        // txt.setText("接收資料");
+                        android.util.Log.e("12345", "data:" + args[0]);
+                        String data = args[0].toString();
+                        System.out.println(data);
+                        // String data_ = "{'title':'公告1','content':'訊息測試'}";
+                        final JSONObject jsonObj;
 
-                                        //                        Notification notification = new
-                                        // NotificationCompat.Builder(this, CHANNEL_1_ID )
-                                        //
-                                        // .setSmallIcon(R.drawable.ic_one)
-                                        //                                .setContentTitle("test")
-                                        //                                .setContentText(data2)
-                                        //
-                                        // .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                        //
-                                        // .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                                        //                                .build();
-                                        //
-                                        // notificationManager.notify(1,notification);
+                        try {
+                            jsonObj = new JSONObject(data);
+                            // tiltle = jsonObj.getString("title");
+                            // content = jsonObj.getString("content");
+                            icon = "OoO";
+                            System.out.println("watch here" + jsonObj.has("icon"));
 
+                        } catch (Exception e) {
+                        }
+
+                        data2 = args[0].toString();
+                        runOnUiThread(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Toast.makeText(MainActivity.this, data2,
+                                        // Toast.LENGTH_SHORT).show();
+                                        // whatever your UI logic
+                                        notificaioncall("危險警報", data2, "test");
+                                        Toast.makeText(
+                                                        DialerActivity.this,
+                                                        "新消息2",
+                                                        Toast.LENGTH_SHORT)
+                                                .show();
                                     }
                                 });
                     }
@@ -478,18 +509,40 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         return identity;
     }
 
-    private void notificaioncall(String ContentTitle, String ContentText) {
+    private void notificaioncall(String ContentTitle, String ContentText, String newicon) {
+        System.out.println(newicon);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_one)
+                        .setSmallIcon(R.drawable.photo)
                         .setLargeIcon(
-                                BitmapFactory.decodeResource(getResources(), R.drawable.ic_two))
+                                BitmapFactory.decodeResource(getResources(), R.drawable.photo))
                         .setContentTitle(ContentTitle)
                         .setOngoing(false)
                         .setAutoCancel(true)
                         .setContentText(ContentText);
+        // .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+        if (newicon.equals("warning")) {
+            notificationBuilder.setSmallIcon(R.drawable.onfire);
+            notificationBuilder.setLargeIcon(
+                    BitmapFactory.decodeResource(getResources(), R.drawable.onfire));
+            int soundResId = R.raw.fire;
+            Uri soundUri =
+                    Uri.parse(
+                            ContentResolver.SCHEME_ANDROID_RESOURCE
+                                    + "://"
+                                    + getPackageName()
+                                    + "/"
+                                    + soundResId);
+            System.out.println(soundUri);
+            notificationBuilder.setSound(soundUri, AudioManager.STREAM_ALARM);
+        } else {
+            notificationBuilder.setSmallIcon(R.drawable.photo);
+            notificationBuilder.setDefaults(
+                    Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+        }
+
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(55, notificationBuilder.build());
+        notificationManager.notify((int) (Math.random() * 99 + 101), notificationBuilder.build());
     }
 }

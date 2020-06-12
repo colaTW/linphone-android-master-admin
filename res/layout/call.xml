@@ -22,7 +22,7 @@
             <!--自己視訊預覽-->
             <TextureView
                 android:id="@+id/local_preview_texture"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="200dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true" />
@@ -41,7 +41,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <include layout="@layout/call_active_header" />
+                    <include
+                        layout="@layout/call_active_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

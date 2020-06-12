@@ -92,7 +92,7 @@
             android:layout_alignStart="@+id/controls"
             android:layout_alignTop="@+id/controls"
             android:layout_alignParentTop="true"
-            android:layout_weight="1.0"
+            android:layout_weight="0.5"
             android:background="@drawable/call_guard"></org.linphone.views.CallButton>
 
         <org.linphone.views.CallButton
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/controls"
-            android:layout_weight="1.0"
+            android:layout_weight="0.5"
 
             android:background="@drawable/call_home"></org.linphone.views.CallButton>
 
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/controls"
-            android:layout_weight="1.0"
+            android:layout_weight="0.5"
             android:background="@drawable/call_send"></org.linphone.views.CallButton>
         </LinearLayout>
 
