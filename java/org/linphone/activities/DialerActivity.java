@@ -30,28 +30,38 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.text.InputType;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Collection;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.AbstractHttpEntity;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
-import org.linphone.assistant.home;
+import org.linphone.assistant.BApage;
 import org.linphone.call.CallActivity;
 import org.linphone.contacts.ContactsActivity;
 import org.linphone.contacts.ContactsManager;
@@ -59,11 +69,15 @@ import org.linphone.core.Call;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.tools.Log;
-import org.linphone.settings.LinphonePreferences;
 import org.linphone.views.AddressText;
 import org.linphone.views.CallButton;
 import org.linphone.views.Digit;
-import org.linphone.views.EraseButton;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class DialerActivity extends MainActivity implements AddressText.AddressChangedListener {
     private static final String ACTION_CALL_LINPHONE = "org.linphone.intent.action.CallLaunched";
@@ -92,24 +106,51 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         RatKiller app = (RatKiller) getApplication();
         mSocket = app.getmSocket();
         mSocket.connect();
-        System.out.println("here" + mSocket.connect());
         Toast.makeText(DialerActivity.this, "Connected!!", Toast.LENGTH_SHORT).show();
-        // mSocket.emit("login", "53326483");
-        String UUID = "";
-        try {
-            FileInputStream fin = openFileInput("info.txt");
-            byte[] buffer = new byte[100];
-            int byteCount = fin.read(buffer);
-            String outinfo = "";
-            outinfo = new String(buffer, 0, byteCount, "utf-8");
-            String out[] = outinfo.split("\\,");
-            UUID = out[2];
-            fin.close();
-        } catch (Exception e) {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy =
+                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
         }
-        mSocket.emit("login", UUID);
+        // mSocket.emit("login", "53326483");
+        String userID = "";
+        try {
+            userID = getSharedPreferences("info", MODE_PRIVATE).getString("user", "");
+            URL url =
+                    new URL(
+                            "http://"
+                                    + getSharedPreferences("info", MODE_PRIVATE)
+                                            .getString("domain", "")
+                                    + ":8888/api/v1/household/device/login");
+            JSONObject jo = new JSONObject();
+            jo.put(
+                    "device_uuid",
+                    Settings.Secure.getString(
+                            getContext().getContentResolver(), Settings.Secure.ANDROID_ID));
+            jo.put("password", getSharedPreferences("info", MODE_PRIVATE).getInt("birth", 0));
+            HttpClient httpClient = new DefaultHttpClient();
+            AbstractHttpEntity entity = new ByteArrayEntity(jo.toString().getBytes("UTF8"));
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            HttpPost httpPost = new HttpPost(url.toURI());
+            httpPost.setEntity(entity);
+            HttpResponse response = httpClient.execute(httpPost);
+            String json_string = EntityUtils.toString(response.getEntity());
+            JSONObject temp1 = new JSONObject(json_string);
+            JSONObject data = temp1.getJSONObject("data");
+            String token = data.getString("access_token");
+            String status = temp1.getString("status");
+            if (status.equals("success")) {
+                System.out.print("succes");
+                SharedPreferences pref = getSharedPreferences("info", MODE_PRIVATE);
+                pref.edit().putString("token", token).commit();
+            }
+        } catch (Exception e) {
+            System.out.print("出錯了" + e);
+        }
+
+        mSocket.emit("login", userID);
         //  txt_uuid.setText("Login UUID:\n"+UUID);
-        Toast.makeText(DialerActivity.this, "Login ID:" + UUID, Toast.LENGTH_SHORT).show();
+        Toast.makeText(DialerActivity.this, "Login ID:" + userID, Toast.LENGTH_SHORT).show();
 
         mSocket.on(
                 "new_msg2",
@@ -265,13 +306,13 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
 
         if (mInterfaceLoaded) {
             updateLayout();
-            enableVideoPreviewIfTablet(true);
+            //  enableVideoPreviewIfTablet(true);
         }
     }
 
     @Override
     protected void onPause() {
-        enableVideoPreviewIfTablet(false);
+        // enableVideoPreviewIfTablet(false);
         Core core = LinphoneManager.getCore();
         if (core != null) {
             core.removeListener(mListener);
@@ -284,8 +325,8 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         mAddress.setAddressListener(this);
         mAddress.setInputType(InputType.TYPE_NULL);
 
-        EraseButton erase = view.findViewById(R.id.erase);
-        erase.setAddressWidget(mAddress);
+        //  EraseButton erase = view.findViewById(R.id.erase);
+        //  erase.setAddressWidget(mAddress);
 
         mStartCall = view.findViewById(R.id.start_call2);
         mStartCall.setAddressWidget(mAddress);
@@ -307,14 +348,11 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
                     public void onClick(View v) {
                         String Guard = "";
                         try {
-                            FileInputStream fin = openFileInput("info.txt");
-                            byte[] buffer = new byte[100];
-                            int byteCount = fin.read(buffer);
-                            String outinfo = "";
-                            outinfo = new String(buffer, 0, byteCount, "utf-8");
-                            String out[] = outinfo.split("\\,");
-                            Guard = out[0];
-                            fin.close();
+                            Guard =
+                                    getSharedPreferences("info", MODE_PRIVATE)
+                                            .getString("guard", "");
+                            System.out.print(Guard);
+
                         } catch (Exception e) {
 
                         }
@@ -348,7 +386,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(DialerActivity.this, home.class));
+                        startActivity(new Intent(DialerActivity.this, BApage.class));
                     }
                 });
 
@@ -360,10 +398,10 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
 
         setUpNumpad(view);
         updateLayout();
-        enableVideoPreviewIfTablet(true);
+        // enableVideoPreviewIfTablet(true);
     }
 
-    private void enableVideoPreviewIfTablet(boolean enable) {
+    /* private void enableVideoPreviewIfTablet(boolean enable) {
         Core core = LinphoneManager.getCore();
         TextureView preview = findViewById(R.id.video_preview);
         if (preview != null && core != null) {
@@ -389,7 +427,7 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
                 core.enableVideoPreview(false);
             }
         }
-    }
+    }*/
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

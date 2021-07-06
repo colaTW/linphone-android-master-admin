@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:stretchColumns="*"
+            android:layout_marginRight="5dp">
+
+            <TableRow>
+                <ImageButton
+                    android:id="@+id/B_BA"
+                    android:layout_width="1dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/buttun1_b"
+                    android:background="#262A2F"
+                    android:scaleType="fitXY"/>
+                <ImageButton
+                    android:id="@+id/B_door"
+                    android:layout_width="1dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/buttun2_a"
+                    android:background="#262A2F"
+                    android:scaleType="fitXY"/>
+
+                <ImageButton
+                    android:id="@+id/B_call"
+                    android:layout_width="1dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/buttun3_a"
+                    android:background="#262A2F"
+                    android:scaleType="fitXY"/>
+                <ImageButton
+                    android:id="@+id/B_Guard"
+                    android:layout_width="1dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/buttun5_a"
+                    android:background="#262A2F"
+                    android:scaleType="fitXY"/>
+
+
+            </TableRow>
+
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/baexample"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ListView
+                android:id="@+id/BAlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.ArrayList;
 import org.linphone.LinphoneManager;
 import org.linphone.LinphoneService;
@@ -93,12 +94,13 @@ public abstract class MainActivity extends LinphoneGenericActivity
     protected boolean mOnBackPressGoHome;
     protected boolean mAlwaysHideTabBar;
     protected String[] mPermissionsToHave;
-
     private CoreListenerStub mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
+
         if (mAbortCreation) {
             return;
         }

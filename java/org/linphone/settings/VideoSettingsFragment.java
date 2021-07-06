@@ -107,8 +107,8 @@ public class VideoSettingsFragment extends SettingsFragment {
                         mPrefs.enableVideo(newValue);
                         if (!newValue) {
                             mVideoPreview.setChecked(false);
-                            mAutoAccept.setChecked(false);
-                            mAutoInitiate.setChecked(false);
+                            mAutoAccept.setChecked(true);
+                            mAutoInitiate.setChecked(true);
                         }
                         updateVideoSettingsVisibility(newValue);
                     }

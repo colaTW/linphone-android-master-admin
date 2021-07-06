@@ -101,7 +101,6 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/controls"
             android:layout_weight="0.5"
-
             android:background="@drawable/call_home"></org.linphone.views.CallButton>
 
         <org.linphone.views.CallButton

@@ -143,6 +143,7 @@ public class MenuAssistantActivity extends AssistantActivity {
                 String guard = "";
                 String code = "";
                 String houseID;
+                String houseType;
                 // String ANDROID_ID = java.util.UUID.randomUUID().toString();
                 // System.out.println(ANDROID_ID);
                 try {
@@ -153,10 +154,12 @@ public class MenuAssistantActivity extends AssistantActivity {
                     Domain = info2.getString("domain");
                     guard = info2.getString("guard");
                     houseID = info2.getString("household_id");
-
+                    houseType = info2.getString("household_type");
                     HttpGet httpGet =
                             new HttpGet(
-                                    "http://49.159.128.172:8888/api/v1/household/devices/captain/"
+                                    "http://"
+                                            + Domain
+                                            + ":8888/api/v1/household/devices/captain/"
                                             + houseID);
                     HttpClient httpClient2 = new DefaultHttpClient();
                     HttpResponse response2 = httpClient2.execute(httpGet);
@@ -180,6 +183,9 @@ public class MenuAssistantActivity extends AssistantActivity {
                         bundle.putString("Password", Password);
                         bundle.putString("type", type);
                         bundle.putString("guard", guard);
+                        bundle.putString("household_id", houseID);
+                        bundle.putString("household_type", type);
+
                         Intent intent = new Intent();
                         intent.setClass(MenuAssistantActivity.this, login.class);
                         intent.putExtras(bundle); // 記得put進去，不然資料不會帶過去哦

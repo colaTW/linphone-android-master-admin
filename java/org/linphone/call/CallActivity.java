@@ -19,8 +19,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
-
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
@@ -33,7 +31,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
-import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -53,22 +50,14 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.AbstractHttpEntity;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,15 +147,8 @@ public class CallActivity extends LinphoneGenericActivity
         setContentView(R.layout.call);
 
         try {
-            FileInputStream fin = openFileInput("info.txt");
-            byte[] buffer = new byte[100];
-            int byteCount = fin.read(buffer);
-            String outinfo = "";
-            outinfo = new String(buffer, 0, byteCount, "utf-8");
-            String out[] = outinfo.split("\\,");
-            Guard = out[0];
-            pass = out[1];
-            fin.close();
+            Guard = getSharedPreferences("info", MODE_PRIVATE).getString("guard", "");
+
         } catch (Exception e) {
         }
         ImageView mget = findViewById(R.id.Openkey);
@@ -181,46 +163,26 @@ public class CallActivity extends LinphoneGenericActivity
                             StrictMode.setThreadPolicy(policy);
                         }
                         try {
-                            URL url =
-                                    new URL(
-                                            "http://49.159.128.172:8888/api/v1/household/device/login");
-                            JSONObject jo = new JSONObject();
-                            jo.put(
-                                    "device_uuid",
-                                    Settings.Secure.getString(
-                                            getContext().getContentResolver(),
-                                            Settings.Secure.ANDROID_ID));
-                            jo.put("password", pass);
-                            HttpClient httpClient = new DefaultHttpClient();
-                            AbstractHttpEntity entity =
-                                    new ByteArrayEntity(jo.toString().getBytes("UTF8"));
-                            entity.setContentType(
-                                    new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-                            HttpPost httpPost = new HttpPost(url.toURI());
-                            httpPost.setEntity(entity);
-                            // Prepare JSON to send by setting the entity
-                            HttpResponse response = httpClient.execute(httpPost);
-                            String json_string = EntityUtils.toString(response.getEntity());
-                            JSONObject temp1 = new JSONObject(json_string);
-                            JSONObject data = temp1.getJSONObject("data");
-                            String status = temp1.getString("status");
-
-                            if (status.equals("success")) {
-                                String token = data.getString("access_token");
-                                HttpGet httpGet =
-                                        new HttpGet(
-                                                "http://49.159.128.172:8888/api/v1/household/device/open/gap");
-                                HttpClient httpClient2 = new DefaultHttpClient();
-                                httpGet.addHeader("Authorization", "Bearer " + token);
-                                HttpResponse response2 = httpClient2.execute(httpGet);
-                                HttpEntity responseHttpEntity = response2.getEntity();
-                                String json_string2 = EntityUtils.toString(response2.getEntity());
-                                JSONObject temp2 = new JSONObject(json_string2);
-                                String suc = temp2.getString("success");
-                                if (suc.equals("true")) {
-                                    Toast.makeText(CallActivity.this, "芝麻芝麻開門", Toast.LENGTH_SHORT)
-                                            .show();
-                                }
+                            HttpGet httpGet =
+                                    new HttpGet(
+                                            "http://"
+                                                    + getSharedPreferences("info", MODE_PRIVATE)
+                                                            .getString("domain", "")
+                                                    + ":8888/api/v1/household/device/open/gap");
+                            HttpClient httpClient2 = new DefaultHttpClient();
+                            httpGet.addHeader(
+                                    "Authorization",
+                                    "Bearer "
+                                            + getSharedPreferences("info", MODE_PRIVATE)
+                                                    .getString("token", ""));
+                            HttpResponse response2 = httpClient2.execute(httpGet);
+                            HttpEntity responseHttpEntity = response2.getEntity();
+                            String json_string2 = EntityUtils.toString(response2.getEntity());
+                            JSONObject temp2 = new JSONObject(json_string2);
+                            String suc = temp2.getString("success");
+                            if (suc.equals("true")) {
+                                Toast.makeText(CallActivity.this, "芝麻芝麻開門", Toast.LENGTH_SHORT)
+                                        .show();
                             }
 
                             //  BufferedReader reader = new BufferedReader(new
@@ -231,8 +193,6 @@ public class CallActivity extends LinphoneGenericActivity
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (URISyntaxException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {
                             e.printStackTrace();

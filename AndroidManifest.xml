@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.linphone"
     android:installLocation="auto">
-
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -13,8 +13,8 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
 
     <!-- Needed to allow Linphone to install on tablets, since android.permission.CAMERA implies android.hardware.camera and android.hardware.camera.autofocus are required -->
     <uses-feature
@@ -66,7 +66,10 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/LinphoneStyleLight">
+        android:theme="@style/LinphoneStyleLight"
+        android:networkSecurityConfig="@xml/network_security_config"
+        >
+
         <!-- 安卓9.0以上需要這句-->
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
@@ -74,7 +77,8 @@
 
         <activity
             android:name=".activities.LinphoneLauncherActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -87,7 +91,7 @@
         <activity
         android:name=".activities.DialerActivity"
         android:launchMode="singleTop"
-        android:screenOrientation="portrait" >
+        android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
                 <action android:name="android.intent.action.CALL" />
@@ -193,68 +197,43 @@
             android:showWhenLocked="true"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="landscape"/>
         <!-- Assistant activities -->
-
-
+        <activity
+            android:name=".assistant.memberdatabase"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".assistant.ApporvedList"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".assistant.DoorAccess"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".assistant.DoorAccess_floor"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".assistant.BApage"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".assistant.AccesCard"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".assistant.Guardpage"
+            android:screenOrientation="landscape"
+            />
         <activity
             android:name=".assistant.MenuAssistantActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".assistant.home">
-        <intent-filter>
-            <action android:name="org.linphone.intent.action.bulletin" />
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-            <intent-filter>
-                <action android:name="org.linphone.intent.action.mailbox" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="org.linphone.intent.action.message" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="org.linphone.intent.action.cctv" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="org.linphone.intent.action.house_qrcode" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            </activity>
-        <activity
-            android:name=".assistant.sercu"/>
-
-        <activity
-            android:name=".assistant.sercu"/>
-        <activity
-            android:name=".assistant.sercu_setting"/>
-        <activity
-            android:name=".assistant.sercu_reset"/>
-        <activity
-            android:name=".assistant.house_qrcode"/>
+            android:screenOrientation="landscape"
+            />
         <activity
             android:name=".assistant.login"/>
-        <activity
-            android:name=".assistant.bulletin"/>
-        <activity
-            android:name=".assistant.mailbox"/>
-        <activity
-        android:name=".assistant.message"/>
-        <activity
-            android:name=".assistant.messagepage1"/>
-        <activity
-            android:name=".assistant.messagepage2"/>
-        <activity
-            android:name=".assistant.messagepage3"/>
-        <activity
-            android:name=".assistant.messagepage4"/>
-        <activity
-            android:name=".assistant.cctv"
-            android:anyDensity="false"/>
+
         <activity
             android:name=".assistant.AccountConnectionAssistantActivity"/>
         <activity
@@ -279,6 +258,16 @@
             android:name=".assistant.OpenH264DownloadAssistantActivity"/>
 
         <!-- Services -->
+        <service
+            android:name=".Fcmservices"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+
 
         <service
             android:name=".LinphoneService"

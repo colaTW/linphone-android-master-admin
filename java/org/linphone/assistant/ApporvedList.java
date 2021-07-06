@@ -1,42 +1,46 @@
 package org.linphone.assistant;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import java.security.acl.Group;
+import java.util.ArrayList;
 import org.linphone.R;
 import org.linphone.activities.DialerActivity;
 
-public class home extends Activity {
+public class ApporvedList extends Activity {
+    private ArrayList<Group> gData = null;
+    private ArrayList<ArrayList<ClipData.Item>> iData = null;
+    private ArrayList<ClipData.Item> lData = null;
+    private Context mContext;
+    private ExpandableListView list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        setContentView(R.layout.apporvedlist);
+        ExpandableListView memberlist = findViewById(R.id.memberlist);
+        ImageButton goBA = findViewById(R.id.B_BA);
+        ImageButton godoor = findViewById(R.id.B_door);
         ImageButton gocall = findViewById(R.id.B_call);
-        ImageButton gobull = findViewById(R.id.B_bull);
-        ImageButton gomess = findViewById(R.id.B_mess);
-        ImageButton gomail = findViewById(R.id.B_mail);
-        ImageButton gocctv = findViewById(R.id.B_cctv);
-        ImageButton golist = findViewById(R.id.list);
-        ImageButton gosercu = findViewById(R.id.B_security);
+        ImageButton goguard = findViewById(R.id.B_Guard);
+        ImageButton memberdata = findViewById(R.id.memberdata);
+        Button dooracess = findViewById(R.id.dooracess);
+        Button approvedlist = findViewById(R.id.approvedList);
+        Button accescard = findViewById(R.id.AccessCard);
 
-        golist.setOnClickListener(
+        goBA.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(home.this, house_qrcode.class);
-                        startActivity(intent);
-                    }
-                });
-
-        gocctv.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.setClass(home.this, cctv.class);
+                        intent.setClass(ApporvedList.this, BApage.class);
                         startActivity(intent);
                     }
                 });
@@ -46,43 +50,52 @@ public class home extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(home.this, DialerActivity.class);
+                        intent.setClass(ApporvedList.this, DialerActivity.class);
                         startActivity(intent);
                     }
                 });
-        gobull.setOnClickListener(
+        goguard.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(home.this, bulletin.class);
+                        intent.setClass(ApporvedList.this, Guardpage.class);
                         startActivity(intent);
                     }
                 });
-        gomess.setOnClickListener(
+        memberdata.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(home.this, message.class);
+                        intent.setClass(ApporvedList.this, memberdatabase.class);
                         startActivity(intent);
                     }
                 });
-        gomail.setOnClickListener(
+        dooracess.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(home.this, mailbox.class);
+                        intent.setClass(ApporvedList.this, DoorAccess.class);
                         startActivity(intent);
                     }
                 });
-        gosercu.setOnClickListener(
+        approvedlist.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(home.this, sercu.class);
+                        intent.setClass(ApporvedList.this, ApporvedList.class);
+                        startActivity(intent);
+                    }
+                });
+        accescard.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(ApporvedList.this, AccesCard.class);
                         startActivity(intent);
                     }
                 });

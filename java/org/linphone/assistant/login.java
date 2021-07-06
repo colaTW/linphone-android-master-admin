@@ -3,6 +3,7 @@ package org.linphone.assistant;
 import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -45,8 +46,11 @@ public class login extends AssistantActivity {
         final String user = bundle.getString("user");
         final String Domain = bundle.getString("Domain");
         final String Password = bundle.getString("Password");
+
         final String guard = bundle.getString("guard");
         final String type = bundle.getString("type");
+        final String household_id = bundle.getString("household_id");
+        final String household_type = bundle.getString("household_type");
         Num.setText(user);
         Integer year = dt.getYear();
         Integer mon = dt.getMonth();
@@ -65,7 +69,9 @@ public class login extends AssistantActivity {
                         try {
                             URL url =
                                     new URL(
-                                            "http://49.159.128.172:8888/api/v1/household/device/register");
+                                            "http://"
+                                                    + Domain
+                                                    + ":8888/api/v1/household/device/register");
                             JSONObject jo = new JSONObject();
                             jo.put("uuid", android_id.toString());
                             jo.put("password", birth.toString());
@@ -93,6 +99,15 @@ public class login extends AssistantActivity {
                                 mAccountCreator.setTransport(TransportType.Udp);
                                 createProxyConfigAndLeaveAssistant();
                                 // 儲存資料
+                                SharedPreferences pref = getSharedPreferences("info", MODE_PRIVATE);
+                                pref.edit()
+                                        .putString("domain", Domain)
+                                        .putString("guard", guard)
+                                        .putInt("birth", birth)
+                                        .putString("user", user)
+                                        .putString("household_id", household_id)
+                                        .putString("household_type", household_type)
+                                        .commit();
                                 FileOutputStream fos =
                                         openFileOutput("info.txt", Context.MODE_PRIVATE);
                                 String test = guard + ",";

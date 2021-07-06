@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Custom-->
-  <string name="app_name">Cola</string>
+  <string name="app_name">Cola-admin</string>
   <string name="service_name">Cola 服務</string>
   <string name="addressbook_label">Linphone</string>
   <string name="notification_title">Linphone</string>
