@@ -20,10 +20,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -31,7 +29,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -40,11 +37,7 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import java.io.File;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+
 import org.linphone.assistant.PhoneAccountLinkingAssistantActivity;
 import org.linphone.call.CallManager;
 import org.linphone.contacts.ContactsManager;
@@ -66,7 +59,6 @@ import org.linphone.core.ProxyConfig;
 import org.linphone.core.Reason;
 import org.linphone.core.Tunnel;
 import org.linphone.core.TunnelConfig;
-import org.linphone.core.VersionUpdateCheckResult;
 import org.linphone.core.tools.H264Helper;
 import org.linphone.core.tools.Log;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration;
@@ -76,6 +68,12 @@ import org.linphone.utils.AndroidAudioManager;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.MediaScanner;
 import org.linphone.utils.PushNotificationUtils;
+
+import java.io.File;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /** Handles Linphone's Core lifecycle */
 public class LinphoneManager implements SensorEventListener {
@@ -254,7 +252,7 @@ public class LinphoneManager implements SensorEventListener {
                         }
                     }
 
-                    @Override
+                    /* @Override
                     public void onVersionUpdateCheckResultReceived(
                             Core core,
                             VersionUpdateCheckResult result,
@@ -296,7 +294,7 @@ public class LinphoneManager implements SensorEventListener {
                                     },
                                     1000);
                         }
-                    }
+                    }*/
 
                     @Override
                     public void onFriendListCreated(Core core, FriendList list) {

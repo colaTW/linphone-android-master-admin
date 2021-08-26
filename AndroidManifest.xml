@@ -204,6 +204,10 @@
             android:screenOrientation="landscape"
             />
         <activity
+            android:name=".assistant.member_modify"
+            android:screenOrientation="landscape"
+            />
+        <activity
             android:name=".assistant.ApporvedList"
             android:screenOrientation="landscape"
             />
@@ -216,7 +220,15 @@
             android:screenOrientation="landscape"
             />
         <activity
+            android:name=".assistant.DoorAccess_elevator"
+            android:screenOrientation="landscape"
+            />
+        <activity
             android:name=".assistant.BApage"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".assistant.BAlist"
             android:screenOrientation="landscape"
             />
         <activity

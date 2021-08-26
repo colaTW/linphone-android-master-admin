@@ -109,7 +109,7 @@ public abstract class AssistantActivity extends LinphoneGenericActivity
             if (proxyConfig.getDialPrefix() == null) {
                 DialPlan dialPlan = getDialPlanForCurrentCountry();
                 if (dialPlan != null) {
-                    proxyConfig.setDialPrefix(dialPlan.getCountryCallingCode());
+                    proxyConfig.setDialPrefix("");
                 }
             }
 

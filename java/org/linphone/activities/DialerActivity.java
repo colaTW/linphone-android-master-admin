@@ -72,6 +72,7 @@ import org.linphone.core.tools.Log;
 import org.linphone.views.AddressText;
 import org.linphone.views.CallButton;
 import org.linphone.views.Digit;
+import org.linphone.views.EraseButton;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -325,8 +326,8 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         mAddress.setAddressListener(this);
         mAddress.setInputType(InputType.TYPE_NULL);
 
-        //  EraseButton erase = view.findViewById(R.id.erase);
-        //  erase.setAddressWidget(mAddress);
+        EraseButton erase = view.findViewById(R.id.erase);
+        erase.setAddressWidget(mAddress);
 
         mStartCall = view.findViewById(R.id.start_call2);
         mStartCall.setAddressWidget(mAddress);

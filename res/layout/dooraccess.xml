@@ -5,62 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:stretchColumns="*"
-            android:layout_marginRight="5dp">
-
-            <TableRow>
-                <ImageButton
-                    android:id="@+id/B_BA"
-                    android:layout_width="1dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/buttun1_a"
-                    android:background="#262A2F"
-                    android:scaleType="fitXY"/>
-                <ImageButton
-                    android:id="@+id/B_door"
-                    android:layout_width="1dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/buttun2_b"
-                    android:background="#262A2F"
-                    android:clickable="false"
-                    android:scaleType="fitXY"/>
-
-                <ImageButton
-                    android:id="@+id/B_call"
-                    android:layout_width="1dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/buttun3_a"
-                    android:background="#262A2F"
-                    android:scaleType="fitXY"/>
-                <ImageButton
-                    android:id="@+id/B_Guard"
-                    android:layout_width="1dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/buttun5_a"
-                    android:background="#262A2F"
-                    android:scaleType="fitXY"/>
-
-
-            </TableRow>
-
-
-        </TableLayout>
-
-    </LinearLayout>
+    android:orientation="horizontal">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="0.95"
         android:background="#202127">
 
         <LinearLayout
@@ -69,71 +20,169 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/memberdata"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:enabled="false"
-                android:background="@drawable/b9_a" />
-            <Button
-                android:id="@+id/dooracess"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/b10_b" />
-            <Button
-                android:id="@+id/approvedList"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/b11_a" />
-            <Button
-                android:id="@+id/AccessCard"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/b12_a" />
+                android:layout_height="wrap_content">
+
+                <ExpandableListView
+                    android:id="@+id/departmentlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:childDivider="#800000FF"
+                    android:divider="#800000FF"
+                    android:dividerHeight="1dp"
+                    android:fadeScrollbars="false"
+                    android:background="@drawable/mylistpadding"/>
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <ListView
-                android:id="@+id/memberlist"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:childDivider="#80FF0000"
-                android:divider="#800000FF"
-                android:dividerHeight="1dp" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:orientation="vertical">
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:text="人員名單"
+                   android:textColor="@color/white_color"
+                   android:textSize="20dp"
+                   />
+                <ListView
+                    android:id="@+id/memberlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:childDivider="#80FF0000"
+                    android:divider="#800000FF"
+                    android:dividerHeight="1dp"
+                    android:fadeScrollbars="false"
+                    android:background="@drawable/mylistpadding"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/lastpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="←"/>
+                    <TextView
+                        android:id="@+id/nowpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:id="@+id/totalpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:textColor="@color/white_color"/>
+                    <Button
+                        android:id="@+id/nextpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="→"
+                        />
+                </LinearLayout>
 
+            </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="right"
-            android:layout_weight="1">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:background="@drawable/mylistpadding">
 
-            <Button
-                android:id="@+id/nextpage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="下一步"
-                android:layout_gravity="bottom|right" />
-            </LinearLayout>
-            <ProgressBar
-                android:id="@+id/memberlistspiner"
-                style="?android:attr/progressBarStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nextpage" />
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="選取名單"
+                    android:textColor="@color/white_color"
+                    android:textSize="20dp"
+                    />
+
+                <ListView
+                    android:id="@+id/confirmlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:childDivider="#80FF0000"
+                    android:divider="#800000FF"
+                    android:dividerHeight="1dp"
+                    android:fadeScrollbars="false"
+                    />
+
         </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="選取單位"
+                    android:textColor="@color/white_color"
+                    android:textSize="20dp"
+                    />
+                <ListView
+                    android:id="@+id/confirmgroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:childDivider="#80FF0000"
+                    android:divider="#800000FF"
+                    android:dividerHeight="1dp"
+                    android:fadeScrollbars="false"
+                    />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        android:gravity="bottom"
+        android:background="#202127">
+        <Button
+            android:id="@+id/nextstep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下一步"/>
+    </LinearLayout>
+
 </LinearLayout>

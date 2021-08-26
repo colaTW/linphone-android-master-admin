@@ -108,8 +108,7 @@
         <org.linphone.views.EraseButton
             android:id="@+id/erase"
             style="@style/DialerDigit"
-            android:background="@drawable/backspace"
-             />
+            android:background="@drawable/backspace" />
 
     </TableRow>
 
