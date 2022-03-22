@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 public class RatKiller extends Application {
 
     private Socket mSocket;
-    private static final String URL = "http://49.159.128.172:2120";
+    private static final String URL = "http://192.168.53.168:7878/ShowTime/";
 
     @Override
     public void onCreate() {

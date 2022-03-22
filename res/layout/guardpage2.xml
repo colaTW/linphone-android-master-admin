@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#262A2F"
+        >
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:stretchColumns="*"
+            android:layout_marginRight="5dp">
+
+            <TableRow>
+                <ImageButton
+                    android:id="@+id/B_BA"
+                    android:layout_width="1dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/buttun1_a"
+                    android:background="#262A2F"
+                    android:scaleType="centerInside"/>
+                <ImageButton
+                    android:id="@+id/B_door"
+                    android:layout_width="1dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/buttun2_a"
+                    android:background="#262A2F"
+                    android:scaleType="centerInside"/>
+
+                <ImageButton
+                    android:id="@+id/B_call"
+                    android:layout_width="1dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/buttun3_a"
+                    android:background="#262A2F"
+                    android:scaleType="centerInside"/>
+                <ImageButton
+                    android:id="@+id/B_Guard"
+                    android:layout_width="1dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/buttun5_b"
+                    android:background="#262A2F"
+                    android:scaleType="centerInside"/>
+
+
+            </TableRow>
+
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#202127">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2">
+            <ExpandableListView
+                android:id="@+id/grouplist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#800000FF"
+                android:childDivider="#800000FF"
+                android:dividerHeight="1dp"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/lastpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="←"/>
+                    <TextView
+                        android:id="@+id/nowpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:id="@+id/totalpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:textColor="@color/white_color"/>
+                    <Button
+                        android:id="@+id/nextpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="→"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Spinner
+                    android:id="@+id/select_group"
+                    android:popupBackground="@color/black_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+                <Spinner
+                    android:id="@+id/select_type"
+                    android:popupBackground="@color/black_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"/>
+                <EditText
+                    android:textColor="@color/white_color"
+                    android:id="@+id/select_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"/>
+                <Button
+                    android:id="@+id/select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="搜尋"/>
+            </LinearLayout>
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:orientation="horizontal"
+            >
+        <Button
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="基本設定"/>
+
+            <ImageButton
+                android:id="@+id/IPsetting"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|right"
+                android:background="#202127" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

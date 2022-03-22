@@ -22,9 +22,9 @@
 
             <TextureView
                 android:id="@+id/local_preview_texture"
-                android:layout_width="250dp"
-                android:layout_height="200dp"
-                android:layout_alignParentRight="true"
+                android:layout_width="295px"
+                android:layout_height="413px"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
               />
 

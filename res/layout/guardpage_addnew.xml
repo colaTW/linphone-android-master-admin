@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#202127">
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#2B2D35"
+            android:layout_marginRight="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="180dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bt23"
+                    android:scaleType="centerInside" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Spinner
+                        android:id="@+id/select_group"
+                        android:popupBackground="@color/black_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <Spinner
+                        android:id="@+id/select_type"
+                        android:popupBackground="@color/black_color"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        />
+                    <EditText
+                        android:textColor="@color/white_color"
+                        android:id="@+id/select_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/select"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/bt20" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="180dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bt24"
+                    android:scaleType="centerInside" />
+
+                <ExpandableListView
+                    android:id="@+id/grouplist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:listSelector="@android:color/transparent" >
+                </ExpandableListView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#2B2D35"
+            android:layout_marginRight="10dp">
+            <ListView
+                android:id="@+id/memberlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:childDivider="#80FF0000"
+                android:divider="#800000FF"
+                android:dividerHeight="1dp"
+                android:fadeScrollbars="false"
+                android:background="#2B2D35"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:orientation="vertical"
+                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/lastpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="←"/>
+                    <TextView
+                        android:id="@+id/nowpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:id="@+id/totalpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:textColor="@color/white_color"/>
+                    <Button
+                        android:id="@+id/nextpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="→"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/addnotify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="加入推播"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

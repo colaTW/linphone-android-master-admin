@@ -200,14 +200,17 @@ public class CallActivity extends LinphoneGenericActivity
                     }
                 });
         mLocalPreview = findViewById(R.id.local_preview_texture);
-        mLocalPreview.setOnTouchListener(
-                new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        moveLocalPreview(event);
-                        return true;
-                    }
-                });
+
+        mLocalPreview.setRotation(270);
+
+        /* mLocalPreview.setOnTouchListener(
+        new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                moveLocalPreview(event);
+                return true;
+            }
+        });*/
 
         mRemoteVideo = findViewById(R.id.remote_video_texture);
         mRemoteVideo.setOnClickListener(
@@ -500,6 +503,7 @@ public class CallActivity extends LinphoneGenericActivity
         if (mCore != null) {
             mCore.setNativeVideoWindowId(mRemoteVideo);
             mCore.setNativePreviewWindowId(mLocalPreview);
+
             mCore.addListener(mListener);
         }
     }

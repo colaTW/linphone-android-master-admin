@@ -3,8 +3,13 @@ package org.linphone.assistant;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +18,16 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.dantsu.escposprinter.EscPosCharsetEncoding;
+import com.dantsu.escposprinter.EscPosPrinter;
+import com.dantsu.escposprinter.connection.tcp.TcpConnection;
+import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,7 +105,7 @@ public class DoorAccess_elevator extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(DoorAccess_elevator.this, Guardpage.class);
+                        intent.setClass(DoorAccess_elevator.this, Guardpage2.class);
                         startActivity(intent);
                     }
                 });
@@ -105,6 +115,8 @@ public class DoorAccess_elevator extends Activity {
                     public void onClick(View view) {
                         Log.e("最後1", select_id.toString());
                         Log.e("最後2", select_json.toString());
+                        Log.e("最後3", comfirm_elejson.toString());
+
                         elevatordate();
                     }
                 });
@@ -892,13 +904,11 @@ public class DoorAccess_elevator extends Activity {
                         return;
 
                     } else {
-                        Log.e("j", j + "");
 
                         JSONObject object2 =
                                 elevatordate.get(
                                         date_id.indexOf(
                                                 confirmjson.get(j).getString("DeployDevice_Id")));
-                        Log.e("object2", object2.toString());
 
                         object2.put("TimeZone", confirmjson.get(j).getString("TimeZone"));
                     }
@@ -918,7 +928,6 @@ public class DoorAccess_elevator extends Activity {
 
                     } else {
                         JSONArray z = elevatordate.get(x).getJSONArray("floors");
-                        Log.e("z", z.toString());
                         JSONObject object2 = elevatordate.get(x);
                         int hex = 0;
                         for (int y = 0; y < z.length(); y++) {
@@ -947,12 +956,22 @@ public class DoorAccess_elevator extends Activity {
                 for (int i = 0; i < confirmjson.size(); i++) {
                     elevator_selectinfo.put(confirmjson.get(i));
                 }
+                // 門禁授權需要資料
                 allinfo.put("elevator_access", elevator_access);
+                // 搜尋時回傳資料(結果值 右邊部分)
                 allinfo.put("elevator_selectinfo", elevator_selectinfo);
+                // 搜尋時回傳資料(所選樓層 左邊及中間部分)
+                JSONObject accessinfo = new JSONObject();
+
+                accessinfo.put("select_json", select_json);
+                accessinfo.put("comfirm_ele", comfirm_ele);
+                accessinfo.put("comfirm_elejson", comfirm_elejson);
+                allinfo.put("elevator_accessinfo", accessinfo);
+
                 URL url = new URL("http://18.181.171.107/riway/api/v1/access/allow/card");
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url.toURI());
-                StringEntity params = new StringEntity(allinfo.toString());
+                StringEntity params = new StringEntity(allinfo.toString(), "UTF-8");
                 Log.e("params", allinfo.toString());
                 httpPost.addHeader("content-type", "application/json");
                 httpPost.setEntity(params);
@@ -960,14 +979,83 @@ public class DoorAccess_elevator extends Activity {
                 // setting the entity
                 HttpResponse response = httpClient.execute(httpPost);
                 String json_string = EntityUtils.toString(response.getEntity());
+                Log.e("json_string", json_string);
+
                 JSONObject temp1 = new JSONObject(json_string);
                 String data = temp1.getString("errors");
                 if (data.equals("")) {
-                    Toast.makeText(DoorAccess_elevator.this, "授權成功", Toast.LENGTH_SHORT).show();
-                    next.setEnabled(true);
-                    Intent intent = new Intent();
-                    intent.setClass(DoorAccess_elevator.this, ApporvedList.class);
-                    startActivity(intent);
+                    // 若print值為2則列印qrcode
+                    if (allinfo.getString("print").equals("2")) {
+                        try { // 用卡號查詢QRCODE
+                            HttpGet httpGet =
+                                    new HttpGet(
+                                            "http://18.181.171.107/riway/api/v1/clients/temporary/qrcode/"
+                                                    + allinfo.getJSONArray("cards").getString(0));
+                            HttpClient httpClient2 = new DefaultHttpClient();
+                            httpClient2
+                                    .getParams()
+                                    .setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 2000);
+                            httpClient2
+                                    .getParams()
+                                    .setParameter(CoreConnectionPNames.SO_TIMEOUT, 2000);
+                            HttpResponse response2 = httpClient2.execute(httpGet);
+                            HttpEntity responseHttpEntity2 = response2.getEntity();
+                            String code = EntityUtils.toString(response2.getEntity());
+                            JSONObject temp2 = new JSONObject(code);
+                            // 取得BASE64碼並影印
+                            String encodedString = temp2.getString("qrcode");
+
+                            final String pureBase64Encoded =
+                                    encodedString.substring(encodedString.indexOf(",") + 1);
+                            byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
+                            Bitmap decodedByte =
+                                    BitmapFactory.decodeByteArray(
+                                            decodedBytes, 0, decodedBytes.length);
+                            SharedPreferences sPrefs =
+                                    getSharedPreferences("printer", MODE_PRIVATE);
+                            final String printIP = sPrefs.getString("IP", "");
+                            EscPosPrinter printer =
+                                    new EscPosPrinter(
+                                            new TcpConnection(printIP, 9100),
+                                            203,
+                                            48f,
+                                            32,
+                                            new EscPosCharsetEncoding("Big5", 0));
+                            printer.printFormattedText(
+                                            "[C]<u><font size='big'>門禁QRCODE</font></u>\n")
+                                    .printFormattedText(
+                                            "[R]<img>"
+                                                    + PrinterTextParserImg
+                                                            .bitmapToHexadecimalString(
+                                                                    printer, decodedByte)
+                                                    + "</img>\n");
+                            // 切紙指令
+                            printer.printFormattedTextAndCut("");
+                            printer.disconnectPrinter();
+                            next.setEnabled(true);
+                            Toast.makeText(DoorAccess_elevator.this, "授權成功", Toast.LENGTH_SHORT)
+                                    .show();
+                            next.setEnabled(true);
+                            Intent intent = new Intent();
+                            intent.setClass(DoorAccess_elevator.this, ApporvedList.class);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Toast.makeText(
+                                            DoorAccess_elevator.this,
+                                            "請確認IP以及熱感機連線狀態",
+                                            Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+
+                    } else {
+                        next.setEnabled(true);
+                        Toast.makeText(DoorAccess_elevator.this, "授權成功", Toast.LENGTH_SHORT).show();
+                        next.setEnabled(true);
+                        Intent intent = new Intent();
+                        intent.setClass(DoorAccess_elevator.this, ApporvedList.class);
+                        startActivity(intent);
+                    }
+
                 } else {
                     Toast.makeText(DoorAccess_elevator.this, data.toString(), Toast.LENGTH_SHORT)
                             .show();
@@ -984,5 +1072,63 @@ public class DoorAccess_elevator extends Activity {
     private class ViewHolder {
         TextView groupText, childText, TextID;
         CheckBox groupBox, childBox;
+    }
+
+    void printdailog(final Bitmap QRdata) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(DoorAccess_elevator.this);
+        View view = getLayoutInflater().inflate(R.layout.printsetting, null);
+        final EditText IP = view.findViewById(R.id.printerIP);
+        SharedPreferences sPrefs = getSharedPreferences("printer", MODE_PRIVATE);
+        final String printIP = sPrefs.getString("IP", "");
+        IP.setText(printIP);
+        alertDialog.setPositiveButton(
+                "確認",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        try {
+                            EscPosPrinter printer =
+                                    new EscPosPrinter(
+                                            new TcpConnection(IP.getText().toString(), 9100),
+                                            203,
+                                            48f,
+                                            32,
+                                            new EscPosCharsetEncoding("Big5", 0));
+                            printer.printFormattedText(
+                                            "[C]<u><font size='big'>門禁QRCODE</font></u>\n")
+                                    .printFormattedText(
+                                            "[R]<img>"
+                                                    + PrinterTextParserImg
+                                                            .bitmapToHexadecimalString(
+                                                                    printer, QRdata)
+                                                    + "</img>\n");
+                            // 切紙指令
+                            printer.printFormattedTextAndCut("");
+                            printer.disconnectPrinter();
+                            SharedPreferences sPrefs =
+                                    getSharedPreferences("printer", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sPrefs.edit(); // 获取Editor对象
+                            editor.putString("IP", IP.getText().toString()); // 存储数据
+                            editor.commit();
+                            Toast.makeText(DoorAccess_elevator.this, "授權成功", Toast.LENGTH_SHORT)
+                                    .show();
+                            Intent intent = new Intent();
+                            intent.setClass(DoorAccess_elevator.this, ApporvedList.class);
+                            startActivity(intent);
+
+                        } catch (Exception e) {
+                            Toast.makeText(
+                                            DoorAccess_elevator.this,
+                                            "請確認IP以及熱感機連線狀態",
+                                            Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                });
+
+        alertDialog.setTitle("IP設定");
+        alertDialog.setView(view);
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
     }
 }

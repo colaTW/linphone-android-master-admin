@@ -11,60 +11,126 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.95"
+        android:layout_weight="0.9"
         android:background="#202127">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.3"
             android:orientation="vertical">
-
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="200dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bt23"
+                    android:scaleType="centerInside" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Spinner
+                        android:id="@+id/select_group"
+                        android:popupBackground="@color/black_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <Spinner
+                        android:id="@+id/select_type"
+                        android:popupBackground="@color/black_color"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        />
+                    <EditText
+                        android:textColor="@color/white_color"
+                        android:id="@+id/select_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/select"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/bt20" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="200dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bt24"
+                    android:scaleType="centerInside" />
 
                 <ExpandableListView
                     android:id="@+id/departmentlist"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:childDivider="#800000FF"
-                    android:divider="#800000FF"
-                    android:dividerHeight="1dp"
-                    android:fadeScrollbars="false"
-                    android:background="@drawable/mylistpadding"/>
+                    android:listSelector="@android:color/transparent" >
+                </ExpandableListView>
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.9"
                 android:orientation="vertical">
                <TextView
+                   android:id="@+id/title"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:gravity="center"
-                   android:text="人員名單"
+                   android:text=""
                    android:textColor="@color/white_color"
                    android:textSize="20dp"
                    />
+
                 <ListView
                     android:id="@+id/memberlist"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/mylistpadding"
                     android:childDivider="#80FF0000"
                     android:divider="#800000FF"
                     android:dividerHeight="1dp"
-                    android:fadeScrollbars="false"
-                    android:background="@drawable/mylistpadding"/>
+                    android:fadeScrollbars="false" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,6 +138,31 @@
                 android:layout_weight="0.1"
                 android:orientation="horizontal"
                 android:gravity="center">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/selectall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="全選"/>
+                    <Button
+                        android:id="@+id/confirmlistbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="選取人員"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="gone">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,12 +198,15 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.3"
             android:gravity="right"
             android:orientation="vertical"
             android:background="@drawable/mylistpadding">
@@ -120,13 +214,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.5"
+                android:layout_weight="0.9"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="選取名單"
+                    android:text="選取人員名單"
                     android:textColor="@color/white_color"
                     android:textSize="20dp"
                     />
@@ -145,25 +239,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
+                android:layout_weight="0.1"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/clearall"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="選取單位"
-                    android:textColor="@color/white_color"
-                    android:textSize="20dp"
-                    />
-                <ListView
-                    android:id="@+id/confirmgroup"
+                    android:text="全部清除"/>
+                <LinearLayout
+                    android:gravity="right"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:childDivider="#80FF0000"
-                    android:divider="#800000FF"
-                    android:dividerHeight="1dp"
-                    android:fadeScrollbars="false"
-                    />
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/nextstep"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="確認" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -172,17 +265,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1"
-        android:gravity="bottom"
-        android:background="#202127">
-        <Button
-            android:id="@+id/nextstep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="下一步"/>
-    </LinearLayout>
+
 
 </LinearLayout>

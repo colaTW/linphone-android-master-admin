@@ -50,6 +50,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Needed to get the current Do Not Disturb policy -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <permission android:name="android.permission.STATUS_BAR_SERVICE"  />
+
 
     <supports-screens
         android:anyDensity="true"
@@ -60,7 +62,6 @@
 
 
     <application
-        android:name=".activities.RatKiller"
         android:allowBackup="false"
         android:icon="@drawable/appicon"
         android:label="@string/app_name"
@@ -129,6 +130,8 @@
 
         <activity
             android:name=".settings.SettingsActivity"/>
+
+
 
         <activity
             android:name=".chat.ChatActivity"
@@ -201,43 +204,85 @@
         <!-- Assistant activities -->
         <activity
             android:name=".assistant.memberdatabase"
-            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity
+            android:name=".WebSocket.JWebSocketClient"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.member_modify"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.ApporvedList"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.DoorAccess"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.DoorAccess_floor"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.DoorAccess_elevator"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity
+            android:name=".assistant.DoorAccess_floor_elevtor"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity
+            android:name=".assistant.DoorAccess_longtime"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity
+            android:name=".assistant.modify_floor"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity
+            android:name=".assistant.modify_elevator"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.BApage"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.BAlist"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.AccesCard"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.Guardpage"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity
+            android:name=".assistant.Guardpage2"
+            android:screenOrientation="landscape"
+            />
+        <activity
+            android:name=".assistant.Guardpage_addnew"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity
             android:name=".assistant.MenuAssistantActivity"

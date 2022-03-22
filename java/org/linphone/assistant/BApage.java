@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import java.security.acl.Group;
@@ -31,12 +32,14 @@ public class BApage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bapage);
-        ExpandableListView memberlist = findViewById(R.id.memberlist);
+        SharedPreferences sPrefs = getSharedPreferences("Domain", MODE_PRIVATE);
+        final String DomainIP = sPrefs.getString("IP", "");
         ImageButton goBA = findViewById(R.id.B_BA);
         ImageButton godoor = findViewById(R.id.B_door);
         ImageButton gocall = findViewById(R.id.B_call);
         ImageButton goguard = findViewById(R.id.B_Guard);
-        Button golist = findViewById(R.id.golist);
+        ImageButton golist = findViewById(R.id.golist);
+
         // final ListView BAlist = findViewById(R.id.BAlist);
         WebView baweb = findViewById(R.id.Baweb);
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -47,6 +50,8 @@ public class BApage extends Activity {
 
         baweb.getSettings().setJavaScriptEnabled(true);
         baweb.setWebViewClient(new WebViewClient()); // 不調用系統瀏覽器
+        baweb.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        baweb.getSettings().setDomStorageEnabled(true);
         baweb.loadUrl("http://18.181.171.107/riway_BA/BAview.html");
         golist.setOnClickListener(
                 new View.OnClickListener() {
@@ -113,6 +118,8 @@ public class BApage extends Activity {
             runOnUiThread(
                     new Runnable() {
                         public void run() {
+                            SharedPreferences sPrefs = getSharedPreferences("Domain", MODE_PRIVATE);
+                            final String DomainIP = sPrefs.getString("IP", "");
                             baweb.loadUrl("http://18.181.171.107/riway_BA/BAview.html");
                         }
                     });

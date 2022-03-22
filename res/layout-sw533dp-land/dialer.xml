@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg01"
     >
 
     <RelativeLayout
@@ -33,19 +34,18 @@
     <include
         android:id="@+id/numpad"
         layout="@layout/numpad"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
         android:layout_above="@id/controls"
         android:layout_below="@id/address_bar"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="-14dp"
-        android:layout_marginBottom="14dp"
+        android:layout_centerHorizontal="true"
         android:padding="10dp" />
 
     <LinearLayout
         android:id="@+id/controls"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="2dp">
@@ -85,31 +85,67 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             >
-        <org.linphone.views.CallButton
-            android:id="@+id/alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/controls"
-            android:layout_alignTop="@+id/controls"
-            android:layout_alignParentTop="true"
-            android:layout_weight="0.5"
-            android:background="@drawable/call_guard"></org.linphone.views.CallButton>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <org.linphone.views.CallButton
-            android:id="@+id/B_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/controls"
-            android:layout_weight="0.5"
-            android:background="@drawable/call_home"></org.linphone.views.CallButton>
+                <org.linphone.views.CallButton
+                    android:id="@+id/alarm2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/controls"
+                    android:layout_alignTop="@+id/controls"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="2.5dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:layout_gravity="center"
+                    android:background="#212227"
+                    android:src="@drawable/b005"></org.linphone.views.CallButton>
+                <org.linphone.views.CallButton
+                    android:id="@+id/alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2.5dp"
+                    android:layout_alignStart="@+id/controls"
+                    android:layout_alignTop="@+id/controls"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:layout_gravity="center"
+                    android:background="#212227"
 
+                    android:src="@drawable/b006"></org.linphone.views.CallButton>
+                <org.linphone.views.CallButton
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_alignStart="@+id/controls"
+                    android:layout_alignTop="@+id/controls"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/b006"></org.linphone.views.CallButton>
+            </LinearLayout>
         <org.linphone.views.CallButton
+            android:layout_marginTop="20dp"
             android:id="@+id/start_call2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_alignStart="@+id/controls"
-            android:layout_weight="0.5"
-            android:background="@drawable/call_send"></org.linphone.views.CallButton>
+            android:layout_weight="0.7"
+            android:background="@drawable/b003"></org.linphone.views.CallButton>
+
+            <org.linphone.views.CallButton
+                android:layout_marginTop="20dp"
+                android:id="@+id/B_home"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_alignStart="@+id/controls"
+                android:layout_weight="0.5"
+                android:scaleType="centerInside"
+                android:background="#212227"
+                android:src="@drawable/b004"></org.linphone.views.CallButton>
         </LinearLayout>
 
         <org.linphone.views.CallButton

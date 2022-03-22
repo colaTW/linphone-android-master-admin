@@ -7,55 +7,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical">
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:stretchColumns="*"
-        android:layout_marginRight="5dp">
 
-        <TableRow>
-            <ImageButton
-                android:id="@+id/B_BA"
-                android:layout_width="1dp"
-                android:layout_height="90dp"
-                android:src="@drawable/buttun1_a"
-                android:background="#262A2F"
-                android:scaleType="fitXY"/>
-            <ImageButton
-                android:id="@+id/B_door"
-                android:layout_width="1dp"
-                android:layout_height="90dp"
-                android:src="@drawable/buttun2_b"
-                android:background="#262A2F"
-                android:clickable="false"
-                android:scaleType="fitXY"/>
-
-            <ImageButton
-                android:id="@+id/B_call"
-                android:layout_width="1dp"
-                android:layout_height="90dp"
-                android:src="@drawable/buttun3_a"
-                android:background="#262A2F"
-                android:scaleType="fitXY"/>
-            <ImageButton
-                android:id="@+id/B_Guard"
-                android:layout_width="1dp"
-                android:layout_height="90dp"
-                android:src="@drawable/buttun5_a"
-                android:background="#262A2F"
-                android:scaleType="fitXY"/>
-
-
-        </TableRow>
-
-
-    </TableLayout>
-
-</LinearLayout>
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -65,92 +17,128 @@ android:orientation="vertical">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_weight="0.2"
+        android:orientation="vertical"
+        android:layout_marginRight="20dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/buttun2_a"/>
 
         <ImageButton
             android:id="@+id/memberdata"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:enabled="false"
-            android:background="@drawable/b9_b" />
-        <Button
+            android:src="@drawable/b9_b"
+            android:scaleType="centerInside"
+            android:background="#262A2F"
+            android:layout_marginBottom="15dp"/>
+
+        <ImageButton
             android:id="@+id/dooracess"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:background="@drawable/b10_a" />
-        <Button
+            android:layout_height="0dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:background="#262A2F"
+            android:scaleType="centerInside"
+            android:src="@drawable/b10_a" />
+
+        <ImageButton
             android:id="@+id/approvedList"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:background="@drawable/b11_a" />
-        <Button
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/b11_a"
+            android:scaleType="centerInside"
+            android:background="#262A2F"
+            android:layout_marginBottom="15dp"/>
+        <ImageButton
             android:id="@+id/AccessCard"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:background="@drawable/b12_a" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <LinearLayout
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/b12_a"
+            android:scaleType="centerInside"
+            android:background="#262A2F"
+            android:layout_marginBottom="15dp"
+            />
+        <ImageButton
+            android:id="@+id/Longtime"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ExpandableListView
-                android:id="@+id/grouplist"
-                android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/b12_a"
+            android:scaleType="centerInside"
+            android:background="#262A2F"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/returnback"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:listSelector="@android:color/transparent" >
-            </ExpandableListView>
+                android:src="@drawable/b12_a"
+                android:scaleType="centerInside"
+                android:text="返回上一頁"
+                />
+            <Button
+                android:id="@+id/gomain"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/b12_a"
+                android:scaleType="centerInside"
+                android:text="回到主畫面"
+                />
+
         </LinearLayout>
-
-
-
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.4"
         android:orientation="vertical"
         android:overScrollMode="always"
+        android:background="#2B2D35"
+        android:layout_marginRight="20dp"
         >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/bt21"
+            android:layout_marginBottom="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="姓名:"
-                android:textColor="@color/white_color" />
+                android:text="類別:"
+                android:textColor="@color/white_color"
+                />
 
-            <EditText
-                android:id="@+id/Editname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white_color" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
+            <Spinner
+                android:popupBackground="@color/black_color"
+                android:id="@+id/groupLv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="電話:"
-                android:textColor="@color/white_color" />
-            <EditText
-                android:id="@+id/Editphone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white_color" />
+                />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -162,79 +150,146 @@ android:orientation="vertical">
                 android:text="部門:"
                 android:textColor="@color/white_color"
                 />
-
-            <Spinner
-                android:popupBackground="@color/black_color"
-                android:id="@+id/groupLv1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="　　 "
-                android:textColor="@color/white_color"
-                />
             <Spinner
                 android:popupBackground="@color/black_color"
                 android:id="@+id/groupLv2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="密碼:"
-                android:textColor="@color/white_color" />
+                android:text="姓名:"
+                android:textColor="@color/white_color"
+                />
+
             <EditText
+
+                android:id="@+id/Editname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white_color"
-                android:inputType="textPassword"/>
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="電話:"
+                android:textColor="@color/white_color"
+                />
+            <EditText
+                android:id="@+id/Editphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_color"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="發卡類型:"
+            android:textColor="@color/white_color"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioGroup
+                    android:id="@+id/cardtype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                        <RadioButton
+                            android:id="@+id/phoneApp"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white_color" />
+                        <RadioButton
+                            android:id="@+id/QRcode"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white_color" />
+                        <RadioButton
+                            android:id="@+id/card"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white_color" />
+                </RadioGroup>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="發卡類型"
-                android:textColor="@color/white_color" />
-            <RadioGroup
-                android:id="@+id/cardtype"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <RadioButton
-                    android:id="@+id/QRcode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="QRcode"
-                    android:textColor="@color/white_color" />
-                <RadioButton
-                    android:id="@+id/card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="card"
-                    android:textColor="@color/white_color" />
 
-            </RadioGroup>
 
-            <Button
-                android:id="@+id/sendButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="確認新增"
-                />
+                android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginRight="20dp">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/bt16"
+                            android:scaleType="centerInside"
+                            android:layout_marginBottom="10dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginRight="20dp">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/bt18"
+                            android:scaleType="centerInside"
+                            android:layout_marginBottom="10dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/bt17"
+                            android:scaleType="centerInside"
+                            android:layout_marginBottom="10dp"/>
+                    </LinearLayout>
+
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
         <ProgressBar
@@ -252,22 +307,118 @@ android:orientation="vertical">
             android:visibility="invisible">
 
             <TextView
+                android:id="@+id/card_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="卡號:"
-                android:textColor="@color/white_color" />
+                android:textColor="@color/white_color"
+                />
             <EditText
+                android:id="@+id/cardNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white_color" />
+                android:textColor="@color/white_color"
+                />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right">
+            android:gravity="center">
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bt19"
+                />
 
         </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:background="#2B2D35"
+        android:orientation="vertical"
+        android:layout_marginRight="20dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/bt22"
+            android:layout_marginBottom="10dp"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:background="@drawable/bt23"
+                android:scaleType="centerInside" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <Spinner
+                    android:id="@+id/select_type"
+                    android:popupBackground="@color/black_color"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    />
+                <EditText
+                    android:textColor="@color/white_color"
+                    android:id="@+id/select_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+
+                <Button
+                    android:id="@+id/select"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bt20" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:background="@drawable/bt24"
+                android:scaleType="centerInside" />
+
+            <ExpandableListView
+                android:id="@+id/grouplist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:listSelector="@android:color/transparent" >
+            </ExpandableListView>
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

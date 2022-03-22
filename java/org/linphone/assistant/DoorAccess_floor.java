@@ -101,7 +101,7 @@ public class DoorAccess_floor extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(DoorAccess_floor.this, Guardpage.class);
+                        intent.setClass(DoorAccess_floor.this, Guardpage2.class);
                         startActivity(intent);
                     }
                 });
@@ -270,7 +270,32 @@ public class DoorAccess_floor extends Activity {
                                 new ArrayAdapter(DoorAccess_floor.this, R.layout.mylist_item);
 
                         Map<String, String> map = childData.get(groupPosition).get(childPosition);
-                        String get =
+                        Log.e(
+                                "isSelected",
+                                childData
+                                        .get(groupPosition)
+                                        .get(childPosition)
+                                        .get("isSelected")
+                                        .toString());
+                        if (childData
+                                .get(groupPosition)
+                                .get(childPosition)
+                                .get("isSelected")
+                                .equals("false")) {
+                            childData
+                                    .get(groupPosition)
+                                    .get(childPosition)
+                                    .put("isSelected", "true");
+                        } else {
+                            childData
+                                    .get(groupPosition)
+                                    .get(childPosition)
+                                    .put("isSelected", "false");
+                        }
+                        adapter.notifyDataSetChanged();
+                        return false;
+
+                        /* String get =
                                 childData
                                         .get(groupPosition)
                                         .get(childPosition)
@@ -320,7 +345,7 @@ public class DoorAccess_floor extends Activity {
                             member_adapter.clear();
                             member_adapter.addAll(member);
                             memberlist.setAdapter(member_adapter);
-                        }
+                        }/*
 
                         /*  if (member.contains(get)) {
                             Toast.makeText(DoorAccess_floor.this, "已在選取名單內", Toast.LENGTH_SHORT)
@@ -347,8 +372,6 @@ public class DoorAccess_floor extends Activity {
                         } catch (Exception e) {
                                                 }*/
 
-                        adapter.notifyDataSetChanged();
-                        return false;
                     }
                 });
     }
@@ -455,6 +478,7 @@ public class DoorAccess_floor extends Activity {
                         map.put(
                                 "Dep_DeployDevice_Id",
                                 IDarray.get(i).get(j).get("Dep_DeployDevice_Id"));
+                        map.put("isSelected", "false");
 
                         list.add(map);
                     }
@@ -513,6 +537,11 @@ public class DoorAccess_floor extends Activity {
                     childData.get(groupPosition).get(childPosition).get("childItem"));
 
             String isChecked = childData.get(groupPosition).get(childPosition).get("isChecked");
+            if (childData.get(groupPosition).get(childPosition).get("isSelected").equals("false")) {
+                convertView.setBackgroundColor(0x202127);
+            } else {
+                convertView.setBackgroundColor(0xFF00FFFF);
+            }
             holder.TextID.setText(
                     childData.get(groupPosition).get(childPosition).get("DeployDevice_Id"));
             holder.childText.setOnClickListener(
@@ -627,39 +656,39 @@ public class DoorAccess_floor extends Activity {
             /*
              * groupListView的点击事件
              */
-            holder.groupBox.setOnClickListener(
-                    new View.OnClickListener() {
+            /*  holder.groupBox.setOnClickListener(
+            new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-                            CheckBox groupBox = (CheckBox) v.findViewById(R.id.id_group_checkbox);
-                            if (!isExpanded) {
-                                // 展开某个group view
-                                exListView.expandGroup(groupPosition);
-                            } else {
-                                // 关闭某个group view
-                                exListView.collapseGroup(groupPosition);
-                            }
+                @Override
+                public void onClick(View v) {
+                    CheckBox groupBox = (CheckBox) v.findViewById(R.id.id_group_checkbox);
+                    if (!isExpanded) {
+                        // 展开某个group view
+                        exListView.expandGroup(groupPosition);
+                    } else {
+                        // 关闭某个group view
+                        exListView.collapseGroup(groupPosition);
+                    }
 
-                            if ("No".equals(isGroupCheckd)) {
-                                exListView.expandGroup(groupPosition);
-                                groupBox.setChecked(true);
-                                parentList.get(groupPosition).put("isGroupCheckd", "Yes");
-                                List<Map<String, String>> list = childData.get(groupPosition);
-                                for (Map<String, String> map : list) {
-                                    map.put("isChecked", "Yes");
-                                }
-                            } else {
-                                groupBox.setChecked(false);
-                                parentList.get(groupPosition).put("isGroupCheckd", "No");
-                                List<Map<String, String>> list = childData.get(groupPosition);
-                                for (Map<String, String> map : list) {
-                                    map.put("isChecked", "No");
-                                }
-                            }
-                            notifyDataSetChanged();
+                    if ("No".equals(isGroupCheckd)) {
+                        exListView.expandGroup(groupPosition);
+                        groupBox.setChecked(true);
+                        parentList.get(groupPosition).put("isGroupCheckd", "Yes");
+                        List<Map<String, String>> list = childData.get(groupPosition);
+                        for (Map<String, String> map : list) {
+                            map.put("isChecked", "Yes");
                         }
-                    });
+                    } else {
+                        groupBox.setChecked(false);
+                        parentList.get(groupPosition).put("isGroupCheckd", "No");
+                        List<Map<String, String>> list = childData.get(groupPosition);
+                        for (Map<String, String> map : list) {
+                            map.put("isChecked", "No");
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+            });*/
 
             return convertView;
         }

@@ -7,55 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:stretchColumns="*"
-            android:layout_marginRight="5dp">
-
-            <TableRow>
-                <ImageButton
-                    android:id="@+id/B_BA"
-                    android:layout_width="1dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/buttun1_a"
-                    android:background="#262A2F"
-                    android:scaleType="fitXY"/>
-                <ImageButton
-                    android:id="@+id/B_door"
-                    android:layout_width="1dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/buttun2_b"
-                    android:background="#262A2F"
-                    android:clickable="false"
-                    android:scaleType="fitXY"/>
-
-                <ImageButton
-                    android:id="@+id/B_call"
-                    android:layout_width="1dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/buttun3_a"
-                    android:background="#262A2F"
-                    android:scaleType="fitXY"/>
-                <ImageButton
-                    android:id="@+id/B_Guard"
-                    android:layout_width="1dp"
-                    android:layout_height="90dp"
-                    android:src="@drawable/buttun5_a"
-                    android:background="#262A2F"
-                    android:scaleType="fitXY"/>
-
-
-            </TableRow>
-
-
-        </TableLayout>
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,127 +16,276 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+
+                android:scaleType="centerInside"
+                android:src="@drawable/buttun2_a"/>
 
             <ImageButton
                 android:id="@+id/memberdata"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:enabled="false"
-                android:background="@drawable/b9_a" />
-            <Button
+                android:src="@drawable/b9_a"
+                android:scaleType="centerInside"
+                android:background="#262A2F"
+                android:layout_marginBottom="15dp"/>
+            <ImageButton
                 android:id="@+id/dooracess"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/b10_a" />
-            <Button
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/b10_a"
+                android:scaleType="centerInside"
+                android:background="#262A2F"
+                android:layout_marginBottom="15dp"/>
+
+            <ImageButton
                 android:id="@+id/approvedList"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/b11_b" />
-            <Button
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="15dp"
+                android:background="#262A2F"
+                android:scaleType="centerInside"
+                android:src="@drawable/b11_b" />
+
+            <ImageButton
                 android:id="@+id/AccessCard"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/b12_a" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/b12_a"
+                android:scaleType="centerInside"
+                android:background="#262A2F"
+                android:layout_marginBottom="15dp"
+
+                />
+            <ImageButton
+                android:id="@+id/Longtime"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/b12_a"
+                android:scaleType="centerInside"
+                android:background="#262A2F"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/returnback"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/b12_a"
+                    android:scaleType="centerInside"
+                    android:text="返回上一頁"
+                    />
+                <Button
+                    android:id="@+id/gomain"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/b12_a"
+                    android:scaleType="centerInside"
+                    android:text="回到主畫面"
+                    />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <ExpandableListView
+            android:layout_weight="0.4"
+            android:background="#2B2D35"
+            android:layout_marginRight="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="200dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bt23"
+                    android:scaleType="centerInside" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Spinner
+                        android:id="@+id/select_group"
+                        android:popupBackground="@color/black_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <Spinner
+                        android:id="@+id/select_type"
+                        android:popupBackground="@color/black_color"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        />
+                    <EditText
+                        android:textColor="@color/white_color"
+                        android:id="@+id/select_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/select"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/bt20" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="200dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/bt24"
+                    android:scaleType="centerInside" />
+
+                <ExpandableListView
+                    android:id="@+id/grouplist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:listSelector="@android:color/transparent" >
+                </ExpandableListView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:background="#2B2D35"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="搜尋人員名單"
+                android:textColor="@color/white_color"
+                android:textSize="20dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:orientation="vertical"
+                android:gravity="center">
+            <ListView
                 android:id="@+id/memberlist"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="#800000FF"
+                android:layout_height="wrap_content"
                 android:childDivider="#80FF0000"
-                android:dividerHeight="1dp"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="姓名:" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:divider="#800000FF"
+                android:dividerHeight="1dp"
+                android:fadeScrollbars="false"
+                android:background="#2B2D35"
+                />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="vertical"
+                android:gravity="center">
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="電話:" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/lastpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible"
+                        android:text="上一頁"/>
+                    <TextView
+                        android:id="@+id/nowpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:id="@+id/totalpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white_color"/>
+                    <Button
+                        android:id="@+id/nextpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="下一頁"
+                        android:visibility="invisible"
+                        />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="部門:" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/print"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="臨時證列印"/>
+                    <Button
+                        android:id="@+id/selectaccess"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="人員查詢"/>
+                </LinearLayout>
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="密碼:" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="發卡類型"/>
-               <Spinner
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"/>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="卡號:" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
 
         </LinearLayout>
 

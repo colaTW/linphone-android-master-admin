@@ -9,7 +9,9 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#262A2F"
+        >
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,14 +26,14 @@
                     android:layout_height="90dp"
                     android:src="@drawable/buttun1_a"
                     android:background="#262A2F"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerInside"/>
                 <ImageButton
                     android:id="@+id/B_door"
                     android:layout_width="1dp"
                     android:layout_height="90dp"
                     android:src="@drawable/buttun2_a"
                     android:background="#262A2F"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerInside"/>
 
                 <ImageButton
                     android:id="@+id/B_call"
@@ -39,14 +41,14 @@
                     android:layout_height="90dp"
                     android:src="@drawable/buttun3_a"
                     android:background="#262A2F"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerInside"/>
                 <ImageButton
                     android:id="@+id/B_Guard"
                     android:layout_width="1dp"
                     android:layout_height="90dp"
                     android:src="@drawable/buttun5_b"
                     android:background="#262A2F"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerInside"/>
 
 
             </TableRow>
@@ -64,107 +66,404 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <ExpandableListView
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:background="#2B2D35"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9">
+            <ListView
                 android:id="@+id/memberlist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="#800000FF"
                 android:childDivider="#80FF0000"
-                android:dividerHeight="1dp"/>
+                android:divider="#800000FF"
+                android:dividerHeight="1dp"
+                android:fadeScrollbars="false"
+                android:background="@drawable/mylistpadding"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/lastpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="←"/>
+                    <TextView
+                        android:id="@+id/nowpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="@color/white_color"/>
+                    <TextView
+                        android:id="@+id/totalpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:textColor="@color/white_color"/>
+                    <Button
+                        android:id="@+id/nextpage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="→"
+                        />
+                </LinearLayout>
 
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/addnew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新增名單"/>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
+            android:layout_weight="0.3"
+            android:orientation="vertical"
+            android:background="#2B2D35"
+            android:layout_marginRight="10dp">
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="姓名:" />
-                <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="電話:" />
-                <EditText
+                    android:paddingBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期一:"
+                        android:textColor="@color/white_color"
+                        />
+                    <TextView
+                        android:id="@+id/monday_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                    <TextView
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+
+                        android:text="~"/>
+                    <TextView
+                        android:id="@+id/monday_endtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="部門:" />
-                <EditText
+                    android:paddingBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期二:"
+                        android:textColor="@color/white_color"
+
+                        />
+                    <TextView
+                        android:id="@+id/tuesday_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                    <TextView
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+
+                        android:text="~"/>
+                    <TextView
+                        android:id="@+id/tuesday_endtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="密碼:" />
-                <EditText
+                    android:paddingBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期三:"
+                        android:textColor="@color/white_color"
+
+                        />
+                    <TextView
+                        android:id="@+id/wednesday_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                    <TextView
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+
+                        android:text="~"/>
+                    <TextView
+                        android:id="@+id/wednesday_endtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="發卡類型"/>
-               <Spinner
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"/>
-            </LinearLayout>
+                    android:paddingBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期四:"
+                        android:textColor="@color/white_color"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                        />
+                    <TextView
+                        android:id="@+id/thursday_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                    <TextView
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="卡號:" />
-                <EditText
+                        android:text="~"/>
+                    <TextView
+                        android:id="@+id/thursday_endtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期五:"
+                        android:textColor="@color/white_color"
+
+                        />
+                    <TextView
+                        android:id="@+id/friday_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                    <TextView
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+
+                        android:text="~"/>
+                    <TextView
+                        android:id="@+id/friday_endtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期六:"
+                        android:textColor="@color/white_color"
+
+                        />
+                    <TextView
+                        android:id="@+id/saturday_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                    <TextView
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+
+                        android:text="~"/>
+                    <TextView
+                        android:id="@+id/saturday_endtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期日:"
+                        android:textColor="@color/white_color"
+
+                        />
+                    <TextView
+                        android:id="@+id/sunday_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                    <TextView
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+
+                        android:text="~"/>
+                    <TextView
+                        android:id="@+id/sunday_endtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_color"
+                        android:text="00:00"
+                        android:textSize="25dp"
+                        android:background="@color/primary_light_color"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <Button
+                        android:id="@+id/apply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更新推撥時段"/>
+                </LinearLayout>
             </LinearLayout>
 
+
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:orientation="horizontal"
+            android:background="#2B2D35"
+            android:layout_marginRight="10dp"
+            >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="推播開關:"
+                    android:textColor="@color/white_color"
+                    />
+                <Switch
+                    android:id="@+id/isnotify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <ImageButton
+                android:id="@+id/IPsetting"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom"
+                android:background="#2B2D35" />
         </LinearLayout>
 
     </LinearLayout>

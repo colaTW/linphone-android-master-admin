@@ -33,6 +33,7 @@ import org.linphone.R;
 import org.linphone.core.TransportType;
 
 public class login extends AssistantActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -123,6 +124,7 @@ public class login extends AssistantActivity {
                                 String show = new String(buffer, 0, byteCount, "utf-8");
                                 System.out.println(show);
                                 fin.close();
+
                             } else {
                                 Toast.makeText(login.this, error, Toast.LENGTH_SHORT).show();
                             }

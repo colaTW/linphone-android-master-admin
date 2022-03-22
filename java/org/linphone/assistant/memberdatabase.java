@@ -2,6 +2,7 @@ package org.linphone.assistant;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +43,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.linphone.R;
-import org.linphone.activities.DialerActivity;
 
 public class memberdatabase extends Activity {
 
@@ -58,29 +59,72 @@ public class memberdatabase extends Activity {
     ArrayAdapter<String> adapterLv2;
     ArrayList<String> Lv1 = new ArrayList<>();
     final ArrayList<ArrayList<String>> Lv2 = new ArrayList<>();
+    JSONArray departmentsdata = new JSONArray();
     String nextdata;
+    final ArrayList select_type_name = new ArrayList<>();
+    private Spinner select_type;
+    EditText select_name;
+    String DomainIP = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.memberdatabase);
-        ImageButton goBA = findViewById(R.id.B_BA);
-        ImageButton gocall = findViewById(R.id.B_call);
-        ImageButton goguard = findViewById(R.id.B_Guard);
-        Button dooracess = findViewById(R.id.dooracess);
-        Button approvedlist = findViewById(R.id.approvedList);
-        Button accescard = findViewById(R.id.AccessCard);
-        RadioButton cardbutton = findViewById(R.id.card);
+        ImageButton dooracess = findViewById(R.id.dooracess);
+        ImageButton approvedlist = findViewById(R.id.approvedList);
+        ImageButton accescard = findViewById(R.id.AccessCard);
+        ImageButton longtime = findViewById(R.id.Longtime);
+        final RadioGroup cardtype = findViewById(R.id.cardtype);
+        final RadioButton cardbutton = findViewById(R.id.card);
         RadioButton QRbutton = findViewById(R.id.QRcode);
+        RadioButton phoneApp = findViewById(R.id.phoneApp);
         Button sendButton = findViewById(R.id.sendButton);
         final LinearLayout cardlayout = findViewById(R.id.cardlayout);
         final EditText nametext = findViewById(R.id.Editname);
         final EditText phone = findViewById(R.id.Editphone);
+        final EditText cardNumber = findViewById(R.id.cardNumber);
         final ProgressBar sendspiner = findViewById(R.id.sendspiner);
+        final Spinner select_type = findViewById(R.id.select_type);
+        Button select_button = findViewById(R.id.select);
+        Button returnback = findViewById(R.id.returnback);
+        Button gomain = findViewById(R.id.gomain);
+        select_name = findViewById(R.id.select_name);
+        SharedPreferences sPrefs = getSharedPreferences("Domain", MODE_PRIVATE);
+        DomainIP = sPrefs.getString("IP", "");
+        select_type_name.add("電話");
+        select_type_name.add("姓名");
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(
+                        memberdatabase.this, R.layout.myspinner_item, select_type_name);
+        adapter.setDropDownViewResource(R.layout.myspinner_dropitem);
+        select_type.setAdapter(adapter);
         sendspiner.setVisibility(View.INVISIBLE);
         sendspiner.setVisibility(View.VISIBLE);
 
+        returnback.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+        gomain.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(memberdatabase.this, BApage.class);
+                        startActivity(intent);
+                    }
+                });
         QRbutton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cardlayout.setVisibility(View.INVISIBLE);
+                    }
+                });
+        phoneApp.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -109,79 +153,195 @@ public class memberdatabase extends Activity {
                                                             @Override
                                                             public void run() {
                                                                 try {
+                                                                    String x;
+                                                                    x =
+                                                                            departmentsdata
+                                                                                    .getJSONObject(
+                                                                                            groupLv1
+                                                                                                    .getSelectedItemPosition())
+                                                                                    .getJSONArray(
+                                                                                            "childs")
+                                                                                    .getJSONObject(
+                                                                                            groupLv2
+                                                                                                    .getSelectedItemPosition())
+                                                                                    .getString(
+                                                                                            "id");
                                                                     URL url =
                                                                             new URL(
-                                                                                    "http://18.181.171.107/riway/api/v1/clients/main/one");
-                                                                    JSONObject jo =
-                                                                            new JSONObject();
-                                                                    jo.put(
-                                                                            "name",
-                                                                            nametext.getText()
-                                                                                    .toString());
-                                                                    jo.put(
-                                                                            "phone",
-                                                                            phone.getText()
-                                                                                    .toString());
-                                                                    jo.put(
-                                                                            "mobile",
-                                                                            phone.getText()
-                                                                                    .toString());
-                                                                    HttpClient httpClient =
-                                                                            new DefaultHttpClient();
-                                                                    AbstractHttpEntity entity =
-                                                                            new ByteArrayEntity(
-                                                                                    jo.toString()
-                                                                                            .getBytes(
-                                                                                                    "UTF8"));
-                                                                    entity.setContentType(
-                                                                            new BasicHeader(
-                                                                                    HTTP.CONTENT_TYPE,
-                                                                                    "application/json"));
-                                                                    HttpPost httpPost =
-                                                                            new HttpPost(
-                                                                                    url.toURI());
-                                                                    httpPost.setEntity(entity);
-                                                                    // Prepare JSON to send by
-                                                                    // setting the entity
-                                                                    HttpResponse response =
-                                                                            httpClient.execute(
-                                                                                    httpPost);
-                                                                    String json_string =
-                                                                            EntityUtils.toString(
-                                                                                    response
-                                                                                            .getEntity());
-                                                                    JSONObject temp1 =
-                                                                            new JSONObject(
-                                                                                    json_string);
-                                                                    JSONObject data =
-                                                                            temp1.getJSONObject(
-                                                                                    "data");
-                                                                    String error =
-                                                                            data.getString(
-                                                                                    "errors");
-                                                                    if (error.equals("")) {
-                                                                        nametext.setText("");
-                                                                        phone.setText("");
-                                                                        sendspiner.setVisibility(
-                                                                                View.GONE);
-
+                                                                                    "http://"
+                                                                                            + DomainIP
+                                                                                            + "/riway/api/v1/clients/main/one");
+                                                                    if (nametext.getText()
+                                                                            .toString()
+                                                                            .equals("")) {
                                                                         Toast.makeText(
                                                                                         memberdatabase
                                                                                                 .this,
-                                                                                        "新增成功",
-                                                                                        Toast
-                                                                                                .LENGTH_LONG)
-                                                                                .show();
-                                                                    } else {
-                                                                        Toast.makeText(
-                                                                                        memberdatabase
-                                                                                                .this,
-                                                                                        error
-                                                                                                .toString(),
+                                                                                        "請輸入姓名",
                                                                                         Toast
                                                                                                 .LENGTH_SHORT)
                                                                                 .show();
+                                                                    } else if (phone.getText()
+                                                                            .toString()
+                                                                            .equals("")) {
+                                                                        Toast.makeText(
+                                                                                        memberdatabase
+                                                                                                .this,
+                                                                                        "請輸入電話",
+                                                                                        Toast
+                                                                                                .LENGTH_SHORT)
+                                                                                .show();
+
+                                                                    } else if (!phone.getText()
+                                                                            .toString()
+                                                                            .matches("[0-9]{10}")) {
+                                                                        Toast.makeText(
+                                                                                        memberdatabase
+                                                                                                .this,
+                                                                                        "請輸入正確電話(10碼數字)",
+                                                                                        Toast
+                                                                                                .LENGTH_SHORT)
+                                                                                .show();
+                                                                    } else if (cardtype
+                                                                                    .getCheckedRadioButtonId()
+                                                                            == -1) {
+                                                                        Toast.makeText(
+                                                                                        memberdatabase
+                                                                                                .this,
+                                                                                        "請選擇發卡類型",
+                                                                                        Toast
+                                                                                                .LENGTH_SHORT)
+                                                                                .show();
+
+                                                                    } else if (cardtype
+                                                                                            .getCheckedRadioButtonId()
+                                                                                    == R.id.card
+                                                                            && cardNumber
+                                                                                    .getText()
+                                                                                    .toString()
+                                                                                    .equals("")) {
+                                                                        Toast.makeText(
+                                                                                        memberdatabase
+                                                                                                .this,
+                                                                                        "實體卡需填入卡號",
+                                                                                        Toast
+                                                                                                .LENGTH_SHORT)
+                                                                                .show();
+                                                                    } else if (cardtype
+                                                                                            .getCheckedRadioButtonId()
+                                                                                    == R.id.card
+                                                                            && !cardNumber
+                                                                                    .getText()
+                                                                                    .toString()
+                                                                                    .matches(
+                                                                                            "[0-9]{10}")) {
+                                                                        Toast.makeText(
+                                                                                        memberdatabase
+                                                                                                .this,
+                                                                                        "請輸入正確卡號(10碼數字)",
+                                                                                        Toast
+                                                                                                .LENGTH_SHORT)
+                                                                                .show();
+                                                                    } else {
+                                                                        JSONObject jo =
+                                                                                new JSONObject();
+                                                                        jo.put(
+                                                                                "name",
+                                                                                nametext.getText()
+                                                                                        .toString());
+                                                                        jo.put(
+                                                                                "phone",
+                                                                                phone.getText()
+                                                                                        .toString());
+                                                                        jo.put(
+                                                                                "mobile",
+                                                                                phone.getText()
+                                                                                        .toString());
+
+                                                                        jo.put(
+                                                                                "groups",
+                                                                                new JSONArray(
+                                                                                        "[" + x
+                                                                                                + "]"));
+                                                                        jo.put(
+                                                                                "cardNumber",
+                                                                                cardNumber
+                                                                                        .getText()
+                                                                                        .toString());
+                                                                        Log.e("jo", jo.toString());
+                                                                        HttpClient httpClient =
+                                                                                new DefaultHttpClient();
+                                                                        AbstractHttpEntity entity =
+                                                                                new ByteArrayEntity(
+                                                                                        jo.toString()
+                                                                                                .getBytes(
+                                                                                                        "UTF8"));
+                                                                        entity.setContentType(
+                                                                                new BasicHeader(
+                                                                                        HTTP.CONTENT_TYPE,
+                                                                                        "application/json"));
+                                                                        HttpPost httpPost =
+                                                                                new HttpPost(
+                                                                                        url
+                                                                                                .toURI());
+                                                                        httpPost.setEntity(entity);
+                                                                        // Prepare JSON to send by
+                                                                        // setting the entity
+                                                                        HttpResponse response =
+                                                                                httpClient.execute(
+                                                                                        httpPost);
+                                                                        String json_string =
+                                                                                EntityUtils
+                                                                                        .toString(
+                                                                                                response
+                                                                                                        .getEntity());
+                                                                        JSONObject temp1 =
+                                                                                new JSONObject(
+                                                                                        json_string);
+                                                                        JSONObject data =
+                                                                                temp1.getJSONObject(
+                                                                                        "data");
+                                                                        String error =
+                                                                                data.getString(
+                                                                                        "errors");
+                                                                        if (error.equals("")) {
+                                                                            nametext.setText("");
+                                                                            phone.setText("");
+                                                                            sendspiner
+                                                                                    .setVisibility(
+                                                                                            View
+                                                                                                    .GONE);
+
+                                                                            Toast.makeText(
+                                                                                            memberdatabase
+                                                                                                    .this,
+                                                                                            "新增成功",
+                                                                                            Toast
+                                                                                                    .LENGTH_LONG)
+                                                                                    .show();
+                                                                        } else if (data.getString(
+                                                                                        "code")
+                                                                                .equals("37")) {
+                                                                            Toast.makeText(
+                                                                                            memberdatabase
+                                                                                                    .this,
+                                                                                            "手機號碼已被註冊",
+                                                                                            Toast
+                                                                                                    .LENGTH_LONG)
+                                                                                    .show();
+
+                                                                        } else {
+                                                                            Toast.makeText(
+                                                                                            memberdatabase
+                                                                                                    .this,
+                                                                                            error
+                                                                                                    .toString(),
+                                                                                            Toast
+                                                                                                    .LENGTH_SHORT)
+                                                                                    .show();
+                                                                        }
                                                                     }
+
                                                                 } catch (Exception e) {
                                                                     Toast.makeText(
                                                                                     memberdatabase
@@ -200,34 +360,6 @@ public class memberdatabase extends Activity {
                     }
                 });
 
-        goBA.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.setClass(memberdatabase.this, BApage.class);
-                        startActivity(intent);
-                    }
-                });
-
-        gocall.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.setClass(memberdatabase.this, DialerActivity.class);
-                        startActivity(intent);
-                    }
-                });
-        goguard.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.setClass(memberdatabase.this, Guardpage.class);
-                        startActivity(intent);
-                    }
-                });
         dooracess.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -253,6 +385,37 @@ public class memberdatabase extends Activity {
                         Intent intent = new Intent();
                         intent.setClass(memberdatabase.this, AccesCard.class);
                         startActivity(intent);
+                    }
+                });
+        longtime.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setClass(memberdatabase.this, DoorAccess_longtime.class);
+                        startActivity(intent);
+                    }
+                });
+        select_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            JSONObject body = new JSONObject();
+                            if (select_type.getSelectedItem().toString().equals("姓名")) {
+                                body.put("name", select_name.getText().toString());
+                            } else {
+                                body.put("mobile", select_name.getText().toString());
+                            }
+                            Intent intent = new Intent();
+                            intent.setClass(memberdatabase.this, member_modify.class);
+                            intent.putExtra("groupid", "0");
+                            intent.putExtra("data", nextdata);
+                            intent.putExtra("select", body.toString());
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Log.e("errors", e.toString());
+                        }
                     }
                 });
 
@@ -326,6 +489,7 @@ public class memberdatabase extends Activity {
                         intent.setClass(memberdatabase.this, member_modify.class);
                         intent.putExtra("groupid", no.toString());
                         intent.putExtra("data", nextdata);
+                        intent.putExtra("select", "");
                         startActivity(intent);
 
                         return false;
@@ -341,7 +505,8 @@ public class memberdatabase extends Activity {
                 new ArrayList<ArrayList<Map<String, String>>>();
 
         try {
-            HttpGet httpGet = new HttpGet("http://18.181.171.107/riway/api/v1/clients/departments");
+            HttpGet httpGet =
+                    new HttpGet("http://" + DomainIP + "/riway/api/v1/clients/departments");
             HttpClient httpClient = new DefaultHttpClient();
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 2000);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 2000);
@@ -350,6 +515,7 @@ public class memberdatabase extends Activity {
             String code = EntityUtils.toString(response.getEntity());
             JSONObject temp1 = new JSONObject(code);
             JSONArray array1 = temp1.getJSONArray("data");
+            departmentsdata = array1;
             nextdata = array1.toString();
             for (int x = 0; x < array1.length(); x++) {
                 JSONObject str_value = array1.getJSONObject(x);
@@ -359,12 +525,15 @@ public class memberdatabase extends Activity {
                 if (array2.length() > 0) {
                     ArrayList<Map<String, String>> test = new ArrayList<Map<String, String>>();
                     ArrayList<String> test2 = new ArrayList<>();
+                    ArrayList<String> ID = new ArrayList<>();
+
                     for (int y = 0; y < array2.length(); y++) {
                         JSONObject str_value2 = array2.getJSONObject(y);
                         Log.d("內容", str_value2 + "");
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("name", str_value2.getString("name"));
                         test2.add(str_value2.getString("name"));
+                        ID.add(str_value2.getString("id"));
                         map.put("ID", str_value2.getString("id"));
                         test.add(map);
                     }
@@ -407,6 +576,8 @@ public class memberdatabase extends Activity {
             ArrayAdapter<String> adapterLv1 =
                     new ArrayAdapter<String>(this, R.layout.myspinner_item, Lv1);
             adapterLv2 = new ArrayAdapter<String>(this, R.layout.myspinner_item, Lv2.get(1));
+            adapterLv1.setDropDownViewResource(R.layout.myspinner_dropitem);
+            adapterLv2.setDropDownViewResource(R.layout.myspinner_dropitem);
             groupLv1.setAdapter(adapterLv1);
             groupLv2.setAdapter(adapterLv2);
 
@@ -423,7 +594,21 @@ public class memberdatabase extends Activity {
                                         memberdatabase.this,
                                         R.layout.myspinner_item,
                                         Lv2.get(position));
+                        adapterLv2.setDropDownViewResource(R.layout.myspinner_dropitem);
+
                         groupLv2.setAdapter(adapterLv2);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {}
+                });
+        groupLv2.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(
+                            AdapterView<?> adapterView, View view, int position, long l) {
+                        Log.e("LV1", groupLv1.getSelectedItemPosition() + "");
+                        Log.e("LV2", groupLv2.getSelectedItemPosition() + "");
                     }
 
                     @Override
@@ -482,6 +667,7 @@ public class memberdatabase extends Activity {
                             intent.setClass(memberdatabase.this, member_modify.class);
                             intent.putExtra("groupid", holder.TextID.getText().toString());
                             intent.putExtra("data", nextdata);
+                            intent.putExtra("select", "");
                             startActivity(intent);
                         }
                     });

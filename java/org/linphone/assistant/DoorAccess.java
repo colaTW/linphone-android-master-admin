@@ -2,6 +2,7 @@ package org.linphone.assistant;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,8 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.net.URL;
@@ -42,14 +47,16 @@ public class DoorAccess extends Activity {
     int totalcount = 0;
     private ListView memberlist;
     private TextView totalpage;
-    private ListView confirmgroup;
+    private TextView title;
     final ArrayList member_id = new ArrayList<>();
-    final ArrayList confirm_id = new ArrayList<>();
     final ArrayList member_name = new ArrayList<>();
     final ArrayList confirm_name = new ArrayList<>();
     final ArrayList confirm_group_name = new ArrayList<>();
     final ArrayList confirm_group_id = new ArrayList<>();
-
+    final ArrayList select_group_name = new ArrayList<>();
+    final ArrayList select_group_id = new ArrayList<>();
+    final ArrayList select_type_name = new ArrayList<>();
+    final ArrayList parentList_ID = new ArrayList<>();
     private List<Map<String, String>> parentList = new ArrayList<Map<String, String>>();
     private List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
     private DoorAccess.MyAdapter adapter;
@@ -57,6 +64,13 @@ public class DoorAccess extends Activity {
     private HashSet<String> hashSet;
     String department = "";
     private TextView nowpage;
+    EditText select_name;
+    private Spinner select_type;
+    List<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+    List<HashMap<String, Object>> confirm_id = new ArrayList<HashMap<String, Object>>();
+    SimpleAdapter member_adapter;
+    SimpleAdapter confrim_adapter;
+    String DomainIP = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +79,31 @@ public class DoorAccess extends Activity {
         final ExpandableListView departmentlist = findViewById(R.id.departmentlist);
         final ListView memberlist = findViewById(R.id.memberlist);
         final ListView confirmlist = findViewById(R.id.confirmlist);
-        final ListView confirmgroup = findViewById(R.id.confirmgroup);
         Button nextstep = findViewById(R.id.nextstep);
         final Button lastpage = findViewById(R.id.lastpage);
         Button nextpage = findViewById(R.id.nextpage);
+        Button selectall = findViewById(R.id.selectall);
+        Button confrimbutton = findViewById(R.id.confirmlistbutton);
+        Button clearall = findViewById(R.id.clearall);
         final TextView nowpage = findViewById(R.id.nowpage);
-        TextView totalpage = findViewById(R.id.totalpage);
-        final ArrayAdapter department_adapter = new ArrayAdapter(this, R.layout.mylist_item);
-        final ArrayAdapter comfirm_adapter = new ArrayAdapter(this, R.layout.mylist_item);
-        final ArrayAdapter comfirm_group_adapter = new ArrayAdapter(this, R.layout.mylist_item);
+        final TextView totalpage = findViewById(R.id.totalpage);
+        Button select = findViewById(R.id.select);
+        final EditText select_name = findViewById(R.id.select_name);
+        final TextView title = findViewById(R.id.title);
+        final Spinner select_group = findViewById(R.id.select_group);
+        final Spinner select_type = findViewById(R.id.select_type);
+        select_group_name.add("全部");
+        select_group_id.add("0");
+        select_type_name.add("電話");
+        select_type_name.add("姓名");
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(
+                        DoorAccess.this, R.layout.myspinner_item, select_type_name);
+        adapter.setDropDownViewResource(R.layout.myspinner_dropitem);
+        select_type.setAdapter(adapter);
+        SharedPreferences sPrefs = getSharedPreferences("Domain", MODE_PRIVATE);
+        DomainIP = sPrefs.getString("IP", "");
+
         new Thread(
                         new Runnable() {
                             @Override
@@ -85,6 +115,14 @@ public class DoorAccess extends Activity {
                                                 initView();
                                                 initData();
                                                 setListener();
+                                                ArrayAdapter<String> adapterLv1 =
+                                                        new ArrayAdapter<String>(
+                                                                DoorAccess.this,
+                                                                R.layout.myspinner_item,
+                                                                select_group_name);
+                                                adapterLv1.setDropDownViewResource(
+                                                        R.layout.myspinner_dropitem);
+                                                select_group.setAdapter(adapterLv1);
                                             }
                                         });
                             }
@@ -92,63 +130,6 @@ public class DoorAccess extends Activity {
                 .start();
 
         // 增加標頭
-
-        confirmlist.setAdapter(comfirm_adapter);
-        confirmgroup.setAdapter(comfirm_group_adapter);
-        memberlist.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(
-                            AdapterView<?> parent, View view, int position, long id) {
-                        String stringText;
-                        // in normal case
-                        stringText = ((TextView) view).getText().toString();
-                        Log.e("confirm_id", confirm_id.toString());
-                        Log.e("member_id.get(position)", member_id.get(position).toString());
-
-                        if (confirm_id.contains(member_id.get(position))) {
-                            Toast.makeText(DoorAccess.this, "已在選取名單內", Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            int pos = member_name.indexOf(stringText);
-                            confirm_name.add(member_name.get(position));
-                            confirm_id.add(member_id.get(position));
-                            Log.e("23", confirm_name.toString());
-                            comfirm_adapter.clear();
-                            comfirm_adapter.addAll(confirm_name);
-                            confirmlist.setAdapter(comfirm_adapter);
-                        }
-                    }
-                });
-        confirmlist.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(
-                            AdapterView<?> parent, View view, int position, long id) {
-                        String stringText;
-                        stringText = ((TextView) view).getText().toString();
-                        int pos = confirm_name.indexOf(stringText);
-                        confirm_name.remove(position);
-                        confirm_id.remove(position);
-                        comfirm_adapter.clear();
-                        comfirm_adapter.addAll(confirm_name);
-                        confirmlist.setAdapter(comfirm_adapter);
-                    }
-                });
-        confirmgroup.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(
-                            AdapterView<?> parent, View view, int position, long id) {
-                        String stringText;
-                        stringText = ((TextView) view).getText().toString();
-                        confirm_group_name.remove(position);
-                        confirm_group_id.remove(position);
-                        comfirm_group_adapter.clear();
-                        comfirm_group_adapter.addAll(confirm_group_name);
-                        confirmgroup.setAdapter(comfirm_group_adapter);
-                    }
-                });
 
         lastpage.setOnClickListener(
                 new View.OnClickListener() {
@@ -174,18 +155,125 @@ public class DoorAccess extends Activity {
                         }
                     }
                 });
+        select.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        member_id.clear();
+                        member_name.clear();
+                        data.clear();
+                        now = 1;
+                        nowpage.setText("1");
+                        title.setText(
+                                select_group_name
+                                        .get(select_group.getSelectedItemPosition())
+                                        .toString());
+                        try {
+                            URL url =
+                                    new URL(
+                                            "http://"
+                                                    + DomainIP
+                                                    + "/riway/api/v1/clients/simple/main/list");
+                            JSONObject body = new JSONObject();
+                            body.put("page", 1);
+                            if (select_type.getSelectedItem().toString().equals("姓名")) {
+                                body.put("name", select_name.getText().toString());
+                            } else {
+                                body.put("mobile", select_name.getText().toString());
+                            }
+                            department =
+                                    select_group_id
+                                            .get(select_group.getSelectedItemPosition())
+                                            .toString();
+                            if (select_group_id.get(select_group.getSelectedItemPosition()) != "") {
+                                body.put(
+                                        "department",
+                                        select_group_id
+                                                .get(select_group.getSelectedItemPosition())
+                                                .toString());
+                                department =
+                                        select_group_id
+                                                .get(select_group.getSelectedItemPosition())
+                                                .toString();
+                            }
+                            Log.e("department", body.toString());
+
+                            HttpClient httpClient = new DefaultHttpClient();
+                            AbstractHttpEntity entity =
+                                    new ByteArrayEntity(body.toString().getBytes("UTF8"));
+                            entity.setContentType(
+                                    new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                            HttpPost httpPost = new HttpPost(url.toURI());
+                            httpPost.setEntity(entity);
+                            // Prepare JSON to send by setting the entity
+                            HttpResponse response = httpClient.execute(httpPost);
+                            String code = EntityUtils.toString(response.getEntity());
+                            JSONArray temp1 = new JSONArray(code);
+
+                            for (int i = 0; i < temp1.length(); i++) {
+                                HashMap<String, Object> item = new HashMap<String, Object>();
+                                JSONObject jsonObject = temp1.getJSONObject(i);
+                                item.put("name", jsonObject.getString("name"));
+                                item.put("mobile", jsonObject.getString("mobile"));
+                                item.put("isSelected", false);
+                                item.put("card_number", jsonObject.getString("card_number"));
+                                item.put("department", jsonObject.getString("department"));
+                                member_name.add(jsonObject.getString("name"));
+                                member_id.add(jsonObject.getString("card_number"));
+                                data.add(item);
+                            }
+
+                            member_adapter =
+                                    new SimpleAdapter(
+                                            DoorAccess.this,
+                                            data,
+                                            R.layout.member_listitem,
+                                            new String[] {
+                                                "name", "mobile",
+                                            },
+                                            new int[] {
+                                                R.id.name, R.id.mobile,
+                                            }) {
+                                        @Override
+                                        public View getView(
+                                                int position, View convertView, ViewGroup parent) {
+                                            final View newView =
+                                                    super.getView(position, convertView, parent);
+                                            if (data.get(position)
+                                                    .get("isSelected")
+                                                    .toString()
+                                                    .equals("false")) {
+                                                newView.setBackgroundColor(0x202127);
+                                            } else {
+                                                newView.setBackgroundColor(0xFF00FFFF);
+                                            }
+
+                                            return newView;
+                                        }
+                                    };
+
+                            memberlist.setAdapter(member_adapter);
+
+                            // 將JSON字串，放到JSONArray中。
+
+                        } catch (Exception e) {
+                            Toast.makeText(DoorAccess.this, e.toString(), Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                });
         nextstep.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (confirm_name.size() == 0 && confirm_group_name.size() == 0) {
+                        if (confirm_name.size() == 0) {
                             Toast.makeText(DoorAccess.this, "請先選擇人員", Toast.LENGTH_SHORT).show();
                         } else {
 
                             JSONObject memberinfo = new JSONObject();
                             JSONArray cards = new JSONArray();
                             for (int i = 0; i < confirm_id.size(); i++) {
-                                cards.put(confirm_id.get(i));
+                                cards.put(confirm_id.get(i).get("card_number").toString());
                             }
                             JSONArray group_id = new JSONArray();
                             for (int i = 0; i < confirm_group_id.size(); i++) {
@@ -196,6 +284,8 @@ public class DoorAccess extends Activity {
                                 memberinfo.put("group_id", group_id);
                                 memberinfo.put("group_name", confirm_group_name);
                                 memberinfo.put("member_name", confirm_name);
+                                memberinfo.put("print", "0");
+                                memberinfo.put("getaccess", "0");
 
                             } catch (Exception e) {
                                 Log.e("error", e.toString());
@@ -204,9 +294,110 @@ public class DoorAccess extends Activity {
 
                             Intent intent = new Intent();
                             intent.putExtra("memberinfo", memberinfo.toString());
-                            intent.setClass(DoorAccess.this, DoorAccess_floor.class);
+                            intent.setClass(DoorAccess.this, DoorAccess_floor_elevtor.class);
                             startActivity(intent);
                         }
+                    }
+                });
+        memberlist.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(
+                            AdapterView<?> parent, View view, final int position, long id) {
+                        if (data.get(position).get("isSelected").toString().equals("false")) {
+                            data.get(position).put("isSelected", true);
+                        } else {
+                            data.get(position).put("isSelected", false);
+                        }
+                        member_adapter.notifyDataSetChanged();
+                    }
+                });
+        selectall.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (data.size() > 0) {
+                            for (int i = 0; i < data.size(); i++) {
+                                data.get(i).put("isSelected", true);
+                                member_adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+        // 全部清除按鈕
+        clearall.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        confirm_name.clear();
+                        confirm_id.clear();
+                        confirmlist.setAdapter(null);
+                    }
+                });
+        // 確定執行按鈕
+        confrimbutton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        for (int i = 0; i < data.size(); i++) {
+                            if (data.get(i).get("isSelected").toString().equals("true")) {
+                                confirm_name.add(data.get(i).get("name").toString());
+                                confirm_id.add(data.get(i));
+                            }
+                        }
+                        confrim_adapter =
+                                new SimpleAdapter(
+                                        DoorAccess.this,
+                                        confirm_id,
+                                        R.layout.member_group_listitem,
+                                        new String[] {
+                                            "name", "group",
+                                        },
+                                        new int[] {
+                                            R.id.name, R.id.group,
+                                        }) {
+                                    @Override
+                                    public View getView(
+                                            final int position, View view, final ViewGroup parent) {
+                                        ViewHolder holder;
+                                        if (view == null) {
+                                            view =
+                                                    View.inflate(
+                                                            DoorAccess.this,
+                                                            R.layout.member_group_listitem,
+                                                            null);
+                                            holder = new DoorAccess.ViewHolder();
+                                            holder.cacel = view.findViewById(R.id.cancelimg);
+                                            holder.TextID = view.findViewById(R.id.name);
+                                            holder.childText = view.findViewById(R.id.group);
+                                            view.setTag(holder);
+                                        } else {
+                                            holder = (DoorAccess.ViewHolder) view.getTag();
+                                        }
+                                        holder.TextID.setText(
+                                                confirm_id.get(position).get("name").toString());
+                                        holder.childText.setText(
+                                                confirm_id
+                                                        .get(position)
+                                                        .get("department")
+                                                        .toString());
+                                        holder.cacel.setOnClickListener(
+                                                new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        confirm_name.remove(position);
+                                                        confirm_id.remove(position);
+                                                        confrim_adapter.notifyDataSetChanged();
+                                                    }
+                                                });
+
+                                        return view;
+                                    }
+                                };
+
+                        confirmlist.setAdapter(confrim_adapter);
+                        memberlist.setAdapter(null);
+                        data.clear();
                     }
                 });
     }
@@ -214,13 +405,25 @@ public class DoorAccess extends Activity {
     void getpage(int page, String department) {
         memberlist = (ListView) findViewById(R.id.memberlist);
         totalpage = (TextView) findViewById(R.id.totalpage);
+        select_name = findViewById(R.id.select_name);
+        select_type = findViewById(R.id.select_type);
+        data.clear();
         member_name.clear();
         member_id.clear();
         try {
-            URL url = new URL("http://18.181.171.107/riway/api/v1/clients/main/list");
+            URL url = new URL("http://" + DomainIP + "/riway/api/v1/clients/simple/main/list");
             JSONObject body = new JSONObject();
-            body.put("page", page);
-            body.put("department", department);
+            body.put("page", 1);
+            if (select_type.getSelectedItem().toString().equals("姓名")) {
+                body.put("name", select_name.getText().toString());
+            } else {
+                body.put("mobile", select_name.getText().toString());
+            }
+            if (department != "") {
+                body.put("department", department);
+            }
+            Log.e("department", body.toString());
+
             HttpClient httpClient = new DefaultHttpClient();
             AbstractHttpEntity entity = new ByteArrayEntity(body.toString().getBytes("UTF8"));
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -229,38 +432,64 @@ public class DoorAccess extends Activity {
             // Prepare JSON to send by setting the entity
             HttpResponse response = httpClient.execute(httpPost);
             String code = EntityUtils.toString(response.getEntity());
-            JSONObject temp1 = new JSONObject(code);
-            JSONObject array1 = temp1.getJSONObject("lists");
-            int total = temp1.getInt("totalPages");
-            totalcount = total;
-            totalpage.setText(total + "");
-            JSONArray array2 = array1.getJSONArray("data");
-            for (int i = 0; i < array2.length(); i++) {
-                JSONObject jsonObject = array2.getJSONObject(i);
+            JSONArray temp1 = new JSONArray(code);
+
+            for (int i = 0; i < temp1.length(); i++) {
+                HashMap<String, Object> item = new HashMap<String, Object>();
+                JSONObject jsonObject = temp1.getJSONObject(i);
+                item.put("name", jsonObject.getString("name"));
+                item.put("mobile", jsonObject.getString("mobile"));
+                item.put("isSelected", false);
+                item.put("card_number", jsonObject.getString("card_number"));
+                item.put("department", jsonObject.getString("department"));
                 member_name.add(jsonObject.getString("name"));
                 member_id.add(jsonObject.getString("card_number"));
+                data.add(item);
             }
-            ArrayAdapter member_adapter = new ArrayAdapter(this, R.layout.mylist_item);
-            member_adapter.addAll(member_name);
+
+            member_adapter =
+                    new SimpleAdapter(
+                            DoorAccess.this,
+                            data,
+                            R.layout.member_listitem,
+                            new String[] {
+                                "name", "mobile",
+                            },
+                            new int[] {
+                                R.id.name, R.id.mobile,
+                            }) {
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            final View newView = super.getView(position, convertView, parent);
+                            if (data.get(position).get("isSelected").toString().equals("false")) {
+                                newView.setBackgroundColor(0x202127);
+                            } else {
+                                newView.setBackgroundColor(0xFF00FFFF);
+                            }
+
+                            return newView;
+                        }
+                    };
+
             memberlist.setAdapter(member_adapter);
 
             // 將JSON字串，放到JSONArray中。
 
         } catch (Exception e) {
-            // Toast.makeText(memberdatabase.this, e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(DoorAccess.this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void setListener() {
-        grouplist.setOnGroupExpandListener(
-                new ExpandableListView.OnGroupExpandListener() {
+        /* grouplist.setOnGroupExpandListener(
+        new ExpandableListView.OnGroupExpandListener() {
 
-                    @Override
-                    public void onGroupExpand(int groupPosition) {
-                        // 存取已选定的集合
-                        hashSet = new HashSet<String>();
-                    }
-                });
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                // 存取已选定的集合
+                hashSet = new HashSet<String>();
+            }
+        });*/
         // ExpandableListView的Group的点击事件
         grouplist.setOnGroupClickListener(
                 new ExpandableListView.OnGroupClickListener() {
@@ -286,97 +515,95 @@ public class DoorAccess extends Activity {
                             int groupPosition,
                             int childPosition,
                             long id) {
+                        title.setText(
+                                childData.get(groupPosition).get(childPosition).get("childItem"));
                         Map<String, String> map = childData.get(groupPosition).get(childPosition);
                         String no = childData.get(groupPosition).get(childPosition).get("ID");
                         department = no;
                         now = 1;
                         nowpage.setText("1");
+                        select_name.setText("");
                         getpage(now, department);
-                        return false;
+                        return true;
                     }
                 });
-        grouplist.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(
-                            AdapterView<?> parent, View view, int position, long id) {
-                        int itemType = grouplist.getPackedPositionType(id);
-                        Log.e("itemType", itemType + "");
+        /* grouplist.setOnItemLongClickListener(
+        new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(
+                    AdapterView<?> parent, View view, int position, long id) {
+                int itemType = grouplist.getPackedPositionType(id);
+                Log.e("itemType", itemType + "");
 
-                        if (itemType == grouplist.PACKED_POSITION_TYPE_CHILD) {
-                            int groupPosition = grouplist.getPackedPositionGroup(id);
-                            int childPosition = grouplist.getPackedPositionChild(id);
-                            Log.e("1", grouplist.getPackedPositionChild(id) + "");
-                            Log.e("2", grouplist.getPackedPositionGroup(id) + "");
-                            // 取得exapnd的子項目資料(ex:[childitem="",id=""])
-                            childData.get(groupPosition).get(childPosition).get("ID");
-                            String info =
-                                    adapter.getChild(
-                                                    grouplist.getPackedPositionGroup(id),
-                                                    grouplist.getPackedPositionChild(id))
-                                            .toString();
-                            // 取得name
-                            String name =
-                                    childData
-                                            .get(groupPosition)
-                                            .get(childPosition)
-                                            .get("childItem");
+                if (itemType == grouplist.PACKED_POSITION_TYPE_CHILD) {
+                    int groupPosition = grouplist.getPackedPositionGroup(id);
+                    int childPosition = grouplist.getPackedPositionChild(id);
+                    Log.e("1", grouplist.getPackedPositionChild(id) + "");
+                    Log.e("2", grouplist.getPackedPositionGroup(id) + "");
+                    // 取得exapnd的子項目資料(ex:[childitem="",id=""])
+                    childData.get(groupPosition).get(childPosition).get("ID");
+                    String info =
+                            adapter.getChild(
+                                            grouplist.getPackedPositionGroup(id),
+                                            grouplist.getPackedPositionChild(id))
+                                    .toString();
+                    // 取得name
+                    String name =
+                            childData
+                                    .get(groupPosition)
+                                    .get(childPosition)
+                                    .get("childItem");
 
-                            /* String str1 = name.substring(0, name.indexOf("="));
-                            String str2 = name.substring(str1.length() + 1, name.length());
-                            // 取得ID
-                            String str3 = info.substring(0, info.indexOf(","));
-                            String str4 = info.substring(str3.length() + 1, info.length());
-                            String str5 = str4.substring(0, str4.indexOf("="));
-                            String str6 = str4.substring(str5.length() + 1, str4.length());*/
-                            String ID = childData.get(groupPosition).get(childPosition).get("ID");
-                            Log.e("test", ID);
 
-                            if (confirm_group_id.contains(ID)) {
-                                Toast.makeText(DoorAccess.this, "已在選取名單內", Toast.LENGTH_SHORT)
-                                        .show();
-                            } else {
-                                ArrayAdapter comfirm_group_adapter =
-                                        new ArrayAdapter(DoorAccess.this, R.layout.mylist_item);
-                                comfirm_group_adapter.clear();
-                                confirm_group_name.add(name);
-                                confirm_group_id.add(ID);
-                                comfirm_group_adapter.addAll(confirm_group_name);
-                                confirmgroup.setAdapter(comfirm_group_adapter);
-                            }
+                    String ID = childData.get(groupPosition).get(childPosition).get("ID");
+                    Log.e("test", ID);
 
-                            // do your per-item callback here
-                            return true; // true if we consumed the click, false if not
+                    if (confirm_group_id.contains(ID)) {
+                        Toast.makeText(DoorAccess.this, "已在選取名單內", Toast.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        ArrayAdapter comfirm_group_adapter =
+                                new ArrayAdapter(DoorAccess.this, R.layout.mylist_item);
+                        comfirm_group_adapter.clear();
+                        confirm_group_name.add(name);
+                        confirm_group_id.add(ID);
+                        comfirm_group_adapter.addAll(confirm_group_name);
+                        confirmgroup.setAdapter(comfirm_group_adapter);
+                    }
 
-                        } else if (itemType == grouplist.PACKED_POSITION_TYPE_GROUP) {
-                            int groupPosition = grouplist.getPackedPositionGroup(id);
-                            // 取得exapnd的子項目資料(ex:[childitem="",id=""])
-                            for (int i = 0; i < childData.get(groupPosition).size(); i++) {
-                                String name = childData.get(groupPosition).get(i).get("childItem");
-                                String ID = childData.get(groupPosition).get(i).get("ID");
-                                Log.e("test", ID);
+                    // do your per-item callback here
+                    return true; // true if we consumed the click, false if not
 
-                                if (confirm_group_id.contains(ID)) {
+                } else if (itemType == grouplist.PACKED_POSITION_TYPE_GROUP) {
+                    int groupPosition = grouplist.getPackedPositionGroup(id);
+                    // 取得exapnd的子項目資料(ex:[childitem="",id=""])
+                    for (int i = 0; i < childData.get(groupPosition).size(); i++) {
+                        String name = childData.get(groupPosition).get(i).get("childItem");
+                        String ID = childData.get(groupPosition).get(i).get("ID");
+                        Log.e("test", ID);
 
-                                } else {
-                                    ArrayAdapter comfirm_group_adapter =
-                                            new ArrayAdapter(DoorAccess.this, R.layout.mylist_item);
-                                    comfirm_group_adapter.clear();
-                                    confirm_group_name.add(name);
-                                    confirm_group_id.add(ID);
-                                    comfirm_group_adapter.addAll(confirm_group_name);
-                                    confirmgroup.setAdapter(comfirm_group_adapter);
-                                }
-                            }
-
-                            return true; // true if we consumed the click, false if not
+                        if (confirm_group_id.contains(ID)) {
 
                         } else {
-                            // null item; we don't consume the click
-                            return false;
+                            ArrayAdapter comfirm_group_adapter =
+                                    new ArrayAdapter(DoorAccess.this, R.layout.mylist_item);
+                            comfirm_group_adapter.clear();
+                            confirm_group_name.add(name);
+                            confirm_group_id.add(ID);
+                            comfirm_group_adapter.addAll(confirm_group_name);
+                            confirmgroup.setAdapter(comfirm_group_adapter);
                         }
                     }
-                });
+
+                    return true; // true if we consumed the click, false if not
+
+                } else {
+                    // null item; we don't consume the click
+                    return false;
+                }
+            }
+        });*/
+
     }
 
     // 初始化数据
@@ -387,7 +614,8 @@ public class DoorAccess extends Activity {
         ArrayList<ArrayList<Map<String, String>>> groups2 =
                 new ArrayList<ArrayList<Map<String, String>>>();
         try {
-            HttpGet httpGet = new HttpGet("http://18.181.171.107/riway/api/v1/clients/departments");
+            HttpGet httpGet =
+                    new HttpGet("http://" + DomainIP + "/riway/api/v1/clients/departments");
             HttpClient httpClient = new DefaultHttpClient();
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 2000);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 2000);
@@ -399,17 +627,19 @@ public class DoorAccess extends Activity {
             for (int x = 0; x < array1.length(); x++) {
                 JSONObject str_value = array1.getJSONObject(x);
                 groups.add(str_value.getString("name"));
-
+                select_group_name.add(str_value.getString("name"));
+                select_group_id.add(str_value.getString("id"));
                 JSONArray array2 = str_value.getJSONArray("childs");
                 if (array2.length() > 0) {
                     ArrayList<Map<String, String>> test = new ArrayList<Map<String, String>>();
-
                     for (int y = 0; y < array2.length(); y++) {
                         JSONObject str_value2 = array2.getJSONObject(y);
                         Log.d("內容", str_value2 + "");
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("name", str_value2.getString("name"));
                         map.put("ID", str_value2.getString("id"));
+                        select_group_name.add(str_value2.getString("name"));
+                        select_group_id.add(str_value2.getString("id"));
                         test.add(map);
                     }
                     groups2.add(test);
@@ -422,9 +652,9 @@ public class DoorAccess extends Activity {
                     groups2.add(test);
                 }
             }
+            Log.d("select_group_name", select_group_name.toString());
+            Log.d("select_group_id", select_group_id.toString());
 
-            Log.d("樓層", groups + "");
-            Log.d("樓LV2", groups2 + "");
             for (int i = 0; i < groups.size(); i++) {
                 Map<String, String> groupMap = new HashMap<String, String>();
                 groupMap.put("groupText", groups.get(i).toString());
@@ -455,7 +685,8 @@ public class DoorAccess extends Activity {
     private void initView() {
         grouplist = (ExpandableListView) findViewById(R.id.departmentlist);
         nowpage = findViewById(R.id.nowpage);
-        confirmgroup = (ListView) findViewById(R.id.confirmgroup);
+        title = findViewById(R.id.title);
+        select_name = findViewById(R.id.select_name);
     }
 
     /** 适配adapter */
@@ -498,9 +729,11 @@ public class DoorAccess extends Activity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            title.setText(holder.childText.getText());
                             department = holder.TextID.getText().toString();
                             now = 1;
                             nowpage.setText("1");
+                            select_name.setText("");
                             getpage(now, department);
                         }
                     });
@@ -536,16 +769,18 @@ public class DoorAccess extends Activity {
                 final boolean isExpanded,
                 View convertView,
                 ViewGroup parent) {
-            DoorAccess.ViewHolder holder = null;
+            final DoorAccess.ViewHolder holder;
             if (convertView == null) {
                 holder = new DoorAccess.ViewHolder();
                 convertView = View.inflate(DoorAccess.this, R.layout.group_item, null);
                 holder.groupText = (TextView) convertView.findViewById(R.id.id_group_text);
                 holder.groupBox = (CheckBox) convertView.findViewById(R.id.id_group_checkbox);
+
                 convertView.setTag(holder);
             } else {
                 holder = (DoorAccess.ViewHolder) convertView.getTag();
             }
+
             holder.groupText.setText(parentList.get(groupPosition).get("groupText"));
             final String isGroupCheckd = parentList.get(groupPosition).get("isGroupCheckd");
 
@@ -554,43 +789,65 @@ public class DoorAccess extends Activity {
             } else {
                 holder.groupBox.setChecked(true);
             }
+            holder.groupText.setOnLongClickListener(
+                    new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            // TODO Auto-generated method stub
+                            title.setText(holder.groupText.getText());
+                            Log.e("123", select_group_id.toString());
+                            select_group_name.indexOf(holder.groupText.getText());
+
+                            department =
+                                    select_group_id
+                                            .get(
+                                                    select_group_name.indexOf(
+                                                            holder.groupText.getText().toString()))
+                                            .toString();
+                            now = 1;
+                            nowpage.setText("1");
+                            select_name.setText("");
+                            getpage(now, department);
+                            return true;
+                        }
+                    });
 
             /*
              * groupListView的点击事件
              */
-            holder.groupBox.setOnClickListener(
-                    new View.OnClickListener() {
+            /* holder.groupBox.setOnClickListener(
+            new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-                            CheckBox groupBox = (CheckBox) v.findViewById(R.id.id_group_checkbox);
-                            if (!isExpanded) {
-                                // 展开某个group view
-                                grouplist.expandGroup(groupPosition);
-                            } else {
-                                // 关闭某个group view
-                                grouplist.collapseGroup(groupPosition);
-                            }
+                @Override
+                public void onClick(View v) {
+                    CheckBox groupBox = (CheckBox) v.findViewById(R.id.id_group_checkbox);
+                    if (!isExpanded) {
+                        // 展开某个group view
+                        grouplist.expandGroup(groupPosition);
+                    } else {
+                        // 关闭某个group view
+                        grouplist.collapseGroup(groupPosition);
+                    }
 
-                            if ("No".equals(isGroupCheckd)) {
-                                grouplist.expandGroup(groupPosition);
-                                groupBox.setChecked(true);
-                                parentList.get(groupPosition).put("isGroupCheckd", "Yes");
-                                List<Map<String, String>> list = childData.get(groupPosition);
-                                for (Map<String, String> map : list) {
-                                    map.put("isChecked", "Yes");
-                                }
-                            } else {
-                                groupBox.setChecked(false);
-                                parentList.get(groupPosition).put("isGroupCheckd", "No");
-                                List<Map<String, String>> list = childData.get(groupPosition);
-                                for (Map<String, String> map : list) {
-                                    map.put("isChecked", "No");
-                                }
-                            }
-                            notifyDataSetChanged();
+                    if ("No".equals(isGroupCheckd)) {
+                        grouplist.expandGroup(groupPosition);
+                        groupBox.setChecked(true);
+                        parentList.get(groupPosition).put("isGroupCheckd", "Yes");
+                        List<Map<String, String>> list = childData.get(groupPosition);
+                        for (Map<String, String> map : list) {
+                            map.put("isChecked", "Yes");
                         }
-                    });
+                    } else {
+                        groupBox.setChecked(false);
+                        parentList.get(groupPosition).put("isGroupCheckd", "No");
+                        List<Map<String, String>> list = childData.get(groupPosition);
+                        for (Map<String, String> map : list) {
+                            map.put("isChecked", "No");
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+            });*/
 
             return convertView;
         }
@@ -609,5 +866,6 @@ public class DoorAccess extends Activity {
     private class ViewHolder {
         TextView groupText, childText, TextID;
         CheckBox groupBox;
+        ImageView cacel;
     }
 }

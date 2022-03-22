@@ -78,18 +78,18 @@ public class SideMenuFragment extends Fragment {
                             getResources().getString(R.string.menu_assistant),
                             R.drawable.menu_assistant));
         }
-        if (!getResources().getBoolean(R.bool.hide_settings_from_side_menu)) {
+        /* if (!getResources().getBoolean(R.bool.hide_settings_from_side_menu)) {
             sideMenuItems.add(
                     new SideMenuItem(
                             getResources().getString(R.string.menu_settings),
                             R.drawable.menu_options));
-        }
+        }*/
         if (getResources().getBoolean(R.bool.enable_in_app_purchase)) {
             sideMenuItems.add(
                     new SideMenuItem(
                             getResources().getString(R.string.inapp), R.drawable.menu_options));
         }
-        if (!getResources().getBoolean(R.bool.hide_recordings_from_side_menu)) {
+        /*if (!getResources().getBoolean(R.bool.hide_recordings_from_side_menu)) {
             sideMenuItems.add(
                     new SideMenuItem(
                             getResources().getString(R.string.menu_recordings),
@@ -97,7 +97,7 @@ public class SideMenuFragment extends Fragment {
         }
         sideMenuItems.add(
                 new SideMenuItem(
-                        getResources().getString(R.string.menu_about), R.drawable.menu_about));
+                        getResources().getString(R.string.menu_about), R.drawable.menu_about));*/
         mSideMenuItemList = view.findViewById(R.id.item_list);
 
         mSideMenuItemList.setAdapter(
@@ -107,6 +107,7 @@ public class SideMenuFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String selectedItem = mSideMenuItemList.getAdapter().getItem(i).toString();
+
                         if (selectedItem.equals(getString(R.string.menu_logout))) {
                             Core core = LinphoneManager.getCore();
                             if (core != null) {
@@ -129,6 +130,15 @@ public class SideMenuFragment extends Fragment {
                         } else if (selectedItem.equals(getString(R.string.menu_recordings))) {
                             startActivity(new Intent(getActivity(), RecordingsActivity.class));
                         }
+                    }
+                });
+        mSideMenuItemList.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(
+                            AdapterView<?> adapterView, View view, int index, long l) {
+                        startActivity(new Intent(getActivity(), SettingsActivity.class));
+                        return true;
                     }
                 });
 

@@ -13,10 +13,28 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    android:gravity="center_vertical"
+    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:layout_weight="0.4"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/name"
+    android:textColor="@color/white_color"
+    />
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
-    android:layout_width="match_parent"
+    android:id="@+id/text1"
+    android:layout_weight="0.5"
+    android:layout_width="0dp"
     android:layout_height="?android:attr/listPreferredItemHeightSmall"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:textColor="@color/white_color"
@@ -25,3 +43,4 @@
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     />
+</LinearLayout>

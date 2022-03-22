@@ -37,7 +37,11 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-
+import java.io.File;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import org.linphone.assistant.PhoneAccountLinkingAssistantActivity;
 import org.linphone.call.CallManager;
 import org.linphone.contacts.ContactsManager;
@@ -68,12 +72,6 @@ import org.linphone.utils.AndroidAudioManager;
 import org.linphone.utils.LinphoneUtils;
 import org.linphone.utils.MediaScanner;
 import org.linphone.utils.PushNotificationUtils;
-
-import java.io.File;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /** Handles Linphone's Core lifecycle */
 public class LinphoneManager implements SensorEventListener {

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#333333"
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="#333333"
+    android:layout_marginRight="20dp"
+
+    >
+    <ImageView
+        android:layout_weight="0.8"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:background="@drawable/bg03"/>
+    <ImageButton
+
+        android:id="@+id/closedailog"
+        android:layout_gravity="center"
+        android:layout_weight="0.1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bt12"
+
+        />
+</LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#2D3D50">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="地點|Location"
+            android:textColor="#CCCCCC"
+            android:textSize="25dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="狀態|Status"
+            android:textColor="#CCCCCC"
+            android:textSize="25dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="觸發時間|Alarm Time"
+            android:textColor="#CCCCCC"
+            android:textSize="25dp"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#202127">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/BAlist1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:childDivider="#80FF0000"
+                android:divider="#2D3D50"
+                android:dividerHeight="1dp"
+                android:fadeScrollbars="false"
+                />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

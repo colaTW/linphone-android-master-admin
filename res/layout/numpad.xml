@@ -2,6 +2,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/round_border"
     >
 
     <TableRow
@@ -13,6 +14,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n1"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="1" />
 
         <org.linphone.views.Digit
@@ -20,6 +23,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n2"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="2" />
 
         <org.linphone.views.Digit
@@ -27,6 +32,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n3"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="3" />
 
     </TableRow>
@@ -40,6 +47,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n4"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="4" />
 
         <org.linphone.views.Digit
@@ -47,6 +56,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n5"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="5" />
 
         <org.linphone.views.Digit
@@ -54,6 +65,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n6"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="6" />
 
     </TableRow>
@@ -67,6 +80,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n7"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="7" />
 
         <org.linphone.views.Digit
@@ -74,6 +89,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n8"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="8" />
 
         <org.linphone.views.Digit
@@ -81,6 +98,8 @@
             style="@style/DialerDigit"
             android:background="@drawable/n9"
             android:soundEffectsEnabled="true"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:text="9" />
 
     </TableRow>
@@ -92,7 +111,8 @@
         <org.linphone.views.Digit
             android:id="@+id/DigitStar"
             style="@style/DialerDigit"
-            android:layout_width="40dp"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:background="@drawable/mi"
             android:soundEffectsEnabled="true"
             android:text="*"
@@ -101,6 +121,8 @@
         <org.linphone.views.Digit
             android:id="@+id/Digit00"
             style="@style/DialerDigit"
+            android:layout_width="55dp"
+            android:layout_height="65dp"
             android:background="@drawable/n0"
             android:soundEffectsEnabled="true"
             android:text="0+" />
@@ -108,7 +130,9 @@
         <org.linphone.views.EraseButton
             android:id="@+id/erase"
             style="@style/DialerDigit"
-            android:background="@drawable/backspace" />
+            android:layout_width="55dp"
+            android:layout_height="65dp"
+            android:background="@drawable/b002" />
 
     </TableRow>
 

@@ -5,24 +5,137 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+   >
+
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_color"
-       >
-       <Button
-           android:id="@+id/goback"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="返回"></Button>
+        android:background="#4f5d6a"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp">
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:src="@drawable/bt13"    />
 
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.3"
+            >
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="指定區間"
+                android:textColor="#CCCCCC"
+                android:textSize="25dp"
+                android:layout_marginTop="20dp"
+                />
+            <TextView
+                android:id="@+id/startdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#212126"
+                android:text="2021-09-30"
+                android:textColor="#CCCCCC"
+                android:textSize="25dp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="~"
+                android:textSize="40dp"
+                android:textColor="#CCCCCC"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:id="@+id/enddate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#212126"
+                android:text="2021-09-30"
+                android:textColor="#CCCCCC"
+                android:textSize="25dp"
+                android:layout_marginTop="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/select"
+                    android:layout_width="143dp"
+                    android:layout_height="54dp"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/bt11"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:scaleType="centerInside"></ImageButton>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#2D3D50">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="地點|Location"
+            android:textColor="#CCCCCC"
+            android:textSize="25dp"
+            />
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="狀態|Status"
+            android:textColor="#CCCCCC"
+            android:textSize="25dp"
+            />
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="觸發時間|Alarm Time"
+            android:textColor="#CCCCCC"
+            android:textSize="25dp"
+            />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="9"
         android:background="#202127">
 
         <LinearLayout
@@ -43,48 +156,45 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
-
+            android:background="@color/black_color"
+            >
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ListView
-                    android:id="@+id/BAlist2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:childDivider="#80FF0000"
-                    android:divider="#800000FF"
-                    android:dividerHeight="1dp"
-                    android:fadeScrollbars="false"
-                    />
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:layout_weight="0.1"
+                android:background="#212226">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/b000"></ImageButton>
             </LinearLayout>
 
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:overScrollMode="always"
-            >
 
-            <ListView
-                android:id="@+id/BAlist3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:childDivider="#80FF0000"
-                android:divider="#800000FF"
-                android:dividerHeight="1dp"
-                android:fadeScrollbars="false"
-                />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#212226">
 
-        </LinearLayout>
-
+        <ImageButton
+            android:id="@+id/goback"
+            android:layout_width="187dp"
+            android:layout_height="78dp"
+            android:layout_gravity="right"
+            android:background="#212127"
+            android:scaleType="centerInside"
+            android:src="@drawable/b004"></ImageButton>
     </LinearLayout>
 
 

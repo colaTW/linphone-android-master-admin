@@ -20,11 +20,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -38,6 +41,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.linphone.R;
+import org.linphone.core.TransportType;
 import org.linphone.settings.LinphonePreferences;
 
 public class MenuAssistantActivity extends AssistantActivity {
@@ -55,8 +59,13 @@ public class MenuAssistantActivity extends AssistantActivity {
 
         TextView scan_btn = findViewById(R.id.scan_btn);
         TextView scan_btn2 = findViewById(R.id.scan_btn2);
+        TextView scan_serect = findViewById(R.id.serect);
         final Activity activity = this;
+        LinphonePreferences mPrefs;
 
+        mPrefs = LinphonePreferences.instance();
+        mPrefs.setInitiateVideoCall(true);
+        mPrefs.setAutomaticallyAcceptVideoRequests(true);
         scan_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -85,6 +94,36 @@ public class MenuAssistantActivity extends AssistantActivity {
                         integrator.setBarcodeImageEnabled(false);
                         integrator.setOrientationLocked(false);
                         integrator.initiateScan();
+                    }
+                });
+        scan_serect.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view3) {
+                        AlertDialog.Builder alertDialog =
+                                new AlertDialog.Builder(MenuAssistantActivity.this);
+                        View view = getLayoutInflater().inflate(R.layout.accountsetting, null);
+                        final EditText IP = view.findViewById(R.id.IP);
+                        final EditText first = view.findViewById(R.id.first);
+                        final EditText second = view.findViewById(R.id.second);
+
+                        alertDialog.setPositiveButton(
+                                "確認",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        mAccountCreator.setUsername(first.getText().toString());
+                                        mAccountCreator.setDomain(IP.getText().toString());
+                                        mAccountCreator.setPassword(second.getText().toString());
+                                        mAccountCreator.setTransport(TransportType.Udp);
+                                        createProxyConfigAndLeaveAssistant();
+                                    }
+                                });
+
+                        alertDialog.setTitle("IP設定");
+                        alertDialog.setView(view);
+                        AlertDialog dialog = alertDialog.create();
+                        dialog.show();
                     }
                 });
 

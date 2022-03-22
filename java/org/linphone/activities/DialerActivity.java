@@ -20,15 +20,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ContentResolver;
-import android.content.Context;
+import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -36,6 +38,7 @@ import android.provider.Settings;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -44,10 +47,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Socket;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -61,6 +60,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
+import org.linphone.WebSocket.JWebSocketClient;
 import org.linphone.assistant.BApage;
 import org.linphone.call.CallActivity;
 import org.linphone.contacts.ContactsActivity;
@@ -74,24 +74,22 @@ import org.linphone.views.CallButton;
 import org.linphone.views.Digit;
 import org.linphone.views.EraseButton;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static android.app.Notification.DEFAULT_VIBRATE;
 import static org.linphone.mediastream.MediastreamerAndroidContext.getContext;
 
 public class DialerActivity extends MainActivity implements AddressText.AddressChangedListener {
     private static final String ACTION_CALL_LINPHONE = "org.linphone.intent.action.CallLaunched";
-
     private AddressText mAddress;
     private CallButton mStartCall, mAddCall, mTransferCall;
-    private ImageView mAddContact, mBackToCall, gohome, alarm;
-
+    private ImageView mAddContact, mBackToCall, gohome, alarm, alarm2;
     private boolean mIsTransfer;
     private CoreListenerStub mListener;
     private boolean mInterfaceLoaded;
-    private NotificationManagerCompat notificationManager;
-    private Socket mSocket;
     private String data2;
     private String tiltle;
     private String content;
@@ -100,20 +98,34 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notificationManager = NotificationManagerCompat.from(this);
 
         // txt_uuid = (TextView) findViewById(R.id.txt_uuid);
         //  txt = (TextView) findViewById(R.id.txt_hello);
-        RatKiller app = (RatKiller) getApplication();
-        mSocket = app.getmSocket();
-        mSocket.connect();
+
         Toast.makeText(DialerActivity.this, "Connected!!", Toast.LENGTH_SHORT).show();
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy =
                     new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        // mSocket.emit("login", "53326483");
+        // URI uri = URI.create("ws://121.40.165.18:8800");
+        URI uri = URI.create("ws://192.168.53.163:7878/ShowNum");
+
+        JWebSocketClient client =
+                new JWebSocketClient(uri) {
+                    @Override
+                    public void onMessage(String message) {
+                        // message就是接收到的訊息
+                        android.util.Log.e("onMessage", "123456" + message);
+                        notificaioncall("危險警報", message, "warning");
+                    }
+                };
+        try {
+            client.connect();
+        } catch (Exception e) {
+            android.util.Log.e("error", e.toString());
+        }
+
         String userID = "";
         try {
             userID = getSharedPreferences("info", MODE_PRIVATE).getString("user", "");
@@ -148,90 +160,6 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         } catch (Exception e) {
             System.out.print("出錯了" + e);
         }
-
-        mSocket.emit("login", userID);
-        //  txt_uuid.setText("Login UUID:\n"+UUID);
-        Toast.makeText(DialerActivity.this, "Login ID:" + userID, Toast.LENGTH_SHORT).show();
-
-        mSocket.on(
-                "new_msg2",
-                new Emitter.Listener() {
-                    @Override
-                    public void call(Object... args) {
-                        // txt.setText("接收資料");
-                        android.util.Log.e("123", "data:" + args[0]);
-                        String test = args[0].toString();
-                        System.out.println(test);
-                        // String data_ = "{'title':'公告1','content':'訊息測試'}";
-                        final JSONObject jsonObj;
-
-                        try {
-                            jsonObj = new JSONObject(test);
-                            tiltle = jsonObj.getString("title");
-                            content = jsonObj.getString("content");
-                            icon = jsonObj.getString("icon");
-
-                        } catch (Exception e) {
-                        }
-
-                        data2 = args[0].toString();
-                        runOnUiThread(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        // Toast.makeText(MainActivity.this, data2,
-                                        // Toast.LENGTH_SHORT).show();
-                                        // whatever your UI logic
-                                        notificaioncall(tiltle, content, icon);
-                                        Toast.makeText(
-                                                        DialerActivity.this,
-                                                        "新消息",
-                                                        Toast.LENGTH_SHORT)
-                                                .show();
-                                    }
-                                });
-                    }
-                });
-        mSocket.on(
-                "dio",
-                new Emitter.Listener() {
-                    @Override
-                    public void call(Object... args) {
-                        // txt.setText("接收資料");
-                        android.util.Log.e("12345", "data:" + args[0]);
-                        String data = args[0].toString();
-                        System.out.println(data);
-                        // String data_ = "{'title':'公告1','content':'訊息測試'}";
-                        final JSONObject jsonObj;
-
-                        try {
-                            jsonObj = new JSONObject(data);
-                            // tiltle = jsonObj.getString("title");
-                            // content = jsonObj.getString("content");
-                            icon = "OoO";
-                            System.out.println("watch here" + jsonObj.has("icon"));
-
-                        } catch (Exception e) {
-                        }
-
-                        data2 = args[0].toString();
-                        runOnUiThread(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        // Toast.makeText(MainActivity.this, data2,
-                                        // Toast.LENGTH_SHORT).show();
-                                        // whatever your UI logic
-                                        notificaioncall("危險警報", data2, "test");
-                                        Toast.makeText(
-                                                        DialerActivity.this,
-                                                        "新消息2",
-                                                        Toast.LENGTH_SHORT)
-                                                .show();
-                                    }
-                                });
-                    }
-                });
 
         if (mAbortCreation) {
             return;
@@ -343,11 +271,14 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
         mAddContact.setEnabled(false);
 
         alarm = findViewById(R.id.alarm);
+        alarm2 = findViewById(R.id.alarm2);
         alarm.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String Guard = "";
+
+                        /*String Guard = "";
+
                         try {
                             Guard =
                                     getSharedPreferences("info", MODE_PRIVATE)
@@ -356,11 +287,16 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
 
                         } catch (Exception e) {
 
-                        }
-                        mAddress.setText(Guard);
+                        }*/
+                        mAddress.setText("lin9141047801112");
                         mStartCall.performClick();
                         mAddress.setText("");
                     }
+                });
+        alarm2.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {}
                 });
 
         mAddContact.setOnClickListener(
@@ -387,7 +323,23 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(DialerActivity.this, BApage.class));
+                        SharedPreferences sPrefs = getSharedPreferences("Domain", MODE_PRIVATE);
+                        String DomainIP = sPrefs.getString("IP", "");
+                        android.util.Log.e("DomainIP", DomainIP);
+                        if (DomainIP == "") {
+                            IPsettingdialog();
+                        } else {
+                             startActivity(new Intent(DialerActivity.this, BApage.class));
+                        }
+                    }
+                });
+        gohome.setOnLongClickListener(
+                new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        // TODO Auto-generated method stub
+                        IPsettingdialog();
+                        return true;
                     }
                 });
 
@@ -533,8 +485,6 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
 
     protected void onDestroy() {
         super.onDestroy();
-
-        mSocket.off("disconnect");
     }
 
     public String getIdentity() {
@@ -549,39 +499,66 @@ public class DialerActivity extends MainActivity implements AddressText.AddressC
     }
 
     private void notificaioncall(String ContentTitle, String ContentText, String newicon) {
-        System.out.println(newicon);
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.photo)
-                        .setLargeIcon(
-                                BitmapFactory.decodeResource(getResources(), R.drawable.photo))
-                        .setContentTitle(ContentTitle)
-                        .setOngoing(false)
-                        .setAutoCancel(true)
-                        .setContentText(ContentText);
-        // .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-        if (newicon.equals("warning")) {
-            notificationBuilder.setSmallIcon(R.drawable.onfire);
-            notificationBuilder.setLargeIcon(
-                    BitmapFactory.decodeResource(getResources(), R.drawable.onfire));
-            int soundResId = R.raw.fire;
-            Uri soundUri =
-                    Uri.parse(
-                            ContentResolver.SCHEME_ANDROID_RESOURCE
-                                    + "://"
-                                    + getPackageName()
-                                    + "/"
-                                    + soundResId);
-            System.out.println(soundUri);
-            notificationBuilder.setSound(soundUri, AudioManager.STREAM_ALARM);
-        } else {
-            notificationBuilder.setSmallIcon(R.drawable.photo);
-            notificationBuilder.setDefaults(
-                    Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String name = "cola";
+            String description = "colatest";
+            int importance =
+                    NotificationManager.IMPORTANCE_HIGH; // Important for heads-up notification
+            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            channel.setDescription(description);
+            channel.setShowBadge(true);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, new Intent(this, BApage.class), 0);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify((int) (Math.random() * 99 + 101), notificationBuilder.build());
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this, "1")
+                        .setSmallIcon(R.drawable.onfire)
+                        .setContentTitle(ContentTitle)
+                        .setContentText(ContentText)
+                        .setLargeIcon(
+                                BitmapFactory.decodeResource(getResources(), R.drawable.onfire))
+                        .setDefaults(DEFAULT_VIBRATE) // Important for heads-up notification
+                        .setContentIntent(pendingIntent)
+                        .setPriority(
+                                Notification.PRIORITY_MAX); // Important for heads-up notification
+        Notification buildNotification = mBuilder.build();
+        NotificationManager mNotifyMgr =
+                (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
+        mNotifyMgr.notify(001, buildNotification);
+    }
+
+    void IPsettingdialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(DialerActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.domainsetting, null);
+        final EditText IP = view.findViewById(R.id.domainIP);
+        SharedPreferences sPrefs = getSharedPreferences("Domain", MODE_PRIVATE);
+        final String DomainIP = sPrefs.getString("IP", "");
+        IP.setText(DomainIP);
+        alertDialog.setPositiveButton(
+                "確認",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        try {
+                            SharedPreferences sPrefs = getSharedPreferences("Domain", MODE_PRIVATE);
+                            sPrefs.edit().putString("IP", IP.getText().toString()).commit();
+                            /* SharedPreferences.Editor editor = sPrefs.edit(); // 获取Editor对象
+                            editor.putString("IP", IP.getText().toString()); // 存储数据
+                            editor.commit();*/
+                        } catch (Exception e) {
+                            Toast.makeText(DialerActivity.this, "請確認IP連線狀態", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                });
+
+        alertDialog.setTitle("DomainIP設定");
+        alertDialog.setView(view);
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
     }
 }

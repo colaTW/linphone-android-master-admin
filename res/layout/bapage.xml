@@ -9,7 +9,9 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#262A2F"
+        >
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,14 +26,14 @@
                     android:layout_height="90dp"
                     android:src="@drawable/buttun1_b"
                     android:background="#262A2F"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerInside"/>
                 <ImageButton
                     android:id="@+id/B_door"
                     android:layout_width="1dp"
                     android:layout_height="90dp"
                     android:src="@drawable/buttun2_a"
                     android:background="#262A2F"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerInside"/>
 
                 <ImageButton
                     android:id="@+id/B_call"
@@ -39,14 +41,14 @@
                     android:layout_height="90dp"
                     android:src="@drawable/buttun3_a"
                     android:background="#262A2F"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerInside"/>
                 <ImageButton
                     android:id="@+id/B_Guard"
                     android:layout_width="1dp"
                     android:layout_height="90dp"
                     android:src="@drawable/buttun5_a"
                     android:background="#262A2F"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="centerInside"/>
 
 
             </TableRow>
@@ -72,18 +74,43 @@
                 android:layout_weight="1"/>
                         </LinearLayout>
 
--->
+--> <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:orientation="vertical">
         <WebView
             android:id="@+id/Baweb"
             android:layout_width="match_parent"
-            android:layout_height="500px">
-
+            android:layout_height="match_parent">
         </WebView>
-        <Button
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:orientation="horizontal"
+            android:background="@color/black_color">
+        <ImageButton
             android:id="@+id/golist"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="表格" />
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/ba01"
+            android:background="#262a2f"
+
+           />
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:src="@drawable/ba02"
+                android:background="#262a2f"
+
+                />
+        </LinearLayout>
     </LinearLayout>
 
 
